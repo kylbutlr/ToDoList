@@ -7,6 +7,13 @@
         <button id="btnid">Click Me!</button>
         <script>
             const btn = document.querySelector("#btnid");
+
+            const onButtonClick = ( event ) => {
+                event.preventDefault();
+                console.log("test");
+            }
+            btn.addEventListener("click", onButtonClick, false);
+            
         </script>
     </body>
 </html>
