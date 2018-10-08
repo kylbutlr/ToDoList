@@ -6,7 +6,7 @@
         <h1 id="titleId">To-Do List</h1>
         <form id="formId" action="">
             <input id="inputId">
-            <button id="btnId">Click Me!</button>
+            <button id="btnId">Add to List</button>
         </form>
 
         <script>
@@ -14,8 +14,8 @@
             const input = document.querySelector("#inputId");
             const form = document.querySelector("#formId");
 
-            const onButtonClick = ( event ) => {
-                event.preventDefault();
+            const onButtonClick = (e) => {
+                e.preventDefault();
                 const userMessage = document.createElement("div");
                 userMessage.innerHTML = inputId.value;
                 form.insertBefore(userMessage, btn.nextSibling);
