@@ -4,7 +4,7 @@
   </head>
   <body>
     <h1 id="title">Hello World!</h1>
-    <form action="">
+    <form action="/foo">
       <input id="input" />
       <button id="k">Click Me!</button>
     </form>
@@ -15,27 +15,21 @@
       const input = document.querySelector('#input');
       const link = document.querySelector('#link');
       var counter = 0;
-
-      const onLinkClick = ( event ) => {
+       const onLinkClick = ( event ) => {
         event.preventDefault();
         alert('No!');
       }
-
-      link.addEventListener('click', onLinkClick);
-
-      const onButtonClick = ( event ) => {
+       link.addEventListener('click', onLinkClick);
+       const onButtonClick = ( event ) => {
         event.preventDefault();
         const content = title.innerHTML;
-
-        counter = counter + 1;
-
-        if ( content === 'Hello World!' ) {
+         counter = counter + 1;
+         if ( content === 'Hello World!' ) {
           title.innerHTML = "Clicked!";
         } else {
           title.innerHTML = "Hello World!";
         }
-
-        if (counter === 4) {
+         if (counter === 4) {
           btn.disabled = true;
           input.disabled = true;
           const userMessage = document.createElement("div");
@@ -43,13 +37,11 @@
           userMessage.style.color = "red";
           document.body.insertBefore(userMessage, btn);
         }
-
-        if (counter === 1) {
+         if (counter === 1) {
           console.log(input.value);
         }
       }
-
-      btn.addEventListener("click", onButtonClick, false);
+       btn.addEventListener("click", onButtonClick, false);
     </script>
   </body>
 </html>

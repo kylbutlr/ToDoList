@@ -3,17 +3,23 @@
         <title>Hello World!</title>
     </head>
     <body>
-        <h1 id="titleid">Hello World!</h1>
-        <button id="btnid">Click Me!</button>
+        <h1 id="titleId">Hello World!</h1>
+        <form action="">
+            <input id="formId">
+            <button id="btnId">Click Me!</button>
+        </form>
         <script>
-            const btn = document.querySelector("#btnid");
+            const btn = document.querySelector("#btnId");
+            const input = document.querySelector("#formId");
 
             const onButtonClick = ( event ) => {
                 event.preventDefault();
-                console.log("test");
+                const userMessage = document.createElement("div");
+                userMessage.innerHTML = formId.value;
+                document.body.insertBefore(userMessage, btn.nextSibling);
+                console.log(formId.value);
             }
             btn.addEventListener("click", onButtonClick, false);
-            
         </script>
     </body>
 </html>
