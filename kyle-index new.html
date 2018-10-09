@@ -8,7 +8,11 @@
             <input id="inputId">
             <button id="btnId">Add to List</button>
         </form>
-        <div id="listId">To-Do:</div>
+        <div id="divId">To-Do:
+            <ul id="listId">
+
+            </ul>
+        </div>
 
         <script>
             const btn = document.querySelector("#btnId");
@@ -20,7 +24,7 @@
                 e.preventDefault();
                 const userMessage = document.createElement("div");
                 userMessage.innerHTML = inputId.value;
-                document.body.insertBefore(userMessage, listId.nextSibling);
+                listId.insertBefore(userMessage, listId);
                 console.log(inputId.value);
             }
             btn.addEventListener("click", onButtonClick, false);
