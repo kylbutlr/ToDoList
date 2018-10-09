@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title> Hello </title>
+  </head>
+  <body>
+    <h1 id="title">Hello World!</h1>
+    <form id = "form" action="/foo">
+      <input id="input" />
+      <button id="k">Click Me!</button>
+    </form>
+    <a id="link" href="http://google.com">Click Me</a>
+   
+    <script>
+      const btn = document.querySelector('#k');
+      const title = document.querySelector('#title');
+      const input = document.querySelector('#input');
+      const link = document.querySelector('#link');
+      const form = document.querySelector("#form");
+      var counter = 0;
+       const onLinkClick = ( event ) => {
+        event.preventDefault();
+        alert('No!');
+      }
+       link.addEventListener('click', onLinkClick);
+       const onButtonClick = ( event ) => {
+        event.preventDefault();
+        const content = title.innerHTML;
+         counter = counter + 1;
+         if ( content === 'Hello World!' ) {
+          title.innerHTML = "Clicked!";
+        } else {
+          title.innerHTML = "Hello World!";
+        }
+         if (counter === 4) {
+          btn.disabled = true;
+          input.disabled = true;
+          const userMessage = document.createElement("div");
+          userMessage.innerHTML = 'No more clicks';
+          userMessage.style.color = "red";
+          form.insertBefore(userMessage, btn.nextSibling);
+        }
+         if (counter === 1) {
+          console.log(input.value);
+        }
+      }
+       btn.addEventListener("click", onButtonClick, false);
+    </script>
+  </body>
+</html>
