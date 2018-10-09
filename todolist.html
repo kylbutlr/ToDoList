@@ -10,7 +10,10 @@
             <input id="input"><br>
             <button id="button">Add to List</button>
         </form>
-        <p id="list">
+        <p>
+            <ul id="list">
+                    
+            </ul>
         </p>
     </body>
     
@@ -19,12 +22,14 @@
         const button = document.querySelector("#button");
         const input = document.querySelector("#input");
         const form = document.querySelector("#form");
+        //const list = document.getElementById("#list");
         const buttonClick = (e) => {
             e.preventDefault();
             const addToList = input.value;
             listArray.push(addToList);
+            //list.insertBefore(addToList, list.childNodes[0]);
             document.getElementById("list").innerHTML+= addToList + "<br>";
-            console.log(listArray);
+            //console.log(listArray);
         }
         button.addEventListener("click", buttonClick, false);
     </script>
