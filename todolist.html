@@ -41,7 +41,11 @@
         }*/
         form.addEventListener("submit", function(e){
             e.preventDefault();
-            list.innerHTML += "<li>" + input.value + "<code> by " + time.value + " on " + date.value + "</code>";
+            //list.innerHTML += "<li>" + input.value + "<code> by " + time.value + " on " + date.value + "</code></li>";
+            var newlist = document.createElement("li");
+            newlist.textContent = input.value + " ";
+            newlist.appendChild(dltBtn());
+            list.insertBefore(newlist, list.childNodes[0]);
             save();
             input.value = "";
         }, false);
@@ -53,6 +57,18 @@
             save();
         }
 
+        function deletePost(e) {
+        e.preventDefault();
+        e.target.parentNode.remove();
+        }
+
+        function dltBtn(){
+        var dltBtn = document.createElement("button");
+        dltBtn.textContent = "Delete";
+        dltBtn.addEventListener("click", deletePost);
+        return dltBtn;
+        }
+
         function save() {
             window.localStorage.saved = list.innerHTML;
         }
@@ -60,7 +76,7 @@
         function getSaved() {
             var saved = window.localStorage.saved;
             if (!saved) {
-                list.innerHTML = "<li>Default To-Do Event<code> by 8:00 on 2018-10-31</code>";
+                list.innerHTML = "";
             }
             else {
                 list.innerHTML = saved;
