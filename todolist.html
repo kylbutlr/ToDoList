@@ -42,15 +42,31 @@
         form.addEventListener("submit", function(e){
             e.preventDefault();
             list.innerHTML += "<li>" + input.value + "<code> by " + time.value + " on " + date.value + "</code>";
-            //save();
+            save();
             input.value = "";
         }, false);
 
         const clrClick = (e) => {
             e.preventDefault();
             list.innerHTML = "";
-            localStorage.clear();
+            //localStorage.clear();
+            save();
         }
+
+        function save() {
+            window.localStorage.saved = list.innerHTML;
+        }
+
+        function getSaved() {
+            var saved = window.localStorage.saved;
+            if (!saved) {
+                list.innerHTML = "<li>Default To-Do Event<code> by 8:00 on 2018-10-31</code>";
+            }
+            else {
+                list.innerHTML = saved;
+            }
+        }
+        getSaved();
         //addBtn.addEventListener("click", addClick, false);
         clrBtn.addEventListener("click", clrClick, false);
     </script>
