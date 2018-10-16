@@ -21,7 +21,7 @@
         <ul id="list"></ul>
                             
     <script>
-        var listArray = localStorage.listArray = [];
+        //var listArray = localStorage.listArray = [];
         const addBtn = document.querySelector("#addBtn");
         const input = document.querySelector("#input");
         const form = document.querySelector("#form");
@@ -30,6 +30,8 @@
         var time = document.querySelector("#time");
         const clrBtn = document.querySelector("#clrBtn");
         document.querySelector("#date").valueAsDate = new Date();
+        storage = window.localStorage;
+        var key = "0";
         /*const addClick = (e) => {
             e.preventDefault();
             const newToDo = document.createElement("div");
@@ -47,6 +49,7 @@
             newlist.appendChild(dltBtn());
             list.insertBefore(newlist, list.childNodes[0]);
             save();
+            key++;
             input.value = "";
         }, false);
 
@@ -55,11 +58,13 @@
             list.innerHTML = "";
             //localStorage.clear();
             save();
+            key = "0";
         }
 
         function deletePost(e) {
         e.preventDefault();
         e.target.parentNode.remove();
+        key--;
         }
 
         function dltBtn(){
@@ -70,11 +75,11 @@
         }
 
         function save() {
-            window.localStorage.saved = list.innerHTML;
+            storage.setItem(key, input.value);
         }
 
         function getSaved() {
-            var saved = window.localStorage.saved;
+            var saved = storage.getItem("0");
             if (!saved) {
                 list.innerHTML = "";
             }
