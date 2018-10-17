@@ -62,24 +62,24 @@
         }
 
         function deletePost(e) {
-        e.preventDefault();
-        e.target.parentNode.remove();
-        key--;
+            e.preventDefault();
+            e.target.parentNode.remove();
+            key--;
         }
 
         function dltBtn(){
-        var dltBtn = document.createElement("button");
-        dltBtn.textContent = "Delete";
-        dltBtn.addEventListener("click", deletePost);
-        return dltBtn;
+            var dltBtn = document.createElement("button");
+            dltBtn.textContent = "Delete";
+            dltBtn.addEventListener("click", deletePost);
+            return dltBtn;
         }
 
         function save() {
-            storage.setItem(data, JSON.stringify(data));
+            storage.setItem("data", JSON.stringify(data));
         }
 
         function getSaved() {
-            saved = JSON.parse(storage.getItem(data));
+            var saved = JSON.parse(storage.getItem("data"));
             if (!saved) {
                 list.innerHTML = "";
             }
