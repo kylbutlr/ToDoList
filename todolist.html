@@ -21,7 +21,7 @@
         <ul id="list"></ul>
                             
     <script>
-        //var listArray = localStorage.listArray = [];
+        var data = [];
         const addBtn = document.querySelector("#addBtn");
         const input = document.querySelector("#input");
         const form = document.querySelector("#form");
@@ -31,7 +31,7 @@
         const clrBtn = document.querySelector("#clrBtn");
         document.querySelector("#date").valueAsDate = new Date();
         storage = window.localStorage;
-        var key = "0";
+        var key = data.length;
         /*const addClick = (e) => {
             e.preventDefault();
             const newToDo = document.createElement("div");
@@ -44,6 +44,7 @@
         form.addEventListener("submit", function(e){
             e.preventDefault();
             //list.innerHTML += "<li>" + input.value + "<code> by " + time.value + " on " + date.value + "</code></li>";
+            data.push({"key": key, "text": input.value, "done": false});
             var newlist = document.createElement("li");
             newlist.textContent = input.value + " ";
             newlist.appendChild(dltBtn());
@@ -56,9 +57,8 @@
         const clrClick = (e) => {
             e.preventDefault();
             list.innerHTML = "";
-            //localStorage.clear();
-            save();
-            key = "0";
+            storage.clear();            
+            key = 0;
         }
 
         function deletePost(e) {
@@ -75,11 +75,11 @@
         }
 
         function save() {
-            storage.setItem(key, input.value);
+            storage.setItem(data, JSON.stringify(data));
         }
 
         function getSaved() {
-            var saved = storage.getItem("0");
+            saved = JSON.parse(storage.getItem(data));
             if (!saved) {
                 list.innerHTML = "";
             }
