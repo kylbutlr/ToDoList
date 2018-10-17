@@ -79,12 +79,14 @@
         }
 
         function getSaved() {
-            var saved = JSON.parse(storage.getItem("data"));
+            saved = JSON.parse(storage.getItem("data"));
             if (!saved) {
                 list.innerHTML = "";
             }
             else {
-                list.innerHTML = saved;
+                for (var i=0; i<saved.length; i++){
+                    list.innerHTML = saved[i];
+                }
             }
         }
         getSaved();
