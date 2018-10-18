@@ -1,9 +1,51 @@
 <html>
     <head>
         <style>
+        html {
+            font-family: 'Helvetica';
+            background: #dadada;
+        }
         .block {
             display: inline-block;
             width: 250px;
+        }
+        .main-div {
+            display: inline-block;
+            width: 270px;
+            background: #000000ad;
+            padding: 10px;
+        }
+        .form-div {
+            display: inline-block;
+            width: 250px;
+            background: #dadada;
+            padding: 10px;
+        }
+        .list-div {
+            display: inline-block;
+            width: 250px;
+            background: #dadada;
+            padding: 0px 10px 0px;
+            margin: 10px auto 0px;
+        }
+        h1 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .header {
+            height: 40px;
+            background: #000000ad;
+            color: white;
+            line-height: 40px;
+            text-align: left;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+        ul {
+            margin-left:-20px;
+        }
+        li {
+            margin: 10px auto;
         }
         </style>
         <title>
@@ -11,14 +53,19 @@
         </title>
     </head>
     <body>
+        <div class="header">
         <h1>To-Do List</h1>
+        </div>
+        <div class="main-div">
+            <div class="form-div">
         <form id="form" action="">
             <input class="block" style="padding: 10px" id="input" placeholder="Add New To-Do Item" autocomplete="off"><br>
             <input class="block" style="text-align: center" type="time" id="time" value="12:00" required ><br>
             <input class="block" style="text-align: center" type="date" id="date" required ><br>
             <button class="block" id="addBtn">Add to List</button></form>
-            <button class="block" id="clrBtn">Clear List</button>
-        <ul id="list"></ul>
+            <button class="block" id="clrBtn">Clear List</button></div>
+            <div class="list-div">
+            <ul id="list"></ul></div></div>
                             
     <script>
         var data;
@@ -34,7 +81,11 @@
         storage = window.localStorage;
         getSaved();
         key = data.length;
+        var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+        function formatPostDate(date){
+            return DAYS[date.getDay()] + ", " + (date.getMonth()+1) + "/" + date.getDate();
+        }
         form.addEventListener("submit", function(e){
             e.preventDefault();
             const todo = {"key": key, "text": input.value, "time": time.value, "date": date.value, "done": false};
