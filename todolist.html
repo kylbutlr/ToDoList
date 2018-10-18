@@ -11,22 +11,22 @@
         }
         .main-div {
             display: inline-block;
-            width: 270px;
+            width: auto;
             background: #000000ad;
-            padding: 10px;
         }
         .form-div {
             display: inline-block;
             width: 250px;
             background: #dadada;
             padding: 10px;
+            margin: 10px;
         }
         .list-div {
             display: inline-block;
-            width: 250px;
+            width: 500px;
             background: #dadada;
             padding: 0px 10px 0px;
-            margin: 10px auto 0px;
+            margin: 10px 10px 10px 0px;
         }
         h1 {
             font-size: 20px;
@@ -57,14 +57,14 @@
         <h1>To-Do List</h1>
         </div>
         <div class="main-div">
-            <div class="form-div">
+            <div class="form-div" float="inline-block">
         <form id="form" action="">
             <input class="block" style="padding: 10px" id="input" placeholder="Add New To-Do Item" autocomplete="off"><br>
             <input class="block" style="text-align: center" type="time" id="time" value="12:00" required ><br>
             <input class="block" style="text-align: center" type="date" id="date" required ><br>
             <button class="block" id="addBtn">Add to List</button></form>
             <button class="block" id="clrBtn">Clear List</button></div>
-            <div class="list-div">
+            <div class="list-div" float="inline-block">
             <ul id="list"></ul></div></div>
                             
     <script>
