@@ -22,6 +22,7 @@
                             
     <script>
         var data;
+        var key;
         const addBtn = document.querySelector("#addBtn");
         const input = document.querySelector("#input");
         const form = document.querySelector("#form");
@@ -32,21 +33,14 @@
         document.querySelector("#date").valueAsDate = new Date();
         storage = window.localStorage;
         getSaved();
-        var key = data.length;
-        /*const addClick = (e) => {
-            e.preventDefault();
-            const newToDo = document.createElement("div");
-            newToDo.innerHTML = "<code>(" + (listArray.length + 1) + ")</code> " + input.value + "<br><code>by " + time.value + " on " + date.value + "</code>";
-            newToDo.className = "newToDo";
-            list.insertBefore(newToDo, list.lastChild);
-            listArray.push(input.value);
-            console.log(listArray);
-        }*/
+        key = data.length;
+
         form.addEventListener("submit", function(e){
             e.preventDefault();
             //list.innerHTML += "<li>" + input.value + "<code> by " + time.value + " on " + date.value + "</code></li>";
-            data.push({"key": key, "text": input.value, "done": false});
-            renderTodo(input.value);
+            const todo = {"key": key, "text": input.value, "done": false};
+            data.push(todo);
+            renderTodo(todo.text);
             save();
             key++;
             input.value = "";
@@ -63,13 +57,12 @@
             var newlist = document.createElement("li");
             newlist.textContent = input + " ";
             console.log(input);
-            newlist.appendChild(dltBtn());
+            //newlist.appendChild(dltBtn());
             list.insertBefore(newlist, list.childNodes[0]);
         }
 
-        function deletePost(e) {
+        /*function deletePost(e) {
             e.preventDefault();
-            //NEED TO REMOVE FROM DATA ARRAY
             e.target.parentNode.remove();
             key--;
         }
@@ -79,7 +72,7 @@
             dltBtn.textContent = "Delete";
             dltBtn.addEventListener("click", deletePost);
             return dltBtn;
-        }
+        }*/
 
         function save() {
             storage.setItem("data", JSON.stringify(data));
@@ -89,6 +82,8 @@
             data = JSON.parse(storage.getItem("data"));
             if (!data) {
                 list.innerHTML = "";
+                data = [];
+                key = 0;
             }
             else {
                 for (var i=0; i<data.length; i++){
@@ -96,7 +91,6 @@
                 }
             }
         }
-        //addBtn.addEventListener("click", addClick, false);
         clrBtn.addEventListener("click", clrClick, false);
     </script>
     </body>
