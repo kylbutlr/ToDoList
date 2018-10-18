@@ -21,7 +21,7 @@
         <ul id="list"></ul>
                             
     <script>
-        var data = [];
+        var data;
         const addBtn = document.querySelector("#addBtn");
         const input = document.querySelector("#input");
         const form = document.querySelector("#form");
@@ -31,6 +31,7 @@
         const clrBtn = document.querySelector("#clrBtn");
         document.querySelector("#date").valueAsDate = new Date();
         storage = window.localStorage;
+        getSaved();
         var key = data.length;
         /*const addClick = (e) => {
             e.preventDefault();
@@ -83,17 +84,16 @@
         }
 
         function getSaved() {
-            saved = JSON.parse(storage.getItem("data"));
-            if (!saved) {
+            data = JSON.parse(storage.getItem("data"));
+            if (!data) {
                 list.innerHTML = "";
             }
             else {
-                for (var i=0; i<saved.length; i++){
-                    renderTodo(saved[i]);
+                for (var i=0; i<data.length; i++){
+                    renderTodo(data[i]);
                 }
             }
         }
-        getSaved();
         //addBtn.addEventListener("click", addClick, false);
         clrBtn.addEventListener("click", clrClick, false);
     </script>
