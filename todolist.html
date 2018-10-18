@@ -62,12 +62,14 @@
         function renderTodo(input) {
             var newlist = document.createElement("li");
             newlist.textContent = input + " ";
+            console.log(input);
             newlist.appendChild(dltBtn());
             list.insertBefore(newlist, list.childNodes[0]);
         }
 
         function deletePost(e) {
             e.preventDefault();
+            //NEED TO REMOVE FROM DATA ARRAY
             e.target.parentNode.remove();
             key--;
         }
@@ -90,7 +92,7 @@
             }
             else {
                 for (var i=0; i<data.length; i++){
-                    renderTodo(data[i]);
+                    renderTodo(data[i].text);
                 }
             }
         }
