@@ -13,7 +13,7 @@
     <body>
         <h1>To-Do List</h1>
         <form id="form" action="">
-            <input class="block" style="padding: 10px" id="input" placeholder="Add New To-Do Item"><br>
+            <input class="block" style="padding: 10px" id="input" placeholder="Add New To-Do Item" autocomplete="off"><br>
             <input class="block" style="text-align: center" type="time" id="time" value="12:00" required ><br>
             <input class="block" style="text-align: center" type="date" id="date" required ><br>
             <button class="block" id="addBtn">Add to List</button></form>
@@ -37,10 +37,9 @@
 
         form.addEventListener("submit", function(e){
             e.preventDefault();
-            //list.innerHTML += "<li>" + input.value + "<code> by " + time.value + " on " + date.value + "</code></li>";
-            const todo = {"key": key, "text": input.value, "done": false};
+            const todo = {"key": key, "text": input.value, "time": time.value, "date": date.value, "done": false};
             data.push(todo);
-            renderTodo(todo.text);
+            renderTodo(todo);
             save();
             key++;
             input.value = "";
@@ -55,7 +54,7 @@
         
         function renderTodo(input) {
             var newlist = document.createElement("li");
-            newlist.textContent = input + " ";
+            newlist.textContent = input.text + " by " + input.time + " on " + input.date;
             console.log(input);
             //newlist.appendChild(dltBtn());
             list.insertBefore(newlist, list.childNodes[0]);
@@ -87,7 +86,7 @@
             }
             else {
                 for (var i=0; i<data.length; i++){
-                    renderTodo(data[i].text);
+                    renderTodo(data[i]);
                 }
             }
         }
