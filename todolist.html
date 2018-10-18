@@ -45,10 +45,7 @@
             e.preventDefault();
             //list.innerHTML += "<li>" + input.value + "<code> by " + time.value + " on " + date.value + "</code></li>";
             data.push({"key": key, "text": input.value, "done": false});
-            var newlist = document.createElement("li");
-            newlist.textContent = input.value + " ";
-            newlist.appendChild(dltBtn());
-            list.insertBefore(newlist, list.childNodes[0]);
+            renderTodo(input.value);
             save();
             key++;
             input.value = "";
@@ -59,6 +56,13 @@
             list.innerHTML = "";
             storage.clear();            
             key = 0;
+        }
+        
+        function renderTodo(input) {
+            var newlist = document.createElement("li");
+            newlist.textContent = input + " ";
+            newlist.appendChild(dltBtn());
+            list.insertBefore(newlist, list.childNodes[0]);
         }
 
         function deletePost(e) {
@@ -85,7 +89,7 @@
             }
             else {
                 for (var i=0; i<saved.length; i++){
-                    list.innerHTML = saved[i];
+                    renderTodo(saved[i]);
                 }
             }
         }
