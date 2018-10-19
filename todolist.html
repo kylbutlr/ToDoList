@@ -27,6 +27,7 @@
             background: #dadada;
             padding: 0px 10px 0px;
             margin: 10px 10px 10px 0px;
+            vertical-align: top;
         }
         h1 {
             font-size: 20px;
@@ -70,6 +71,7 @@
     <script>
         var data;
         var key;
+        document.querySelector("#date").valueAsDate = new Date();
         const addBtn = document.querySelector("#addBtn");
         const input = document.querySelector("#input");
         const form = document.querySelector("#form");
@@ -77,14 +79,15 @@
         var date = document.querySelector("#date");
         var time = document.querySelector("#time");
         const clrBtn = document.querySelector("#clrBtn");
-        document.querySelector("#date").valueAsDate = new Date();
         storage = window.localStorage;
         getSaved();
         key = data.length;
-        var DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        function formatPostDate(date){
-            return DAYS[date.getDay()] + ", " + (date.getMonth()+1) + "/" + date.getDate();
+        function formatDate(date){
+            //return days[date.getDay()] + ", " + (date.getMonth()+1) + "/" + date.getDate();
+            return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate();
         }
         form.addEventListener("submit", function(e){
             e.preventDefault();
@@ -103,12 +106,15 @@
             key = 0;
         }
         
-        function renderTodo(input) {
-            var newlist = document.createElement("li");
-            newlist.textContent = input.text + " by " + input.time + " on " + input.date;
-            console.log(input);
+        function renderTodo(todo) {
+            var newList = document.createElement("li");
+            //var newDate = new Date(todo.date);
+            var formattedDate =  formatDate(new Date(todo.date));
+            //console.log(formattedDate);
+            newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate;
+            //console.log(newList);
             //newlist.appendChild(dltBtn());
-            list.insertBefore(newlist, list.childNodes[0]);
+            list.insertBefore(newList, list.childNodes[0]);
         }
 
         /*function deletePost(e) {
@@ -138,6 +144,7 @@
             else {
                 for (var i=0; i<data.length; i++){
                     renderTodo(data[i]);
+                    key = data.length;
                 }
             }
         }
