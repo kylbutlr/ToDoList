@@ -57,6 +57,7 @@
         </title>
     </head>
     <body>
+        
         <div class="header">
         <h1>To-Do List</h1>
         </div>
@@ -72,6 +73,7 @@
             <ul id="list"></ul></div></div>
                             
     <script>
+
         var data;
         var key;
         document.querySelector("#date").valueAsDate = new Date();
@@ -82,12 +84,9 @@
         var date = document.querySelector("#date");
         var time = document.querySelector("#time");
         const clrBtn = document.querySelector("#clrBtn");
-        var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        function formatDate(date){
-            return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate();
-        }
         form.addEventListener("submit", function(e){
             e.preventDefault();
             const todo = {"key": key, "text": input.value, "time": time.value, "date": date.value, "done": false};
@@ -103,6 +102,10 @@
             list.innerHTML = "";
             window.localStorage.clear();
             key = 0;
+        }
+
+        function formatDate(date){
+            return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate();
         }
         
         function renderTodo(todo) {
@@ -161,9 +164,11 @@
                 }
             }
         }
+
         clrBtn.addEventListener("click", clrClick, false);
         getSaved();
         key = data.length;
+
     </script>
     </body>
 </html>
