@@ -5,6 +5,9 @@
             font-family: 'Helvetica';
             background: #dadada;
         }
+        .checked {
+            text-decoration: line-through;
+        }
         .block {
             display: inline-block;
             width: 250px;
@@ -79,12 +82,10 @@
         var date = document.querySelector("#date");
         var time = document.querySelector("#time");
         const clrBtn = document.querySelector("#clrBtn");
-        storage = window.localStorage;
         var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         function formatDate(date){
-            //return days[date.getDay()] + ", " + (date.getMonth()+1) + "/" + date.getDate();
             return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate();
         }
         form.addEventListener("submit", function(e){
@@ -100,19 +101,33 @@
         const clrClick = (e) => {
             e.preventDefault();
             list.innerHTML = "";
-            storage.clear();            
+            window.localStorage.clear();
             key = 0;
         }
         
         function renderTodo(todo) {
             var newList = document.createElement("li");
-            //var newDate = new Date(todo.date);
             var formattedDate =  formatDate(new Date(todo.date));
-            //console.log(formattedDate);
             newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate;
-            //console.log(newList);
-            //newlist.appendChild(dltBtn());
-            list.insertBefore(newList, list.childNodes[0]);
+            //newList.appendChild(dltBtn());
+            var checkBox = document.createElement("input");
+            checkBox.type = "checkBox";
+            checkBox.addEventListener("click", checkPost)
+            newList.appendChild(checkBox);
+            //newList.insertBefore(checkBox, newList.childNodes[0]);
+            list.appendChild(newList);
+        }
+
+        function checkPost(e) {
+            e.preventDefault();
+            if (e.target.parentNode.classList.contains("checked")){
+                e.target.parentNode.classList.remove("checked");
+                //e.target.done = false;
+            }
+            else {
+                e.target.parentNode.classList.add("checked");
+                //e.target.done = true;
+            }
         }
 
         /*function deletePost(e) {
@@ -129,11 +144,11 @@
         }*/
 
         function save() {
-            storage.setItem("data", JSON.stringify(data));
+            window.localStorage.setItem("data", JSON.stringify(data));
         }
 
         function getSaved() {
-            data = JSON.parse(storage.getItem("data"));
+            data = JSON.parse(window.localStorage.getItem("data"));
             if (!data) {
                 list.innerHTML = "";
                 data = [];
