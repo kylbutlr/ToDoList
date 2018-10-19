@@ -80,8 +80,6 @@
         var time = document.querySelector("#time");
         const clrBtn = document.querySelector("#clrBtn");
         storage = window.localStorage;
-        getSaved();
-        key = data.length;
         var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -149,6 +147,8 @@
             }
         }
         clrBtn.addEventListener("click", clrClick, false);
+        getSaved();
+        key = data.length;
     </script>
     </body>
 </html>
