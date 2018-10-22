@@ -49,6 +49,7 @@
             margin-left:-20px;
         }
         li {
+            list-style: none;
             margin: 10px auto;
         }
         </style>
@@ -73,8 +74,7 @@
             <ul id="list"></ul></div></div>
                             
     <script>
-
-        var data;
+        var data = [];
         var key;
         document.querySelector("#date").valueAsDate = new Date();
         const addBtn = document.querySelector("#addBtn");
@@ -101,6 +101,7 @@
             e.preventDefault();
             list.innerHTML = "";
             window.localStorage.clear();
+            data = [];
             key = 0;
         }
 
@@ -112,12 +113,12 @@
             var newList = document.createElement("li");
             var formattedDate =  formatDate(new Date(todo.date));
             newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate;
-            //newList.appendChild(dltBtn());
+            newList.appendChild(dltBtn());
             var checkBox = document.createElement("input");
             checkBox.type = "checkBox";
             checkBox.addEventListener("click", checkPost)
-            newList.appendChild(checkBox);
-            //newList.insertBefore(checkBox, newList.childNodes[0]);
+            //newList.appendChild(checkBox);
+            newList.insertBefore(checkBox, newList.childNodes[0]);
             list.appendChild(newList);
         }
 
@@ -133,10 +134,15 @@
             }
         }
 
-        /*function deletePost(e) {
+        function deletePost(e) {
             e.preventDefault();
+            //var target = data.indexOf(e.target.parentNode);
+            //console.log(e.target.parentNode);
+            //console.log(target);
+            //data.splice(target, 1);
             e.target.parentNode.remove();
             key--;
+            save();
         }
 
         function dltBtn(){
@@ -144,7 +150,7 @@
             dltBtn.textContent = "Delete";
             dltBtn.addEventListener("click", deletePost);
             return dltBtn;
-        }*/
+        }
 
         function save() {
             window.localStorage.setItem("data", JSON.stringify(data));
