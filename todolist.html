@@ -117,6 +117,11 @@
             var checkBox = document.createElement("input");
             checkBox.type = "checkBox";
             checkBox.addEventListener("click", checkPost)
+            if (todo.done = true)
+            {
+                checkBox.checked = true;
+                //todo.classList.add("checked");
+            }
             //newList.appendChild(checkBox);
             newList.insertBefore(checkBox, newList.childNodes[0]);
             list.appendChild(newList);
@@ -126,20 +131,22 @@
             e.preventDefault();
             if (e.target.parentNode.classList.contains("checked")){
                 e.target.parentNode.classList.remove("checked");
-                //e.target.done = false;
+                //e.target.parentNode.done = false;
+                save();
             }
             else {
                 e.target.parentNode.classList.add("checked");
-                //e.target.done = true;
+                //e.target.parentNode.done = true;
+                save();
             }
         }
 
         function deletePost(e) {
             e.preventDefault();
-            //var target = data.indexOf(e.target.parentNode);
-            //console.log(e.target.parentNode);
-            //console.log(target);
-            //data.splice(target, 1);
+            var target = data.indexOf(e.target.parentNode.textContent);
+            console.log(e.target.parentNode.textContent);
+            console.log(target);
+            data.splice(target, 1);
             e.target.parentNode.remove();
             key--;
             save();
