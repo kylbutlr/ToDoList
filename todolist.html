@@ -145,7 +145,7 @@
 
         function deletePost(e) {
             e.preventDefault();
-            var target = data.findIndex(x => x.key === e.target.dataset.key);
+            var target = data.findIndex(x => x.key == e.target.dataset.key);
             console.log(e.target.dataset.key);
             console.log(target);
             data.splice(target, 1);
