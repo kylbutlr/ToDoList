@@ -126,26 +126,29 @@
         function checkbox(todo) {
             var checkbox = document.createElement("input");
             checkbox.type = "checkbox";
-            //checkbox.value = "done";
+            checkbox.value = "done";
             checkbox.addEventListener("click", checkPost)
             if (todo.done === true){
                 checkbox.checked = true;
+            }
+            else { 
+                checkbox.checked = false;
             }
             return checkbox;
         }
 
         function checkPost(e) {
-            e.preventDefault();
+            //e.preventDefault();
             var target = data.findIndex(x => x.key == e.target.parentNode.key);
             if (e.target.parentNode.classList.contains("checked")){
                 e.target.parentNode.classList.remove("checked");
-                //e.target.checked = false;
+                e.target.checked = false;
                 data[target].done = false;
                 save();
             }
             else {
                 e.target.parentNode.classList.add("checked");
-                //e.target.checked = true;
+                e.target.checked = true;
                 data[target].done = true;
                 save();
             }
