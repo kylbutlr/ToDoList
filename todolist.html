@@ -58,7 +58,10 @@
         .delete-button {
             opacity: 0;
             transition: opacity 0.5s;
-            margin-left: 5px;
+            margin-left: 10px;
+        }
+        .check-box {
+            margin-right: 10px;
         }
         </style>
         <title>
@@ -134,6 +137,7 @@
         function checkbox(todo) {
             var checkbox = document.createElement("input");
             checkbox.type = "checkbox";
+            checkbox.className = "check-box";
             checkbox.value = "done";
             checkbox.addEventListener("click", checkPost)
             if (todo.done === true){
