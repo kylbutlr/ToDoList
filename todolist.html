@@ -91,7 +91,7 @@
             e.preventDefault();
             const todo = {"key": key, "text": input.value, "time": time.value, "date": date.value, "done": false};
             data.push(todo);
-            renderTodo(todo);
+            renderTodo(todo, key);
             save();
             key++;
             input.value = "";
@@ -109,23 +109,23 @@
             return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate();
         }
         
-        function renderTodo(todo) {
+        function renderTodo(todo, key) {
             var newList = document.createElement("li");
             var formattedDate =  formatDate(new Date(todo.date));
             newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate;
-            newList.appendChild(dltBtn());
-            newList.insertBefore(checkbox(), newList.childNodes[0]);
+            newList.appendChild(dltBtn(key));
+            newList.insertBefore(checkbox(todo), newList.childNodes[0]);
             list.appendChild(newList);
         }
-        function checkbox() {
+        function checkbox(todo) {
             var checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.addEventListener("click", checkPost)
-            /*if (todo.done === true)
+            if (todo.done === true)
             {
-                checkbox.checked = true;
-                todo.classList.add("checked");
-            }*/
+                //checkbox.checked = true;
+                //todo.classList.add("checked");
+            }
             return checkbox;
         }
 
@@ -154,7 +154,7 @@
             save();
         }
 
-        function dltBtn(){
+        function dltBtn(key){
             var dltBtn = document.createElement("button");
             dltBtn.dataset.key = key;
             dltBtn.textContent = "Delete";
@@ -175,15 +175,16 @@
             }
             else {
                 for (var i=0; i<data.length; i++){
-                    renderTodo(data[i]);
-                    key = data.length;
+                    key = i;
+                    renderTodo(data[i], key);
+                    //key = data.length;
                 }
             }
         }
 
         clrBtn.addEventListener("click", clrClick, false);
         getSaved();
-        key = data.length;
+        //key = data.length;
 
     </script>
     </body>
