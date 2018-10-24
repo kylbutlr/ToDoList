@@ -1,2 +1,2 @@
-# Hello-world
-Test
+# ToDoList
+Basic To-Do List made with Vanilla JS
