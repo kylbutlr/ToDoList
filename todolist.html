@@ -52,6 +52,14 @@
             list-style: none;
             margin: 10px auto;
         }
+        li:hover > .delete-button {
+            opacity: 1;
+        }
+        .delete-button {
+            opacity: 0;
+            transition: opacity 0.5s;
+            margin-left: 5px;
+        }
         </style>
         <title>
             To-Do List
@@ -112,7 +120,7 @@
         function renderTodo(todo, key) {
             var newList = document.createElement("li");
             var formattedDate =  formatDate(new Date(todo.date));
-            newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate + " ";
+            newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate;
             newList.key = key;
             //console.log(key);
             newList.appendChild(dltBtn(key));
@@ -172,6 +180,7 @@
         function dltBtn(key){
             var dltBtn = document.createElement("button");
             dltBtn.dataset.key = key;
+            dltBtn.className = "delete-button";
             dltBtn.textContent = "Delete";
             dltBtn.addEventListener("click", deletePost);
             return dltBtn;
