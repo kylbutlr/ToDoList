@@ -114,17 +114,19 @@
             var formattedDate =  formatDate(new Date(todo.date));
             newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate;
             newList.appendChild(dltBtn());
-            var checkBox = document.createElement("input");
-            checkBox.type = "checkBox";
-            checkBox.addEventListener("click", checkPost)
-            if (todo.done === true)
-            {
-                //checkBox.checked = true;
-                //todo.classList.add("checked");
-            }
-            //newList.appendChild(checkBox);
-            newList.insertBefore(checkBox, newList.childNodes[0]);
+            newList.insertBefore(checkbox(), newList.childNodes[0]);
             list.appendChild(newList);
+        }
+        function checkbox() {
+            var checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.addEventListener("click", checkPost)
+            /*if (todo.done === true)
+            {
+                checkbox.checked = true;
+                todo.classList.add("checked");
+            }*/
+            return checkbox;
         }
 
         function checkPost(e) {
@@ -143,8 +145,8 @@
 
         function deletePost(e) {
             e.preventDefault();
-            var target = data.indexOf(e.target.parentNode.textContent);
-            console.log(e.target.parentNode.textContent);
+            var target = data.findIndex(x => x.key === e.target.dataset.key);
+            console.log(e.target.dataset.key);
             console.log(target);
             data.splice(target, 1);
             e.target.parentNode.remove();
@@ -154,6 +156,7 @@
 
         function dltBtn(){
             var dltBtn = document.createElement("button");
+            dltBtn.dataset.key = key;
             dltBtn.textContent = "Delete";
             dltBtn.addEventListener("click", deletePost);
             return dltBtn;
