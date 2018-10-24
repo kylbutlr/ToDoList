@@ -113,6 +113,8 @@
             var newList = document.createElement("li");
             var formattedDate =  formatDate(new Date(todo.date));
             newList.textContent = todo.text + " by " + todo.time + " on " + formattedDate;
+            newList.key = key;
+            //console.log(key);
             newList.appendChild(dltBtn(key));
             newList.insertBefore(checkbox(todo), newList.childNodes[0]);
             list.appendChild(newList);
@@ -120,12 +122,15 @@
         function checkbox(todo) {
             var checkbox = document.createElement("input");
             checkbox.type = "checkbox";
+            checkbox.value = "done";
             checkbox.addEventListener("click", checkPost)
             if (todo.done === true)
             {
-                //checkbox.checked = true;
-                //todo.classList.add("checked");
+                checkbox.checked = true;
+                console.log("yes");
+                todo.classList.add("checked");
             }
+            else { console.log("no"); }
             return checkbox;
         }
 
@@ -133,12 +138,18 @@
             e.preventDefault();
             if (e.target.parentNode.classList.contains("checked")){
                 e.target.parentNode.classList.remove("checked");
-                //e.target.parentNode.done = false;
+                e.target.parentNode.done = false;
+                console.log(e.target.parentNode);
+                console.log(e.target.parentNode.done);
+                console.log("unchecked");
                 save();
             }
             else {
                 e.target.parentNode.classList.add("checked");
-                //e.target.parentNode.done = true;
+                e.target.parentNode.done = true;
+                console.log(e.target.parentNode);
+                console.log(e.target.parentNode.done);
+                console.log("checked");
                 save();
             }
         }
@@ -146,11 +157,15 @@
         function deletePost(e) {
             e.preventDefault();
             var target = data.findIndex(x => x.key == e.target.dataset.key);
-            console.log(e.target.dataset.key);
-            console.log(target);
+            //console.log(e.target.dataset.key);
+            //console.log(target);
             data.splice(target, 1);
             e.target.parentNode.remove();
-            key--;
+            /*if (i=key, i<data.length, i++){
+                console.log(data[i].key);
+                data[i].key = data[i].key - 1;
+            }*/
+            //key--;
             save();
         }
 
@@ -176,6 +191,7 @@
             else {
                 for (var i=0; i<data.length; i++){
                     key = i;
+                    //key = data[i].key;
                     renderTodo(data[i], key);
                     //key = data.length;
                 }
