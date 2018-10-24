@@ -116,40 +116,37 @@
             newList.key = key;
             //console.log(key);
             newList.appendChild(dltBtn(key));
+            //newList.appendChild(checkbox(todo));
             newList.insertBefore(checkbox(todo), newList.childNodes[0]);
+            if (todo.done === true){
+                newList.classList.add("checked");
+            }
             list.appendChild(newList);
         }
         function checkbox(todo) {
             var checkbox = document.createElement("input");
             checkbox.type = "checkbox";
-            checkbox.value = "done";
+            //checkbox.value = "done";
             checkbox.addEventListener("click", checkPost)
-            if (todo.done === true)
-            {
+            if (todo.done === true){
                 checkbox.checked = true;
-                console.log("yes");
-                todo.classList.add("checked");
             }
-            else { console.log("no"); }
             return checkbox;
         }
 
         function checkPost(e) {
             e.preventDefault();
+            var target = data.findIndex(x => x.key == e.target.parentNode.key);
             if (e.target.parentNode.classList.contains("checked")){
                 e.target.parentNode.classList.remove("checked");
-                e.target.parentNode.done = false;
-                console.log(e.target.parentNode);
-                console.log(e.target.parentNode.done);
-                console.log("unchecked");
+                //e.target.checked = false;
+                data[target].done = false;
                 save();
             }
             else {
                 e.target.parentNode.classList.add("checked");
-                e.target.parentNode.done = true;
-                console.log(e.target.parentNode);
-                console.log(e.target.parentNode.done);
-                console.log("checked");
+                //e.target.checked = true;
+                data[target].done = true;
                 save();
             }
         }
