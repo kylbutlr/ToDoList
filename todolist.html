@@ -9,6 +9,9 @@
         form {
             display: inline;
         }
+        .input{
+            padding: 10px 25px;
+        }
         .lnhght {
             line-height: 25px;
         }
@@ -27,7 +30,7 @@
             align-items: flex-start;
             justify-content: center;
             width: auto;
-            margin: 0px 10px;
+            margin: 0px 50px;
             padding: 10px;
             background: #000000ad;
         }
@@ -43,8 +46,8 @@
             background: #dadada;
             padding: 0px 10px 0px;
             vertical-align: top;
-            max-height:500px;
-            overflow-y:scroll;
+            max-height: 500px;
+            overflow-y: auto;
         }
         h1 {
             font-size: 25px;
@@ -91,7 +94,7 @@
         <div class="main-div">
             <div class="form-div">
         <form id="form" action="">
-            <input class="block lnhght" style="padding: 10px" id="input" placeholder="Add New To-Do Item" autocomplete="off" required><br>
+            <input class="block lnhght input" id="input" placeholder="Add New To-Do (Max Char: 40)" maxlength="50" autocomplete="off" required><br>
             <input class="block cntrtxt lnhght" type="time" id="time" value="12:00" required ><br>
             <input class="block cntrtxt lnhght" type="date" id="date" onchange="checkDate()" required ><br>
             <button class="block cntrtxt lnhght" id="addBtn">Add to List</button></form>
