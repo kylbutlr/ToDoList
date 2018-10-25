@@ -121,7 +121,7 @@
             var date = new Date(text);
             var now = new Date();
             if (date < now){
-                alert("Date must be in the future.");
+                alert("To-Do entry must have a future date.");
                 document.querySelector("#date").valueAsDate = new Date();
             }
         }
