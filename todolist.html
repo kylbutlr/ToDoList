@@ -76,9 +76,9 @@
         <div class="main-div">
             <div class="form-div">
         <form id="form" action="">
-            <input class="block" style="padding: 10px" id="input" placeholder="Add New To-Do Item" autocomplete="off"><br>
+            <input class="block" style="padding: 10px" id="input" placeholder="Add New To-Do Item" autocomplete="off" required><br>
             <input class="block" style="text-align: center" type="time" id="time" value="12:00" required ><br>
-            <input class="block" style="text-align: center" type="date" id="date" required ><br>
+            <input class="block" style="text-align: center" type="date" id="date" onchange="checkDate()" required ><br>
             <button class="block" id="addBtn">Add to List</button></form>
             <button class="block" id="clrBtn">Clear List</button></div>
             <div class="list-div">
@@ -114,6 +114,16 @@
             window.localStorage.clear();
             data = [];
             key = 0;
+        }
+
+        function checkDate(){
+            var text = document.getElementById("date").value;
+            var date = new Date(text);
+            var now = new Date();
+            if (date < now){
+                alert("Date must be in the future.");
+                document.querySelector("#date").valueAsDate = new Date();
+            }
         }
 
         function formatDate(date){
@@ -208,8 +218,8 @@
                     renderTodo(data[i], key);
                     //key = data.length;
                 }
+                key = data[data.length - 1].key + 1;
             }
-            key = data[data.length - 1].key + 1;
         }
 
         clrBtn.addEventListener("click", clrClick, false);
