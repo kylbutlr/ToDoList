@@ -253,16 +253,14 @@
         function getSaved() {
             data = JSON.parse(window.localStorage.getItem("data"));
             if (!data) {
-                key = 0;
                 data = [];
-                const dflt1 = {"key": key, "text": "Delete this To-Do entry", "time": formatAMPM(time.value), "date": date.value, "done": true};
+                const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "time": formatAMPM(time.value), "date": date.value, "done": true};
+                const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "time": formatAMPM(time.value), "date": date.value, "done": false};
                 data.push(dflt1);
-                renderTodo(dflt1, key);
-                key++;
-                const dflt2 = {"key": key, "text": "Add more to my To-Do list", "time": formatAMPM(time.value), "date": date.value, "done": false};
                 data.push(dflt2);
+                renderTodo(dflt1, key);
                 renderTodo(dflt2, key);
-                key++;
+                key = 2;
                 save();
             }
             else if (data.length>0) {
