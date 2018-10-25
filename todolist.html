@@ -87,7 +87,6 @@
         </title>
     </head>
     <body>
-        
         <div class="header">
         <h1>To-Do List</h1>
         </div>
@@ -139,6 +138,7 @@
             key = 0;
             save();
         }
+        
         const clrLS = (e) => {
             e.preventDefault();
             list.innerHTML = "";
@@ -146,6 +146,7 @@
             data = [];
             key = 0;
         }
+        
         function formatAMPM(time){
             var [h,m] = time.split(":");
             var ampm;
@@ -169,6 +170,7 @@
             var ft = h + ":" + m + " " + ampm;
             return ft;
         }
+        
         function checkDate(){
             var text = document.getElementById("date").value;
             var date = new Date(text);
@@ -195,6 +197,7 @@
             }
             list.appendChild(newList);
         }
+
         function checkbox(todo) {
             var checkbox = document.createElement("input");
             checkbox.type = "checkbox";
