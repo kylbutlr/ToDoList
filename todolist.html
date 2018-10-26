@@ -134,8 +134,10 @@
 
         const formSubmit = (e) => {
             e.preventDefault();
-            if ($input.value === ""){
-                alert("To-Do entry must have a name.")
+            if ($input.value === " "){
+                alert("To-Do entry must have a name.");
+                $input.value = "";
+                $input.focus();
             }
             else {
                 const todo = {"key": key, "text": $input.value, "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false};
@@ -205,6 +207,7 @@
             if (date < now){
                 alert("To-Do entry must have a future date.");
                 document.querySelector("#date").valueAsDate = new Date();
+                $date.focus();
             }
         }
 
@@ -247,6 +250,7 @@
             $date.value = data[t].date;
             data.splice(t, 1);
             e.target.parentNode.classList.add("post-delete");
+            $input.select();
             setTimeout(function(){
                 e.target.parentNode.remove();
             }, 250);
