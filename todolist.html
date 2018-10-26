@@ -88,52 +88,49 @@
     </head>
     <body>
         <div class="header">
-        <h1>To-Do List</h1>
+            <h1>To-Do List</h1>
         </div>
         <div class="main-div">
             <div class="form-div">
-        <form id="form" action="">
-            <input class="block lnhght input" id="input" placeholder="Add New To-Do (Max Char: 40)" maxlength="50" autocomplete="off" required><br>
-            <input class="block cntrtxt lnhght" type="time" id="time" value="12:00" required ><br>
-            <input class="block cntrtxt lnhght" type="date" id="date" onchange="checkDate()" required ><br>
-            <button class="block cntrtxt lnhght" id="addBtn">Add to List</button></form>
-            <button class="block cntrtxt lnhght" id="clrBtn">Clear List</button>
-            <button class="block cntrtxt lnhght" id="clsBtn">localStorage.clear()</button></div>
+                <form id="form" action="">
+                    <input class="block lnhght input" id="input" placeholder="Add New To-Do (Max Char: 40)" maxlength="50" autocomplete="off" required>
+                    <input class="block cntrtxt lnhght" type="time" id="time" value="12:00" required >
+                    <input class="block cntrtxt lnhght" type="date" id="date" onchange="checkDate()" required >
+                    <button type="submit" class="block cntrtxt lnhght">Add to List</button></form>
+                <button class="block cntrtxt lnhght" id="clrBtn">Clear List</button>
+                <button class="block cntrtxt lnhght" id="clsBtn">localStorage.clear()</button></div>
             <div class="list-div">
-            <ul id="list"></ul></div></div>
+                <ul id="list"></ul></div></div>
                             
     <script>
         var data = [];
         var key;
-        document.querySelector("#date").valueAsDate = new Date();
-        const addBtn = document.querySelector("#addBtn");
-        const input = document.querySelector("#input");
-        const form = document.querySelector("#form");
-        const list = document.querySelector("#list");
-        const date = document.querySelector("#date");
-        const time = document.querySelector("#time");
-        const clrBtn = document.querySelector("#clrBtn");
+        const $form = document.querySelector("#form");
+        const $input = document.querySelector("#input");
+        const $list = document.querySelector("#list");
+        const $date = document.querySelector("#date");
+        const $time = document.querySelector("#time");
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-        addBtn.addEventListener("click", function(e){
+        const formSubmit = (e) => {
             e.preventDefault();
-            if (input.value === ""){
+            if ($input.value === ""){
                 alert("To-Do entry must have a name.")
             }
             else {
-                const todo = {"key": key, "text": input.value, "time": formatAMPM(time.value), "date": date.value, "done": false};
+                const todo = {"key": key, "text": $input.value, "time": formatAMPM($time.value), "date": $date.value, "done": false};
                 data.push(todo);
                 renderTodo(todo, key);
                 save();
                 key++;
-                input.value = "";
+                $input.value = "";
             }
-        }, false);
+        }
 
         const clrClick = (e) => {
             e.preventDefault();
-            list.innerHTML = "";
+            $list.innerHTML = "";
             data = [];
             key = 0;
             save();
@@ -141,16 +138,16 @@
         
         const clrLS = (e) => {
             e.preventDefault();
-            list.innerHTML = "";
+            $list.innerHTML = "";
             window.localStorage.clear();
             data = [];
             key = 0;
+            location.reload();
         }
         
         function formatAMPM(time){
             var [h,m] = time.split(":");
             var ampm;
-            var hour;
             if (0 < h && h < 10){
                 ampm = "am";
                 h = h.substr(1);
@@ -167,14 +164,13 @@
                 ampm = "am";
                 h = 12;
             }
-            var ft = h + ":" + m + " " + ampm;
-            return ft;
+            return (h + ":" + m + " " + ampm);
         }
         
         function checkDate(){
-            var text = document.getElementById("date").value;
-            var date = new Date(text);
-            var now = new Date();
+            const text = document.getElementById("date").value;
+            const date = new Date(text);
+            const now = new Date();
             if (date < now){
                 alert("To-Do entry must have a future date.");
                 document.querySelector("#date").valueAsDate = new Date();
@@ -186,8 +182,8 @@
         }
         
         function renderTodo(todo, key) {
-            var newList = document.createElement("li");
-            var formattedDate =  formatDate(new Date(todo.date));
+            const newList = document.createElement("li");
+            const formattedDate =  formatDate(new Date(todo.date));
             newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
             newList.key = key;
             newList.appendChild(dltBtn(key));
@@ -195,11 +191,11 @@
             if (todo.done === true){
                 newList.classList.add("checked");
             }
-            list.appendChild(newList);
+            $list.appendChild(newList);
         }
 
         function checkbox(todo) {
-            var checkbox = document.createElement("input");
+            const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.className = "check-box";
             checkbox.value = "done";
@@ -214,7 +210,7 @@
         }
 
         function checkPost(e) {
-            var target = data.findIndex(x => x.key == e.target.parentNode.key);
+            const target = data.findIndex(x => x.key == e.target.parentNode.key);
             if (e.target.parentNode.classList.contains("checked")){
                 e.target.parentNode.classList.remove("checked");
                 e.target.checked = false;
@@ -238,7 +234,7 @@
         }
 
         function dltBtn(key){
-            var dltBtn = document.createElement("button");
+            const dltBtn = document.createElement("button");
             dltBtn.dataset.key = key;
             dltBtn.className = "delete-button";
             dltBtn.textContent = "Delete";
@@ -254,8 +250,8 @@
             data = JSON.parse(window.localStorage.getItem("data"));
             if (!data) {
                 data = [];
-                const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "time": formatAMPM(time.value), "date": date.value, "done": true};
-                const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "time": formatAMPM(time.value), "date": date.value, "done": false};
+                const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "time": formatAMPM($time.value), "date": $date.value, "done": true};
+                const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "time": formatAMPM($time.value), "date": $date.value, "done": false};
                 data.push(dflt1);
                 data.push(dflt2);
                 renderTodo(dflt1, key);
@@ -271,12 +267,14 @@
                 key = data[data.length - 1].key + 1;
             }
             else {
-                list.innerHTML = "";
+                $list.innerHTML = "";
                 data = [];
                 key = 0;
             }
         }
-
+        
+        $date.valueAsDate = new Date();
+        form.addEventListener("submit", formSubmit, false);
         clrBtn.addEventListener("click", clrClick, false);
         clsBtn.addEventListener("click", clrLS, false);
         getSaved();
