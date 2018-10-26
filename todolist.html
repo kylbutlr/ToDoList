@@ -81,6 +81,17 @@
         .check-box {
             margin-right: 10px;
         }
+        .new-post {
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        .post-visible {
+            opacity: 1;
+        }
+        .post-delete {
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
         </style>
         <title>
             To-Do List
@@ -130,7 +141,18 @@
 
         const clrClick = (e) => {
             e.preventDefault();
-            $list.innerHTML = "";
+            if ($list.childElementCount>0){
+                for (i=0; i<$list.childElementCount; i++){
+                    $list.childNodes[i].classList.add("post-delete");
+                    console.log(i);
+                }
+                setTimeout(function(){
+                    $list.innerHTML = "";
+                }, 250);
+            }
+            else{
+                $list.innerHTML = "";
+            }
             data = [];
             key = 0;
             save();
@@ -191,7 +213,11 @@
             if (todo.done === true){
                 newList.classList.add("checked");
             }
+            newList.classList.add("new-post");
             $list.appendChild(newList);
+            setTimeout(function(){
+                newList.classList.add("post-visible");
+            });
         }
 
         function checkbox(todo) {
@@ -229,7 +255,10 @@
             e.preventDefault();
             var target = data.findIndex(x => x.key == e.target.dataset.key);
             data.splice(target, 1);
-            e.target.parentNode.remove();
+            e.target.parentNode.classList.add("post-delete");
+            setTimeout(function(){
+                e.target.parentNode.remove();
+            }, 250);
             save();
         }
 
