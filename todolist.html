@@ -71,13 +71,20 @@
             list-style: none;
             margin: 10px auto;
         }
+        li:hover > .edit-button {
+            opacity: 1;
+        }
         li:hover > .delete-button {
             opacity: 1;
+        }
+        .edit-button {
+            opacity: 0;
+            transition: opacity 0.5s;
+            margin-left: 10px;
         }
         .delete-button {
             opacity: 0;
             transition: opacity 0.5s;
-            margin-left: 10px;
         }
         .check-box {
             margin-right: 10px;
@@ -131,12 +138,14 @@
                 alert("To-Do entry must have a name.")
             }
             else {
-                const todo = {"key": key, "text": $input.value, "time": formatAMPM($time.value), "date": $date.value, "done": false};
+                const todo = {"key": key, "text": $input.value, "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false};
                 data.push(todo);
                 renderTodo(todo, key);
                 save();
                 key++;
                 $input.value = "";
+                $time.value = "12:00";
+                $date.valueAsDate = new Date;
             }
         }
 
@@ -208,6 +217,7 @@
             const formattedDate =  formatDate(new Date(todo.date));
             newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
             newList.key = key;
+            newList.appendChild(edtBtn(todo, key));
             newList.appendChild(dltBtn(key));
             newList.insertBefore(checkbox(todo, key), newList.childNodes[0]);
             if (todo.done === true){
@@ -218,6 +228,28 @@
             setTimeout(function(){
                 newList.classList.add("post-visible");
             });
+        }
+
+        function edtBtn(todo, key) {
+            const editB = document.createElement("button");
+            editB.dataset.key = key;
+            editB.className = "edit-button";
+            editB.textContent = "Edit";
+            editB.addEventListener("click", editPost);
+            return editB;
+        }
+
+        function editPost(e) {
+            e.preventDefault();
+            const t = data.findIndex(x => x.key == e.target.dataset.key);
+            $input.value = data[t].text;
+            $time.value = data[t].realtime;
+            $date.value = data[t].date;
+            data.splice(t, 1);
+            e.target.parentNode.classList.add("post-delete");
+            setTimeout(function(){
+                e.target.parentNode.remove();
+            }, 250);
         }
 
         function checkbox(todo, key) {
@@ -237,7 +269,6 @@
 
         function checkPost(e) {
             const target = data.findIndex(x => x.key == e.target.dataset.key);
-            console.log(target);
             if (e.target.parentNode.classList.contains("checked")){
                 e.target.parentNode.classList.remove("checked");
                 e.target.checked = false;
@@ -280,8 +311,8 @@
             data = JSON.parse(window.localStorage.getItem("data"));
             if (!data) {
                 data = [];
-                const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "time": formatAMPM($time.value), "date": $date.value, "done": true};
-                const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "time": formatAMPM($time.value), "date": $date.value, "done": false};
+                const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": true};
+                const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false};
                 data.push(dflt1, dflt2);
                 renderTodo(dflt1, 0);
                 renderTodo(dflt2, 1);
@@ -290,9 +321,8 @@
             }
             else if (data.length>0) {
                 for (var i=0; i<data.length; i++){
-                    key = i;
-
-                    renderTodo(data[i], key);
+                    data[i].key = i;
+                    renderTodo(data[i], i);
                 }
                 key = data[data.length - 1].key + 1;
             }
