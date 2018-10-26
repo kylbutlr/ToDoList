@@ -2,13 +2,31 @@
     <head>
         <style>
         html {
-            font-family: 'Helvetica';
-            font-size: 15px;
             background: #ececec;
             color: #000000d5;
+            font-family: Helvetica, sans-serif;
+            font-size: 15px;
         }
         form {
             display: inline;
+        }
+        h1 {
+            font-size: 25px;
+            font-weight: bold;
+            text-align: center;
+        }
+        ul {
+            margin-left:-20px;
+        }
+        li {
+            list-style: none;
+            margin: 10px auto;
+        }
+        li:hover > .edit-button {
+            opacity: 1;
+        }
+        li:hover > .delete-button {
+            opacity: 1;
         }
         .input{
             padding: 10px 25px;
@@ -27,60 +45,44 @@
             width: 250px;
         }
         .main-div { 
-            display: flex;
             align-items: flex-start;
+            background: #000000d5;
+            display: flex;
             justify-content: center;
-            width: auto;
             margin: 0px 50px;
             padding: 10px;
-            background: #000000d5;
+            width: auto;
         }
         .form-div {
-            width: 250px;
             background: #ececec;
-            padding: 10px;
-            margin-right: 10px;
             height: auto;
+            margin-right: 10px;
+            padding: 10px;
+            width: 250px;
+
         }
         .list-div {
-            width: 100%;
             background: #ececec;
-            padding: 0px 10px 0px;
-            vertical-align: top;
             max-height: 500px;
             overflow-y: auto;
-        }
-        h1 {
-            font-size: 25px;
-            font-weight: bold;
-            text-align: center;
+            padding: 0px 10px 0px;
+            vertical-align: top;
+            width: 100%;
+
         }
         .header {
-            height: 40px;
             background: #000000d5;
             color: #ececec;
+            height: 40px;
             line-height: 40px;
-            text-align: left;
-            padding-left: 10px;
             margin-bottom: 10px;
-        }
-        ul {
-            margin-left:-20px;
-        }
-        li {
-            list-style: none;
-            margin: 10px auto;
-        }
-        li:hover > .edit-button {
-            opacity: 1;
-        }
-        li:hover > .delete-button {
-            opacity: 1;
+            padding-left: 10px;
+            text-align: left;
         }
         .edit-button {
+            margin-left: 10px;
             opacity: 0;
             transition: opacity 0.5s;
-            margin-left: 10px;
         }
         .delete-button {
             opacity: 0;
