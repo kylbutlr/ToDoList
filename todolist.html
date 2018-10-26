@@ -145,13 +145,12 @@
             if ($list.childElementCount>0){
                 for (i=0; i<$list.childElementCount; i++){
                     $list.childNodes[i].classList.add("post-delete");
-                    console.log(i);
                 }
                 setTimeout(function(){
                     $list.innerHTML = "";
                 }, 250);
             }
-            else{
+            else {
                 $list.innerHTML = "";
             }
             data = [];
