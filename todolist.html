@@ -161,10 +161,10 @@
         const clrLS = (e) => {
             e.preventDefault();
             $list.innerHTML = "";
-            window.localStorage.clear();
             data = [];
             key = 0;
-            location.reload();
+            window.localStorage.clear();
+            window.location.reload();
         }
         
         function formatAMPM(time){
@@ -209,7 +209,7 @@
             newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
             newList.key = key;
             newList.appendChild(dltBtn(key));
-            newList.insertBefore(checkbox(todo), newList.childNodes[0]);
+            newList.insertBefore(checkbox(todo, key), newList.childNodes[0]);
             if (todo.done === true){
                 newList.classList.add("checked");
             }
@@ -220,11 +220,11 @@
             });
         }
 
-        function checkbox(todo) {
+        function checkbox(todo, key) {
             const checkbox = document.createElement("input");
             checkbox.type = "checkbox";
             checkbox.className = "check-box";
-            checkbox.value = "done";
+            checkbox.dataset.key = key;
             checkbox.addEventListener("click", checkPost)
             if (todo.done === true){
                 checkbox.checked = true;
@@ -236,7 +236,8 @@
         }
 
         function checkPost(e) {
-            const target = data.findIndex(x => x.key == e.target.parentNode.key);
+            const target = data.findIndex(x => x.key == e.target.dataset.key);
+            console.log(target);
             if (e.target.parentNode.classList.contains("checked")){
                 e.target.parentNode.classList.remove("checked");
                 e.target.checked = false;
@@ -281,16 +282,16 @@
                 data = [];
                 const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "time": formatAMPM($time.value), "date": $date.value, "done": true};
                 const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "time": formatAMPM($time.value), "date": $date.value, "done": false};
-                data.push(dflt1);
-                data.push(dflt2);
-                renderTodo(dflt1, key);
-                renderTodo(dflt2, key);
+                data.push(dflt1, dflt2);
+                renderTodo(dflt1, 0);
+                renderTodo(dflt2, 1);
                 key = 2;
                 save();
             }
             else if (data.length>0) {
                 for (var i=0; i<data.length; i++){
                     key = i;
+
                     renderTodo(data[i], key);
                 }
                 key = data[data.length - 1].key + 1;
