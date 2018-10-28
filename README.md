@@ -1,2 +1,2 @@
-# ToDo List
+# ToDo
 Basic ToDo List made with Vanilla JS
