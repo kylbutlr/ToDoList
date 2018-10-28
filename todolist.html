@@ -3,18 +3,30 @@
         <style>
         html {
             background: #ececec;
-            color: #000000d5;
+            color: #222222;
             font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             font-size: 14px;
             padding: 0 60px;
-        }
-        form {
-            display: inline;
         }
         h1 {
             font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
             font-size: 28px;
             font-weight: bold;
+        }
+        form {
+            display: inline;
+        }
+        input {
+            background: #ffffff;
+            box-sizing: border-box;
+        }
+        input.textfield textarea {
+            resize: none;
+            width: auto;
+        }
+        button, input, textarea {
+            font-family : inherit;
+            outline: none;
         }
         ul {
             margin-left:-40px;
@@ -23,41 +35,30 @@
             list-style: none;
             margin: 10px auto;
         }
-        button, input, textarea {
-            font-family : inherit;
-        }
-        input.textfield textarea {
-            resize: none;
-            width: auto;
-        }
-        input {
-            background: #ffffffee;
-            box-sizing: border-box;
-            outline: none;
-        }
         li:hover > .edit-button {
             opacity: 1;
         }
         li:hover > .delete-button {
             opacity: 1;
         }
-        .button:hover {
-            background: #ececec;
-            border: 1px solid #000000d5; 
-            color: #000000d5;
-        }
-        .button:active {
-            transform: scale(0.975);
-        }
         .button {
-            background: #000000d5;
-            border: 1px solid #000000d5; 
+            background: #222222;
+            border: 1px solid #ececec; 
             border-radius: 5px;
             color: #ececec;
             transition: all 0.1s;
         }
+        .button:active {
+            transform: scale(0.95);
+        }
+        .button:hover {
+            background: #ececec;
+            border: 1px solid #222222;
+            color: #222222;
+            cursor: pointer;
+        }
         .input-boxes {
-            border: 1px solid #000000d5;
+            border: 1px solid #222222;
             border-radius: 5px;
         }
         .input {
@@ -69,12 +70,18 @@
         .cntrtxt{
             text-align: center;
         }
-        .checked {
-            text-decoration: line-through wavy;
-        }
         .block {
             display: inline-block;
             width: 100%;
+        }
+        .header {
+            background: #222222;
+            border-radius: 10px;
+            color: #ececec;
+            height: 40px;
+            line-height: 40px;
+            margin: 0 -60px 10px;
+            text-align: center;
         }
         .main-div { 
             align-items: flex-start;
@@ -106,14 +113,18 @@
             width: 100%;
 
         }
-        .header {
-            background: #000000d5;
-            border-radius: 10px;
-            color: #ececec;
-            height: 40px;
-            line-height: 40px;
-            margin: 0 -60px 10px;
-            text-align: center;
+        .check-box {
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .check-box:active {
+            transform: scale(0.9);
+        }
+        .check-box:hover {
+            cursor: pointer;
+        }
+        .checked {
+            text-decoration: line-through wavy;
         }
         .edit-button {
             margin-left: 10px;
@@ -123,10 +134,6 @@
         .delete-button {
             opacity: 0;
             transition: opacity 0.5s;
-        }
-        .check-box {
-            border-radius: 5px;
-            margin-right: 10px;
         }
         .new-post {
             opacity: 0;
@@ -156,7 +163,7 @@
                     <input class="input-boxes block lnhght cntrtxt" type="date" id="date" onchange="checkDate()" required >
                     <button type="submit" class="button block cntrtxt lnhght">Add to List</button></form>
                 <button class="button block cntrtxt lnhght" id="clrBtn">Clear List</button>
-                <button class="button block cntrtxt lnhght" id="clsBtn">Dev: w.ls.clear()</button></div>
+                <button class="button block cntrtxt lnhght" id="clsBtn">w.ls.clear()</button></div>
             <div class="list-div">
                 <ul id="list"></ul></div></div>
                             
