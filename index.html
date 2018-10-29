@@ -148,6 +148,9 @@
             opacity: 0;
             transition: opacity 0.25s;
         }
+        /*.clr {
+            display: none;
+        }*/
         </style>
         <title>
             ToDo List
@@ -165,7 +168,7 @@
                     <input class="input-boxes block lnhght cntrtxt" type="date" id="date" onchange="checkDate()" required >
                     <button type="submit" class="button block cntrtxt lnhght">Add to List</button></form>
                 <button class="button block cntrtxt lnhght" id="clrBtn">Clear List</button>
-                <button class="button block cntrtxt lnhght" id="clsBtn">w.ls.clear()</button></div>
+                <button class="button block cntrtxt lnhght clr" id="clsBtn">w.ls.clear()</button></div>
             <div class="list-div">
                 <ul id="list"></ul></div></div>
                             
