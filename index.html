@@ -164,7 +164,7 @@
             <div class="form-div">
                 <form id="form" action="">
                     <input class="input-boxes block lnhght input" id="input" placeholder="Add New To-Do (Max: 50)" maxlength="50" autocomplete="off" required>
-                    <input class="input-boxes block lnhght cntrtxt" type="time" id="time" value="12:00" >
+                    <input class="input-boxes block lnhght cntrtxt" type="time" id="time" value="" >
                     <input class="input-boxes block lnhght cntrtxt" type="date" id="date" onchange="checkDate()" required >
                     <button type="submit" class="button block cntrtxt lnhght">Add to List</button></form>
                 <button class="button block cntrtxt lnhght" id="clrBtn">Clear List</button>
@@ -379,15 +379,15 @@
             }
 
             function save() {
-                window.localStorage.setItem("data", JSON.stringify(data));
+                window.localStorage.setItem("tododata", JSON.stringify(data));
             }
 
             function getSaved() {
-                data = JSON.parse(window.localStorage.getItem("data"));
+                data = JSON.parse(window.localStorage.getItem("tododata"));
                 if (!data) {
                     data = [];
-                    const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": true};
-                    const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false};
+                    const dflt1 = {"key": 0, "text": "Delete this To-Do entry", "realtime": $time.value, "date": $date.value, "done": true};
+                    const dflt2 = {"key": 1, "text": "Add more to my To-Do list", "realtime": $time.value, "date": $date.value, "done": false};
                     data.push(dflt1, dflt2);
                     renderTodo(dflt1, 0);
                     renderTodo(dflt2, 1);
