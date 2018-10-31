@@ -205,7 +205,7 @@
                     key++;
                     $input.value = "";
                     $time.value = "12:00";
-                    $date.valueAsDate = new Date;
+                    $date.valueAsDate = getDt(new Date);
                 }
             }
 
@@ -257,20 +257,29 @@
                 }
                 return (h + ":" + m + " " + ampm);
             }
-            
+
+            function getDt(date){
+                const dateValue = new Date(date);
+                const nowDate = new Date(dateValue.getTime() - dateValue.getTimezoneOffset() * 60000);
+                console.log(nowDate);
+                return nowDate;
+            }
+           
             function checkDate(){
                 const text = document.getElementById("date").value;
-                const date = new Date(text);
-                const now = new Date();
+                const date = getDt($date.value);
+                const now = getDt(new Date);
                 if (date < now){
                     alert("To-Do entry must have a future date.");
-                    document.querySelector("#date").valueAsDate = new Date();
+                    document.querySelector("#date").valueAsDate = now;
                     $date.focus();
                 }
             }
 
             function formatDate(date){
-                return days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate();
+                const dateValue = new Date(date);
+                const nowDate = new Date(dateValue.getTime() + dateValue.getTimezoneOffset() * 60000);
+                return days[nowDate.getDay()] + ", " + months[nowDate.getMonth()] + " " + nowDate.getDate();
             }
             
             function renderTodo(todo, key) {
@@ -400,7 +409,7 @@
                 }
             }
             
-            $date.valueAsDate = new Date();
+            $date.valueAsDate = getDt(new Date);
             form.addEventListener("submit", formSubmit, false);
             clrBtn.addEventListener("click", clrClick, false);
             clsBtn.addEventListener("click", clrLS, false);
