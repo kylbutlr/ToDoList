@@ -1,7 +1,7 @@
 body,
 .header-glass,
 .container-glass {
-    background:url(../media/bg.jpg) 0 / cover fixed;
+    background:url('images/8.jpg') 0 / cover fixed;
 }
 body {
     font-family: 'Open Sans', sans-serif;
