@@ -41,7 +41,6 @@ h1 {
     box-shadow: 2px 5px 10px -2px black;
     display: flex;
     height: 70vh;
-    justify-content: center;
     margin: 2.5vh auto;
     padding: 10px;
     width: 80vw;
