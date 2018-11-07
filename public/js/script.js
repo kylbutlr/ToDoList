@@ -39,7 +39,7 @@ $(function() {
             let todo = {};
             const time = $time.value;
             if (time.length>0) {
-                todo = {"keys": key, "text": $input.value, "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false};
+                todo = {"key": key, "text": $input.value, "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false};
             }
             else {
                 todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false};
@@ -150,8 +150,8 @@ $(function() {
     function editPost(e) {
         e.preventDefault();
         const t = data.findIndex(x => x.key == e.target.dataset.key);
+        console.log(data);
         $input.value = data[t].text;
-        console.log(data[t].realtime);
         $time.value = data[t].realtime;
         $date.value = data[t].date;
         data.splice(t, 1);
