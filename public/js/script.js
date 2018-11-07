@@ -1,16 +1,20 @@
 $(function() {
+    let theme;
     $("#input").focus();
     /*$(".container").hide()
     $(".container-glass").hide()
     $(".form-div").hide()
-    $(".list-div").hide()*/
+    $(".list-div").hide()
+    $(".theme-div").hide()*/
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
         $(".list-div").slideToggle(1000)
+        $(".theme-div").slideToggle(1000)
         $("#input").focus()
     });
+
     $("#date").change(function() {
         const date = getDate(this.value);
         const now = getDate(new Date)
@@ -20,6 +24,34 @@ $(function() {
             this.focus();
         }
     });
+
+    $("#theme1").click(function(e) {
+        $(".header").removeClass("header-dark").addClass("header-light");
+        $("body").removeClass("body-dark").addClass("body-light");
+        $(".container").removeClass("container-dark").addClass("container-light");
+        $(".form-div").removeClass("form-div-dark").addClass("form-div-light");
+        $(".theme-div").removeClass("theme-div-dark").addClass("theme-div-light");
+        $(".list-div").removeClass("list-div-dark").addClass("list-div-light");
+        $(".button").removeClass("button-dark").addClass("button-light");
+        $(".ta").removeClass("ta-dark").addClass("ta-light");
+        theme = "light";
+    })
+
+    $("#theme2").click(function(e) {
+        $(".header").removeClass("header-light").addClass("header-dark");
+        $("body").removeClass("body-light").addClass("body-dark");
+        $(".container").removeClass("container-light").addClass("container-dark");
+        $(".form-div").removeClass("form-div-light").addClass("form-div-dark");
+        $(".theme-div").removeClass("theme-div-light").addClass("theme-div-dark");
+        $(".list-div").removeClass("list-div-light").addClass("list-div-dark");
+        $(".button").removeClass("button-light").addClass("button-dark");
+        $(".ta").removeClass("ta-light").addClass("ta-dark");
+        theme = "dark";
+    })
+
+    if (theme == undefined) {
+        $("#theme1").click();
+    }
     
     let data = [];
     let key;

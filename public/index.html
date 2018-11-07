@@ -16,12 +16,16 @@
     <div class="container">
         <div class="form-div">
             <form id="form">
-                <input class="input-boxes block input" id="input" placeholder="Add New ToDo (Max: 50)" maxlength="50" autocomplete="off" required>
-                <input class="input-boxes block time" type="time" id="time" value="" >
-                <input class="input-boxes block date" type="date" id="date" required >
+                <input class="block ta input" id="input" placeholder="Add New ToDo (Max: 50)" maxlength="50" autocomplete="off" required>
+                <input class="block ta time" type="time" id="time" value="" >
+                <input class="block ta date" type="date" id="date" required >
                 <button type="submit" class="button form-button block add-button">Add to List</button></form>
             <button class="button form-button block clear-button" id="clrBtn">Clear List</button>
-            <button class="button form-button block" style="margin: 10px 0 0 0" id="clsBtn">w.ls.clear()</button>
+            <button class="button block" style="margin: 10px 0 0 0; height: 4vh;" id="clsBtn">w.ls.clear()</button>
+        </div>
+        <div class="theme-div">
+            <button class="button theme1-btn" id="theme1">Light</button>
+            <button class="button theme2-btn" id="theme2">Dark</button>
         </div>
         <div class="list-div">
             <ul id="list"></ul>
