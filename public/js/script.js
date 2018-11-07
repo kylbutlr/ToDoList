@@ -5,11 +5,11 @@ $(function() {
     $(".header-glass").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");
     $(".container-glass").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");*/
     $("#input").focus();
-    /*$(".container").hide()
-    $(".container-glass").hide()
-    $(".form-div").hide()
-    $(".list-div").hide()
-    $(".theme-div").hide()*/
+    $(".container").hide().delay(500).slideToggle(1000)
+    $(".container-glass").hide().delay(500).slideToggle(1000)
+    $(".form-div").hide().delay(500).slideToggle(1000)
+    $(".list-div").hide().delay(500).slideToggle(1000)
+    $(".theme-div").hide().delay(500).slideToggle(1000)
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
