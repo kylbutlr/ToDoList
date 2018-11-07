@@ -1,7 +1,7 @@
 body,
 .header-glass,
 .container-glass {
-    background:url('images/bg.jpg') 0 / cover fixed;
+    background:url("images/1.jpg") 0 / cover fixed;
 }
 body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;

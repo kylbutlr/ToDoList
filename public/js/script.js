@@ -1,5 +1,9 @@
 $(function() {
     let theme = JSON.parse(window.localStorage.getItem("todotheme"));
+    /*const random = Math.floor(Math.random()*Math.floor(12));
+    $("body").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");
+    $(".header-glass").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");
+    $(".container-glass").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");*/
     $("#input").focus();
     /*$(".container").hide()
     $(".container-glass").hide()
