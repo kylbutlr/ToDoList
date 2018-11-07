@@ -38,6 +38,7 @@ $(function() {
         $(".list-div").removeClass("list-div-dark").removeClass("list-div-default").addClass("list-div-light");
         $(".button").removeClass("button-dark").removeClass("button-default").addClass("button-light");
         $(".ta").removeClass("ta-dark").removeClass("ta-default").addClass("ta-light");
+        $(".dev-div").removeClass("dev-div-dark").removeClass("dev-div-default").addClass("dev-div-light");
         theme = "light";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
@@ -51,6 +52,7 @@ $(function() {
         $(".list-div").removeClass("list-div-light").removeClass("list-div-dark").addClass("list-div-default");
         $(".button").removeClass("button-light").removeClass("button-dark").addClass("button-default");
         $(".ta").removeClass("ta-light").removeClass("ta-dark").addClass("ta-default");
+        $(".dev-div").removeClass("dev-div-light").removeClass("dev-div-dark").addClass("dev-div-default");
         theme = "default";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
@@ -64,6 +66,7 @@ $(function() {
         $(".list-div").removeClass("list-div-light").removeClass("list-div-default").addClass("list-div-dark");
         $(".button").removeClass("button-light").removeClass("button-default").addClass("button-dark");
         $(".ta").removeClass("ta-light").removeClass("ta-default").addClass("ta-dark");
+        $(".dev-div").removeClass("dev-div-light").removeClass("dev-div-default").addClass("dev-div-dark");
         theme = "dark";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })

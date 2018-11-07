@@ -1,6 +1,7 @@
 body,
 .header-glass,
-.container-glass {
+.container-glass,
+.dev-div-glass {
     background:url("images/1.jpg") 0 / cover fixed;
 }
 body {
@@ -106,15 +107,18 @@ li:hover > .delete-button {
     background-image: linear-gradient(to bottom, #222222, #444444);
 }
 .header-light,
-.container-light {
+.container-light,
+.dev-div-light {
     background:#ececec33;
 }
 .header-default,
-.container-default {
+.container-default,
+.dev-div-default {
     background: #22222255;
 }
 .header-dark,
-.container-dark {
+.container-dark,
+.dev-div-dark {
     background: #22222299;
 }
 .form-div-light,
@@ -283,15 +287,37 @@ li:hover > .delete-button {
     transition: opacity 0.25s;
 }
 .clsBtn {
-    height: 4vh;
-    margin: 20px;
     opacity: 0.5;
     position: absolute; 
     right: 0;
-    bottom: 0; 
-    transition: opacity 0.5s;;
-    width: 100px;
+    bottom: 0;
+    margin: 10px 5px 5px 10px; 
+    transition: opacity 0.25s;
+    height: calc(100% - 15px);
+    width: calc(100% - 15px);
 }
 .clsBtn:hover {
     opacity: 1;
+}
+.dev-div {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 15px 0 0 0;
+    width: 10vw;
+    height: 6vh;
+    box-shadow: 0 5px 15px -1px black;
+}
+.dev-div-glass {
+    content: '';
+    border-radius: 15px 0 0 0;
+    margin: 94vh 0 0 90vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    filter:blur(5px);
+    z-index: -1;
 }
