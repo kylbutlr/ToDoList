@@ -1,2 +1,2 @@
 # Todo List
-Simple Todo List (Vanilla JS)
+Basic Todo List
