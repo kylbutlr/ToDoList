@@ -86,7 +86,7 @@ li:hover > .delete-button {
     box-shadow: 0 5px 15px -1px black;
     color: #ececec;
     cursor: pointer;
-    height: auto;
+    line-height: 5vh;
     margin: 2.5vh 1vw;
     text-align: center;
 }
