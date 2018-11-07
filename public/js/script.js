@@ -70,7 +70,6 @@ $(function() {
 
     if (!theme) {
         $("#theme2").click();
-        window.localStorage.setItem("todotheme", JSON.stringify(theme));
     }
     if (theme === "light") {
         $("#theme1").click();
@@ -204,7 +203,7 @@ $(function() {
     function edtBtn(key) {
         const editB = document.createElement("button");
         editB.dataset.key = key;
-        editB.className = "edit-button button";
+        editB.className = "edit-button button button-"+theme;
         editB.textContent = "Edit";
         editB.addEventListener("click", editPost);
         return editB;
@@ -269,7 +268,7 @@ $(function() {
     function dltBtn(key) {
         const dltBtn = document.createElement("button");
         dltBtn.dataset.key = key;
-        dltBtn.className = "delete-button button";
+        dltBtn.className = "delete-button button button-"+theme;
         dltBtn.textContent = "Delete";
         dltBtn.addEventListener("click", deletePost);
         return dltBtn;
