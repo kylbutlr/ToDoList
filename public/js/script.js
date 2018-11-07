@@ -1,5 +1,5 @@
 $(function() {
-    let theme;
+    let theme = JSON.parse(window.localStorage.getItem("todotheme"));
     $("#input").focus();
     /*$(".container").hide()
     $(".container-glass").hide()
@@ -35,6 +35,7 @@ $(function() {
         $(".button").removeClass("button-dark").addClass("button-light");
         $(".ta").removeClass("ta-dark").addClass("ta-light");
         theme = "light";
+        window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
 
     $("#theme2").click(function(e) {
@@ -47,10 +48,18 @@ $(function() {
         $(".button").removeClass("button-light").addClass("button-dark");
         $(".ta").removeClass("ta-light").addClass("ta-dark");
         theme = "dark";
+        window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
 
-    if (theme == undefined) {
+    if (!theme) {
         $("#theme1").click();
+        window.localStorage.setItem("todotheme", JSON.stringify(theme));
+    }
+    if (theme === "light") {
+        $("#theme1").click();
+    }
+    if (theme ==="dark") {
+        $("#theme2").click();
     }
     
     let data = [];
