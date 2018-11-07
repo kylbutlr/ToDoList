@@ -26,40 +26,56 @@ $(function() {
     });
 
     $("#theme1").click(function(e) {
-        $(".header").removeClass("header-dark").addClass("header-light");
-        $("body").removeClass("body-dark").addClass("body-light");
-        $(".container").removeClass("container-dark").addClass("container-light");
-        $(".form-div").removeClass("form-div-dark").addClass("form-div-light");
-        $(".theme-div").removeClass("theme-div-dark").addClass("theme-div-light");
-        $(".list-div").removeClass("list-div-dark").addClass("list-div-light");
-        $(".button").removeClass("button-dark").addClass("button-light");
-        $(".ta").removeClass("ta-dark").addClass("ta-light");
+        $(".header").removeClass("header-dark").removeClass("header-default").addClass("header-light");
+        $("body").removeClass("body-dark").removeClass("body-default").addClass("body-light");
+        $(".container").removeClass("container-dark").removeClass("container-default").addClass("container-light");
+        $(".form-div").removeClass("form-div-dark").removeClass("form-div-default").addClass("form-div-light");
+        $(".theme-div").removeClass("theme-div-dark").removeClass("theme-div-default").addClass("theme-div-light");
+        $(".list-div").removeClass("list-div-dark").removeClass("list-div-default").addClass("list-div-light");
+        $(".button").removeClass("button-dark").removeClass("button-default").addClass("button-light");
+        $(".ta").removeClass("ta-dark").removeClass("ta-default").addClass("ta-light");
         theme = "light";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
 
     $("#theme2").click(function(e) {
-        $(".header").removeClass("header-light").addClass("header-dark");
-        $("body").removeClass("body-light").addClass("body-dark");
-        $(".container").removeClass("container-light").addClass("container-dark");
-        $(".form-div").removeClass("form-div-light").addClass("form-div-dark");
-        $(".theme-div").removeClass("theme-div-light").addClass("theme-div-dark");
-        $(".list-div").removeClass("list-div-light").addClass("list-div-dark");
-        $(".button").removeClass("button-light").addClass("button-dark");
-        $(".ta").removeClass("ta-light").addClass("ta-dark");
+        $(".header").removeClass("header-light").removeClass("header-dark").addClass("header-default");
+        $("body").removeClass("body-light").removeClass("body-dark").addClass("body-default");
+        $(".container").removeClass("container-light").removeClass("container-dark").addClass("container-default");
+        $(".form-div").removeClass("form-div-light").removeClass("form-div-dark").addClass("form-div-default");
+        $(".theme-div").removeClass("theme-div-light").removeClass("theme-div-dark").addClass("theme-div-default");
+        $(".list-div").removeClass("list-div-light").removeClass("list-div-dark").addClass("list-div-default");
+        $(".button").removeClass("button-light").removeClass("button-dark").addClass("button-default");
+        $(".ta").removeClass("ta-light").removeClass("ta-dark").addClass("ta-default");
+        theme = "default";
+        window.localStorage.setItem("todotheme", JSON.stringify(theme));
+    })
+
+    $("#theme3").click(function(e) {
+        $(".header").removeClass("header-light").removeClass("header-default").addClass("header-dark");
+        $("body").removeClass("body-light").removeClass("body-default").addClass("body-dark");
+        $(".container").removeClass("container-light").removeClass("container-default").addClass("container-dark");
+        $(".form-div").removeClass("form-div-light").removeClass("form-div-default").addClass("form-div-dark");
+        $(".theme-div").removeClass("theme-div-light").removeClass("theme-div-default").addClass("theme-div-dark");
+        $(".list-div").removeClass("list-div-light").removeClass("list-div-default").addClass("list-div-dark");
+        $(".button").removeClass("button-light").removeClass("button-default").addClass("button-dark");
+        $(".ta").removeClass("ta-light").removeClass("ta-default").addClass("ta-dark");
         theme = "dark";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
 
     if (!theme) {
-        $("#theme1").click();
+        $("#theme2").click();
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     }
     if (theme === "light") {
         $("#theme1").click();
     }
-    if (theme ==="dark") {
+    if (theme === "default") {
         $("#theme2").click();
+    }
+    if (theme === "dark") {
+        $("#theme3").click();
     }
     
     let data = [];
