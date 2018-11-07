@@ -78,21 +78,27 @@ li:hover > .delete-button {
 .clear-button {
     border-radius: 0 0 10px 10px;
 }
-.ta-light,
+.ta-light {
+    background: #ececec;
+}
+.ta-default {
+    background: #cccccc;
+}
+.ta-dark {
+    background: #222222;
+}
 .button-light {
     background-image: linear-gradient(to bottom, #fcfcfc, #dedede);
 }
 .button-light:hover {
     background-image: linear-gradient(to bottom, #ececec, #cecece);
 }
-.ta-default,
 .button-default {
-    background-image: linear-gradient(to bottom, #fcfcfc, #dedede);
+    background-image: linear-gradient(to bottom, #dcdcdc, #bebebe);
 }
 .button-default:hover {
-    background-image: linear-gradient(to bottom, #ececec, #cecece);
+    background-image: linear-gradient(to bottom, #cccccc, #aeaeae);
 }
-.ta-dark,
 .button-dark {
     background-image: linear-gradient(to bottom, #111111, #333333);
 }
@@ -105,7 +111,7 @@ li:hover > .delete-button {
 }
 .header-default,
 .container-default {
-    background: #22222266;
+    background: #22222255;
 }
 .header-dark,
 .container-dark {
@@ -119,7 +125,7 @@ li:hover > .delete-button {
 .form-div-default,
 .theme-div-default,
 .list-div-default {
-    background: #ececec66;
+    background: #ececec55;
 }
 .form-div-dark,
 .theme-div-dark,
@@ -151,7 +157,7 @@ li:hover > .delete-button {
     border-radius: 10px;
     box-shadow: 0 5px 15px -1px black;
     cursor: pointer;
-    line-height: 5vh;
+    height: 5vh;
     margin: 2.5vh 1vw;
     text-align: center;
 }
