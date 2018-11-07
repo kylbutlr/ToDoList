@@ -8,6 +8,7 @@ $(function() {
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
         $(".list-div").slideToggle(1000)
+        $("#input").focus()
     });
     $("#date").change(function() {
         const date = getDate(this.value);
@@ -150,7 +151,6 @@ $(function() {
     function editPost(e) {
         e.preventDefault();
         const t = data.findIndex(x => x.key == e.target.dataset.key);
-        console.log(data);
         $input.value = data[t].text;
         $time.value = data[t].realtime;
         $date.value = data[t].date;
