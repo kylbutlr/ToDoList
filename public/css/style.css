@@ -201,7 +201,7 @@ li:hover > .delete-button {
     z-index: -1;
 }
 .form-div {
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: inset 0 5px 10px -3px black;
     height: auto;
     margin: 10px;
@@ -209,7 +209,7 @@ li:hover > .delete-button {
     width: 200px;
 }
 .theme-div {
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: inset 0 5px 10px -3px black;
     bottom: 0;
     display: flex;
@@ -235,7 +235,7 @@ li:hover > .delete-button {
     height: 4vh;
 }
 .list-div {
-    border-radius: 10px;
+    border-radius: 15px;
     box-shadow: inset 0 5px 10px -3px black;
     cursor: default;
     flex: 1;
@@ -281,4 +281,17 @@ li:hover > .delete-button {
 .post-delete {
     opacity: 0;
     transition: opacity 0.25s;
+}
+.clsBtn {
+    height: 4vh;
+    margin: 20px;
+    opacity: 0.5;
+    position: absolute; 
+    right: 0;
+    bottom: 0; 
+    transition: opacity 0.5s;;
+    width: 100px;
+}
+.clsBtn:hover {
+    opacity: 1;
 }
