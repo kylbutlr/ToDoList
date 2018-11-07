@@ -10,12 +10,16 @@ $(function() {
     $(".form-div").hide().delay(500).slideToggle(1000)
     $(".list-div").hide().delay(500).slideToggle(1000)
     $(".theme-div").hide().delay(500).slideToggle(1000)
+    $(".dev-div").hide().delay(500).slideToggle(1000)
+    $(".dev-div-glass").hide().delay(500).fadeToggle(1000)
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
         $(".list-div").slideToggle(1000)
         $(".theme-div").slideToggle(1000)
+        $(".dev-div").slideToggle(1000)
+        $(".dev-div-glass").fadeToggle(1000)
         $("#input").focus()
     });
 

@@ -308,6 +308,7 @@ li:hover > .delete-button {
     width: 10vw;
     height: 6vh;
     box-shadow: 0 5px 15px -1px black;
+    min-width: 100px;
 }
 .dev-div-glass {
     content: '';
@@ -320,4 +321,5 @@ li:hover > .delete-button {
     left: 0;
     filter:blur(5px);
     z-index: -1;
+    min-width: 100px;
 }
