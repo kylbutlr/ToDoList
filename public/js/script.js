@@ -1,8 +1,9 @@
 $(function() {
-    $(".container").hide()
+    $("#input").focus();
+    /*$(".container").hide()
     $(".container-glass").hide()
     $(".form-div").hide()
-    $(".list-div").hide()
+    $(".list-div").hide()*/
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
