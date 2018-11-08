@@ -10,17 +10,29 @@ $(function() {
     $(".form-div").hide().delay(500).slideToggle(1000)
     $(".list-div").hide().delay(500).slideToggle(1000)
     $(".theme-div").hide().delay(500).slideToggle(1000)
-    $(".dev-div").hide().delay(500).slideToggle(1000)
-    $(".dev-div-glass").hide().delay(500).fadeToggle(1000)
+/*    $(".dev-div").hide().delay(500).slideToggle(1000)
+    $(".dev-div-glass").hide().delay(500).fadeToggle(1000) */
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
         $(".list-div").slideToggle(1000)
         $(".theme-div").slideToggle(1000)
-        $(".dev-div").slideToggle(1000)
-        $(".dev-div-glass").fadeToggle(1000)
+/*        $(".dev-div").slideToggle(1000)
+        $(".dev-div-glass").fadeToggle(1000) */
         $("#input").focus()
+    });
+
+    $(".dev-div").hover(function(e){
+        $("#clsBtn").stop().animate({
+            opacity: e.type=="mouseenter" ? 1 : 0.5
+        }, 250);
+        $(".dev-div").stop().animate({
+            bottom: e.type=="mouseenter" ? 25 : 0
+        }, 500);
+        $(".dev-div-glass").stop().animate({
+            top: e.type=="mouseenter" ? 0 : 25
+        }, 500);
     });
 
     $("#date").change(function() {

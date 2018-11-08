@@ -4,6 +4,9 @@ body,
 .dev-div-glass {
     background:url("images/1.jpg") 0 / cover fixed;
 }
+html {
+    overflow: hidden;
+}
 body {
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 14px;
@@ -296,27 +299,24 @@ li:hover > .delete-button {
     height: calc(100% - 15px);
     width: calc(100% - 15px);
 }
-.clsBtn:hover {
-    opacity: 1;
-}
 .dev-div {
     position: absolute;
     bottom: 0;
     right: 0;
-    margin: 0;
-    border-radius: 15px 0 0 0;
+    margin: 0 5vw -25px 0;
+    border-radius: 15px 15px 0 0;
     width: 10vw;
     height: 6vh;
     box-shadow: 0 5px 15px -1px black;
-    min-width: 100px;
+    min-width: 120px;
 }
 .dev-div-glass {
     content: '';
-    border-radius: 15px 0 0 0;
-    margin: 94vh 0 0 90vw;
+    border-radius: 15px 15px 0 0;
+    margin: 94vh 0 0 84vw;
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 25px;
+    right: 5vw;
     bottom: 0;
     left: 0;
     filter:blur(5px);
