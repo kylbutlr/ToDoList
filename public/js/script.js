@@ -30,10 +30,10 @@ $(function() {
             opacity: e.type=="mouseenter" ? 1 : 0.5
         }, 250);
         $(".dev-div").stop().animate({
-            bottom: e.type=="mouseenter" ? 25 : 0
+            bottom: e.type=="mouseenter" ? 35 : 0
         }, 500);
         $(".dev-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 0 : 25
+            top: e.type=="mouseenter" ? 0 : 35
         }, 500);
     });
 
@@ -57,6 +57,7 @@ $(function() {
         $(".button").removeClass("button-dark").removeClass("button-default").addClass("button-light");
         $(".ta").removeClass("ta-dark").removeClass("ta-default").addClass("ta-light");
         $(".dev-div").removeClass("dev-div-dark").removeClass("dev-div-default").addClass("dev-div-light");
+        $(".dev-btn-div").removeClass("dev-btn-div-dark").removeClass("dev-btn-div-default").addClass("dev-btn-div-light");
         theme = "light";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
@@ -71,6 +72,7 @@ $(function() {
         $(".button").removeClass("button-light").removeClass("button-dark").addClass("button-default");
         $(".ta").removeClass("ta-light").removeClass("ta-dark").addClass("ta-default");
         $(".dev-div").removeClass("dev-div-light").removeClass("dev-div-dark").addClass("dev-div-default");
+        $(".dev-btn-div").removeClass("dev-btn-div-light").removeClass("dev-btn-div-dark").addClass("dev-btn-div-default");
         theme = "default";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
@@ -85,6 +87,7 @@ $(function() {
         $(".button").removeClass("button-light").removeClass("button-default").addClass("button-dark");
         $(".ta").removeClass("ta-light").removeClass("ta-default").addClass("ta-dark");
         $(".dev-div").removeClass("dev-div-light").removeClass("dev-div-default").addClass("dev-div-dark");
+        $(".dev-btn-div").removeClass("dev-btn-div-light").removeClass("dev-btn-div-default").addClass("dev-btn-div-dark");
         theme = "dark";
         window.localStorage.setItem("todotheme", JSON.stringify(theme));
     })
