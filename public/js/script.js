@@ -41,7 +41,7 @@ $(function() {
         const date = getDate(this.value);
         const now = getDate(new Date)
         if (date < now) {
-            alert("ToDo entry must have a future date.");
+            alert("Entry must have a future date (or no date).");
             this.valueAsDate = now;
             this.focus();
         }
@@ -114,7 +114,7 @@ $(function() {
     const formSubmit = (e) => {
         e.preventDefault();
         if ($input.value === " ") {
-            alert("ToDo entry must have a name.");
+            alert("Entry must have a name.");
             $input.value = "";
             $input.focus();
         }
@@ -201,11 +201,18 @@ $(function() {
     function renderTodo(todo, key) {
         const newList = document.createElement("li");
         const formattedDate =  formatDate(new Date(todo.date));
-        if (!todo.time) {
+        if (!todo.time && todo.date) {
             newList.textContent = todo.text + " (by " + formattedDate + ")";
         }
-        else {
+        else if (todo.time && !todo.date) {
+            newList.textContent = todo.text + " (by " + todo.time + ")";
+        }
+        else if (todo.time && todo.date) {
+            console.log("hi");
             newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
+        }
+        else {
+            newList.textContent = todo.text;
         }
         newList.key = key;
         newList.appendChild(edtBtn(key));
@@ -303,8 +310,8 @@ $(function() {
         data = JSON.parse(window.localStorage.getItem("tododata"));
         if (!data) {
             data = [];
-            const dflt1 = {"key": 0, "text": "Delete this ToDo entry", "realtime": "", "date": $date.value, "done": true};
-            const dflt2 = {"key": 1, "text": "Add more to my ToDo list", "realtime": "", "date": $date.value, "done": false};
+            const dflt1 = {"key": 0, "text": "Delete this entry", "realtime": "", "date": $date.value, "done": true};
+            const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false};
             data.push(dflt1, dflt2);
             renderTodo(dflt1, 0);
             renderTodo(dflt2, 1);
