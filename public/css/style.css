@@ -140,7 +140,6 @@ li:hover > .delete-button {
     background: #22222299;
 }
 .body-light,
-.header-light,
 .list-div-light {
     color: #222222;
 }
@@ -148,11 +147,14 @@ li:hover > .delete-button {
 .list-div-default {
     color: #222222;
 }
+.header-dark,
 .header-default {
-    color: #ececec;
+    color: #ffffffbb;
+}
+.header-light {
+    color: #000000bb;
 }
 .body-dark,
-.header-dark,
 .list-div-dark {
     color: #cecece;
 }
