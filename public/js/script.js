@@ -1,27 +1,29 @@
 $(function() {
     let theme = JSON.parse(window.localStorage.getItem("todotheme"));
-    /*const random = Math.floor(Math.random()*Math.floor(12));
-    $("body").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");
-    $(".header-glass").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");
-    $(".container-glass").css("background-image", "url('images/"+random+".jpg') 0 / cover fixed");*/
     $("#input").focus();
     $(".container").hide().delay(500).slideToggle(1000)
     $(".container-glass").hide().delay(500).slideToggle(1000)
     $(".form-div").hide().delay(500).slideToggle(1000)
     $(".list-div").hide().delay(500).slideToggle(1000)
     $(".theme-div").hide().delay(500).slideToggle(1000)
-/*    $(".dev-div").hide().delay(500).slideToggle(1000)
-    $(".dev-div-glass").hide().delay(500).fadeToggle(1000) */
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
         $(".list-div").slideToggle(1000)
         $(".theme-div").slideToggle(1000)
-/*        $(".dev-div").slideToggle(1000)
-        $(".dev-div-glass").fadeToggle(1000) */
         $("#input").focus()
     });
+
+    function getBackground() {
+        const random = Math.floor(Math.random()*Math.floor(12));
+        $("body").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
+        $(".header-glass").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
+        $(".container-glass").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
+        $(".dev-div-glass").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
+    }
+    getBackground();
+    setInterval(getBackground, 10000);
 
     $(".dev-div").hover(function(e){
         $("#clsBtn").stop().animate({
