@@ -33,7 +33,7 @@ $(function() {
             bottom: e.type=="mouseenter" ? 35 : 0
         }, 500);
         $(".dev-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 0 : 35
+            top: e.type=="mouseenter" ? 10 : 45
         }, 500);
     });
 
