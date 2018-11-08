@@ -2,7 +2,7 @@ body,
 .header-glass,
 .container-glass,
 .dev-div-glass {
-    transition: background 1s ease;
+    background: url("images/0.jpg") 0 / cover fixed;
 }
 html {
     overflow: hidden;

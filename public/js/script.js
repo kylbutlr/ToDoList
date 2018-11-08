@@ -15,16 +15,6 @@ $(function() {
         $("#input").focus()
     });
 
-    function getBackground() {
-        const random = Math.floor(Math.random()*Math.floor(8));
-        $("body").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
-        $(".header-glass").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
-        $(".container-glass").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
-        $(".dev-div-glass").css("background", "url('css/images/"+random+".jpg') 0 / cover fixed");
-    }
-    getBackground();
-    setInterval(getBackground, 30000);
-
     $(".dev-div").hover(function(e){
         $("#clsBtn").stop().animate({
             opacity: e.type=="mouseenter" ? 1 : 0.5
