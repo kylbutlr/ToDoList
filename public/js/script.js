@@ -47,43 +47,6 @@ $(function() {
         }
     }
 
-    $("#input").focus()
-    $(".container").hide().delay(500).slideToggle(1000)
-    $(".container-glass").hide().delay(500).slideToggle(1000)
-    $(".form-div").hide().delay(500).slideToggle(1000)
-    $(".list-div").hide().delay(500).slideToggle(1000)
-    $(".theme-div").hide().delay(500).slideToggle(1000)
-    $(".header").click(function(e) {
-        $(".container").slideToggle(1000)
-        $(".container-glass").slideToggle(1000)
-        $(".form-div").slideToggle(1000)
-        $(".list-div").slideToggle(1000)
-        $(".theme-div").slideToggle(1000)
-        $("#input").focus()
-    });
-
-    $(".dev-div").hover(function(e){
-        $("#clearLS").stop().animate({
-            opacity: e.type=="mouseenter" ? 1 : 0.5
-        }, 250)
-        $(".dev-div").stop().animate({
-            bottom: e.type=="mouseenter" ? -15 : -50
-        }, 500)
-        $(".dev-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 15 : 50
-        }, 500)
-    });
-
-    $("#date").change(function() {
-        const date = getDateObject(this.value)
-        const now = getDateObject(new Date)
-        if (date < now) {
-            alert("Entry must have a future date (or no date).")
-            this.valueAsDate = now
-            this.focus()
-        }
-    })    
-
     function getSavedTheme() {
         currentTheme = JSON.parse(window.localStorage.getItem("todoTheme"))
         if (!currentTheme) {
@@ -121,108 +84,34 @@ $(function() {
         $(".dev-btn-div").addClass("dev-btn-div-"+theme)
     }
 
-
-    $("#theme1").click(function(e) {
-        const themeName = "light"
-        applyTheme(themeName)
-        currentTheme = themeName
-        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
-    })
-
-    $("#theme2").click(function(e) {
-        const themeName = "default"
-        applyTheme(themeName)
-        currentTheme = themeName
-        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
-    })
-
-    $("#theme3").click(function(e) {
-        const themeName = "dark"
-        applyTheme(themeName)
-        currentTheme = themeName
-        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
-    })
-
-    const onFormSubmit = (e) => {
-        e.preventDefault()
-        if ($input.value === " ") {
-            alert("Entry must have a name.")
-            $input.value = ""
-            $input.focus()
-        }
-        else {
-            let todo = {}
-            const time = $time.value
-            if (time.length>0) {
-                todo = {"key": key, "text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false}
-            }
-            else {
-                todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
-            }
-            data.push(todo)
-            renderTodo(todo, key)
-            saveList()
-            key++
-            $input.value = ""
-            $time.value = "12:00"
-            $date.valueAsDate = getDateObject(new Date)
-            $input.focus()
-        }
+    function saveList() {
+        window.localStorage.setItem("tododata", JSON.stringify(data))
     }
 
-    const onClearClick = (e) => {
-        e.preventDefault()
-        if ($list.childElementCount>0) {
-            for (i=0;i<$list.childElementCount;i++) {
-                $list.childNodes[i].classList.add("post-delete")
+    function getSavedList() {
+        data = JSON.parse(window.localStorage.getItem("tododata"))
+        if (!data) {
+            data = []
+            const dflt1 = {"key": 0, "text": "Delete this entry", "realtime": "", "date": $date.value, "done": true}
+            const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
+            data.push(dflt1, dflt2)
+            renderTodo(dflt1, 0)
+            renderTodo(dflt2, 1)
+            key = 2
+            saveList()
+        }
+        else if (data.length>0) {
+            for (let i=0;i<data.length;i++) {
+                data[i].key = i
+                renderTodo(data[i], i)
             }
-            setTimeout(function() {
-                $list.innerHTML = ""
-            }, 250)
+            key = data[data.length - 1].key + 1
         }
         else {
             $list.innerHTML = ""
+            data = []
+            key = 0
         }
-        data = []
-        key = 0
-        saveList()
-    }
-
-    const onClearLSClick = (e) => {
-        e.preventDefault()
-        $list.innerHTML = ""
-        data = []
-        key = 0
-        window.localStorage.clear()
-        window.location.reload()
-    }
-
-    function getAMPM(time) {
-        let [h,m] = time.split(":")
-        let ampm
-        if (0 < h && h < 10) {
-            ampm = "am"
-            h = h.substr(1)
-        }
-        else if (h == 12) {
-            ampm = "pm"
-            h = 12
-        }
-        else if (12 < h && h < 24) {
-            ampm = "pm"
-            h -= 12
-        }   
-        else {
-            ampm = "am"
-            h = 12
-        }
-        return (h + ":" + m + " " + ampm)
-    }
-
-    function getDateObject(date) {
-        const dateObject = new Date(date)
-        const timeObject = new Date(dateObject.getTime() - dateObject.getTimezoneOffset() * 60000)
-        return timeObject
     }
 
     function renderTodo(todo, key) {
@@ -256,6 +145,88 @@ $(function() {
         })
     }
 
+    const onFormSubmit = (e) => {
+        e.preventDefault()
+        if ($input.value === " ") {
+            alert("Entry must have a name.")
+            $input.value = ""
+            $input.focus()
+        }
+        else {
+            let todo = {}
+            const time = $time.value
+            if (time.length>0) {
+                todo = {"key": key, "text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false}
+            }
+            else {
+                todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
+            }
+            data.push(todo)
+            renderTodo(todo, key)
+            saveList()
+            key++
+            $input.value = ""
+            $time.value = "12:00"
+            $date.valueAsDate = getDateObject(new Date)
+            $input.focus()
+        }
+    }
+
+    function getDateObject(date) {
+        const dateObject = new Date(date)
+        const timeObject = new Date(dateObject.getTime() - dateObject.getTimezoneOffset() * 60000)
+        return timeObject
+    }
+
+    function getAMPM(time) {
+        let [h,m] = time.split(":")
+        let ampm
+        if (0 < h && h < 10) {
+            ampm = "am"
+            h = h.substr(1)
+        }
+        else if (h == 12) {
+            ampm = "pm"
+            h = 12
+        }
+        else if (12 < h && h < 24) {
+            ampm = "pm"
+            h -= 12
+        }   
+        else {
+            ampm = "am"
+            h = 12
+        }
+        return (h + ":" + m + " " + ampm)
+    }
+
+    const onClearClick = (e) => {
+        e.preventDefault()
+        if ($list.childElementCount>0) {
+            for (i=0;i<$list.childElementCount;i++) {
+                $list.childNodes[i].classList.add("post-delete")
+            }
+            setTimeout(function() {
+                $list.innerHTML = ""
+            }, 250)
+        }
+        else {
+            $list.innerHTML = ""
+        }
+        data = []
+        key = 0
+        saveList()
+    }
+
+    const onClearLSClick = (e) => {
+        e.preventDefault()
+        $list.innerHTML = ""
+        data = []
+        key = 0
+        window.localStorage.clear()
+        window.location.reload()
+    }
+
     function createElementEditButton(key) {
         const editButton = document.createElement("button")
         editButton.dataset.key = key
@@ -277,6 +248,26 @@ $(function() {
         setTimeout(function() {
             e.target.parentNode.remove()
         }, 250)
+    }
+
+    function createElementDeleteButton(key) {
+        const deleteButton = document.createElement("button")
+        deleteButton.dataset.key = key
+        deleteButton.className = "delete-button button button-"+currentTheme
+        deleteButton.textContent = "Delete"
+        deleteButton.addEventListener("click", onDeleteButtonClick)
+        return deleteButton
+    }
+
+    function onDeleteButtonClick(e) {
+        e.preventDefault()
+        let target = data.findIndex(x => x.key == e.target.dataset.key)
+        data.splice(target, 1)
+        e.target.parentNode.classList.add("post-delete")
+        setTimeout(function() {
+            e.target.parentNode.remove()
+        }, 250)
+        saveList()
     }
 
     function createElementCheckbox(todo, key) {
@@ -310,56 +301,6 @@ $(function() {
         }
     }
 
-    function onDeleteButtonClick(e) {
-        e.preventDefault()
-        let target = data.findIndex(x => x.key == e.target.dataset.key)
-        data.splice(target, 1)
-        e.target.parentNode.classList.add("post-delete")
-        setTimeout(function() {
-            e.target.parentNode.remove()
-        }, 250)
-        saveList()
-    }
-
-    function createElementDeleteButton(key) {
-        const deleteButton = document.createElement("button")
-        deleteButton.dataset.key = key
-        deleteButton.className = "delete-button button button-"+currentTheme
-        deleteButton.textContent = "Delete"
-        deleteButton.addEventListener("click", onDeleteButtonClick)
-        return deleteButton
-    }
-
-    function saveList() {
-        window.localStorage.setItem("tododata", JSON.stringify(data))
-    }
-
-    function getSavedList() {
-        data = JSON.parse(window.localStorage.getItem("tododata"))
-        if (!data) {
-            data = []
-            const dflt1 = {"key": 0, "text": "Delete this entry", "realtime": "", "date": $date.value, "done": true}
-            const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
-            data.push(dflt1, dflt2)
-            renderTodo(dflt1, 0)
-            renderTodo(dflt2, 1)
-            key = 2
-            saveList()
-        }
-        else if (data.length>0) {
-            for (let i=0;i<data.length;i++) {
-                data[i].key = i
-                renderTodo(data[i], i)
-            }
-            key = data[data.length - 1].key + 1
-        }
-        else {
-            $list.innerHTML = ""
-            data = []
-            key = 0
-        }
-    }
-
     $time.value = "12:00"
     $date.valueAsDate = getDateObject(new Date)
     form.addEventListener("submit", onFormSubmit, false)
@@ -367,4 +308,62 @@ $(function() {
     clearLS.addEventListener("click", onClearLSClick, false)
     getSavedList()
     getSavedTheme()
+
+    $("#date").change(function() {
+        const date = getDateObject(this.value)
+        const now = getDateObject(new Date)
+        if (date < now) {
+            alert("Entry must have a future date (or no date).")
+            this.valueAsDate = now
+            this.focus()
+        }
+    })    
+
+    $("#input").focus()
+    $(".container").hide().delay(500).slideToggle(1000)
+    $(".container-glass").hide().delay(500).slideToggle(1000)
+    $(".form-div").hide().delay(500).slideToggle(1000)
+    $(".list-div").hide().delay(500).slideToggle(1000)
+    $(".theme-div").hide().delay(500).slideToggle(1000)
+    $(".header").click(function(e) {
+        $(".container").slideToggle(1000)
+        $(".container-glass").slideToggle(1000)
+        $(".form-div").slideToggle(1000)
+        $(".list-div").slideToggle(1000)
+        $(".theme-div").slideToggle(1000)
+        $("#input").focus()
+    })
+
+    $(".dev-div").hover(function(e){
+        $("#clearLS").stop().animate({
+            opacity: e.type=="mouseenter" ? 1 : 0.5
+        }, 250)
+        $(".dev-div").stop().animate({
+            bottom: e.type=="mouseenter" ? -15 : -50
+        }, 500)
+        $(".dev-div-glass").stop().animate({
+            top: e.type=="mouseenter" ? 15 : 50
+        }, 500)
+    })
+
+    $("#theme1").click(function(e) {
+        const themeName = "light"
+        applyTheme(themeName)
+        currentTheme = themeName
+        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
+    })
+
+    $("#theme2").click(function(e) {
+        const themeName = "default"
+        applyTheme(themeName)
+        currentTheme = themeName
+        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
+    })
+
+    $("#theme3").click(function(e) {
+        const themeName = "dark"
+        applyTheme(themeName)
+        currentTheme = themeName
+        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
+    })
 })
