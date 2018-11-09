@@ -1,5 +1,13 @@
 $(function() {
-    let theme
+    let currentTheme = undefined
+    let data = []
+    let key = undefined
+    const $input = document.querySelector("#input")
+    const $list = document.querySelector("#list")
+    const $date = document.querySelector("#date")
+    const $time = document.querySelector("#time")
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     const themes = {
         light: {
             headerClass: 'header-light',
@@ -38,7 +46,8 @@ $(function() {
             devBtnDivClass: 'dev-btn-div-dark'
         }
     }
-    $("#input").focus();
+
+    $("#input").focus()
     $(".container").hide().delay(500).slideToggle(1000)
     $(".container-glass").hide().delay(500).slideToggle(1000)
     $(".form-div").hide().delay(500).slideToggle(1000)
@@ -54,39 +63,40 @@ $(function() {
     });
 
     $(".dev-div").hover(function(e){
-        $("#clsBtn").stop().animate({
+        $("#clearLS").stop().animate({
             opacity: e.type=="mouseenter" ? 1 : 0.5
-        }, 250);
+        }, 250)
         $(".dev-div").stop().animate({
-            bottom: e.type=="mouseenter" ? 35 : 0
-        }, 500);
+            bottom: e.type=="mouseenter" ? -15 : -50
+        }, 500)
         $(".dev-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 10 : 45
-        }, 500);
+            top: e.type=="mouseenter" ? 15 : 50
+        }, 500)
     });
 
     $("#date").change(function() {
-        const date = getDate(this.value);
-        const now = getDate(new Date)
+        const date = getDateObject(this.value)
+        const now = getDateObject(new Date)
         if (date < now) {
-            alert("Entry must have a future date (or no date).");
-            this.valueAsDate = now;
-            this.focus();
+            alert("Entry must have a future date (or no date).")
+            this.valueAsDate = now
+            this.focus()
         }
-    });    
+    })    
 
-    function getTheme() {
-        theme = JSON.parse(window.localStorage.getItem("todotheme"))
-        if (!theme) {
+    function getSavedTheme() {
+        currentTheme = JSON.parse(window.localStorage.getItem("todoTheme"))
+        if (!currentTheme) {
             applyTheme("default")
+            window.localStorage.setItem("todoTheme", JSON.stringify("default"))
         }
         else {
-            applyTheme(theme)
+            applyTheme(currentTheme)
         }
     }
 
     function applyTheme(theme) {
-        const keys = Object.keys(themes);
+        const keys = Object.keys(themes)
         for (i=0;i<keys.length;i++) {
             $(".header").removeClass("header-"+keys[i])
             $("body").removeClass("body-"+keys[i])
@@ -113,255 +123,248 @@ $(function() {
 
 
     $("#theme1").click(function(e) {
-        applyTheme("light")
-        window.localStorage.setItem("todotheme", JSON.stringify("light"));
+        const themeName = "light"
+        applyTheme(themeName)
+        currentTheme = themeName
+        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
     })
 
     $("#theme2").click(function(e) {
-        applyTheme("default")
-        window.localStorage.setItem("todotheme", JSON.stringify("default"));
+        const themeName = "default"
+        applyTheme(themeName)
+        currentTheme = themeName
+        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
     })
 
     $("#theme3").click(function(e) {
-        applyTheme("dark")
-        window.localStorage.setItem("todotheme", JSON.stringify("dark"));
+        const themeName = "dark"
+        applyTheme(themeName)
+        currentTheme = themeName
+        window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
     })
 
-    
-    let data = [];
-    let key;
-    const $input = document.querySelector("#input");
-    const $list = document.querySelector("#list");
-    const $date = document.querySelector("#date");
-    const $time = document.querySelector("#time");
-    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-    const formSubmit = (e) => {
-        e.preventDefault();
+    const onFormSubmit = (e) => {
+        e.preventDefault()
         if ($input.value === " ") {
-            alert("Entry must have a name.");
-            $input.value = "";
-            $input.focus();
+            alert("Entry must have a name.")
+            $input.value = ""
+            $input.focus()
         }
         else {
-            let todo = {};
-            const time = $time.value;
+            let todo = {}
+            const time = $time.value
             if (time.length>0) {
-                todo = {"key": key, "text": $input.value, "time": formatAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false};
+                todo = {"key": key, "text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false}
             }
             else {
-                todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false};
+                todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
             }
-            data.push(todo);
-            renderTodo(todo, key);
-            save();
-            key++;
-            $input.value = "";
-            $time.value = "12:00";
-            $date.valueAsDate = getDate(new Date);
+            data.push(todo)
+            renderTodo(todo, key)
+            saveList()
+            key++
+            $input.value = ""
+            $time.value = "12:00"
+            $date.valueAsDate = getDateObject(new Date)
+            $input.focus()
         }
     }
 
-    const clrClick = (e) => {
-        e.preventDefault();
+    const onClearClick = (e) => {
+        e.preventDefault()
         if ($list.childElementCount>0) {
-            for (i=0; i<$list.childElementCount; i++) {
-                $list.childNodes[i].classList.add("post-delete");
+            for (i=0;i<$list.childElementCount;i++) {
+                $list.childNodes[i].classList.add("post-delete")
             }
             setTimeout(function() {
-                $list.innerHTML = "";
-            }, 250);
+                $list.innerHTML = ""
+            }, 250)
         }
         else {
-            $list.innerHTML = "";
+            $list.innerHTML = ""
         }
-        data = [];
-        key = 0;
-        save();
+        data = []
+        key = 0
+        saveList()
     }
 
-    const clrLS = (e) => {
-        e.preventDefault();
-        $list.innerHTML = "";
-        data = [];
-        key = 0;
-        window.localStorage.clear();
-        window.location.reload();
+    const onClearLSClick = (e) => {
+        e.preventDefault()
+        $list.innerHTML = ""
+        data = []
+        key = 0
+        window.localStorage.clear()
+        window.location.reload()
     }
 
-    function formatAMPM(time) {
-        let [h,m] = time.split(":");
-        let ampm;
+    function getAMPM(time) {
+        let [h,m] = time.split(":")
+        let ampm
         if (0 < h && h < 10) {
-            ampm = "am";
-            h = h.substr(1);
+            ampm = "am"
+            h = h.substr(1)
         }
         else if (h == 12) {
-            ampm = "pm";
-            h = 12;
+            ampm = "pm"
+            h = 12
         }
         else if (12 < h && h < 24) {
-            ampm = "pm";
-            h -= 12;
+            ampm = "pm"
+            h -= 12
         }   
         else {
-            ampm = "am";
-            h = 12;
+            ampm = "am"
+            h = 12
         }
-        return (h + ":" + m + " " + ampm);
+        return (h + ":" + m + " " + ampm)
     }
 
-    function getDate(date) {
-        const dateValue = new Date(date);
-        const nowDate = new Date(dateValue.getTime() - dateValue.getTimezoneOffset() * 60000);
-        return nowDate;
-    }
-
-    function formatDate(date) {
-        const dateValue = new Date(date);
-        const nowDate = new Date(dateValue.getTime() + dateValue.getTimezoneOffset() * 60000);
-        return days[nowDate.getDay()] + ", " + months[nowDate.getMonth()] + " " + nowDate.getDate();
+    function getDateObject(date) {
+        const dateObject = new Date(date)
+        const timeObject = new Date(dateObject.getTime() - dateObject.getTimezoneOffset() * 60000)
+        return timeObject
     }
 
     function renderTodo(todo, key) {
-        const newList = document.createElement("li");
-        const formattedDate =  formatDate(new Date(todo.date));
+        const newList = document.createElement("li")
+        const dateObject = new Date(todo.date)
+        const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
+        const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
         if (!todo.time && todo.date) {
-            newList.textContent = todo.text + " (by " + formattedDate + ")";
+            newList.textContent = todo.text + " (by " + formattedDate + ")"
         }
         else if (todo.time && !todo.date) {
-            newList.textContent = todo.text + " (by " + todo.time + ")";
+            newList.textContent = todo.text + " (by " + todo.time + ")"
         }
         else if (todo.time && todo.date) {
-            newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
+            newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
         }
         else {
-            newList.textContent = todo.text;
+            newList.textContent = todo.text
         }
-        newList.key = key;
-        newList.appendChild(edtBtn(key));
-        newList.appendChild(dltBtn(key));
-        newList.insertBefore(checkbox(todo, key), newList.childNodes[0]);
+        newList.key = key
+        newList.appendChild(createElementEditButton(key))
+        newList.appendChild(createElementDeleteButton(key))
+        newList.insertBefore(createElementCheckbox(todo, key), newList.childNodes[0])
         if (todo.done === true) {
-            newList.classList.add("checked");
+            newList.classList.add("checked")
         }
-        newList.classList.add("new-post");
-        $list.appendChild(newList);
+        newList.classList.add("new-post")
+        $list.appendChild(newList)
         setTimeout(function() {
-            newList.classList.add("post-visible");
-        });
+            newList.classList.add("post-visible")
+        })
     }
 
-    function edtBtn(key) {
-        const editB = document.createElement("button");
-        editB.dataset.key = key;
-        editB.className = "edit-button button button-"+theme;
-        editB.textContent = "Edit";
-        editB.addEventListener("click", editPost);
-        return editB;
+    function createElementEditButton(key) {
+        const editButton = document.createElement("button")
+        editButton.dataset.key = key
+        editButton.className = "edit-button button button-"+currentTheme
+        editButton.textContent = "Edit"
+        editButton.addEventListener("click", onEditButtonClick)
+        return editButton
     }
 
-    function editPost(e) {
-        e.preventDefault();
-        const t = data.findIndex(x => x.key == e.target.dataset.key);
-        $input.value = data[t].text;
-        $time.value = data[t].realtime;
-        $date.value = data[t].date;
-        data.splice(t, 1);
-        e.target.parentNode.classList.add("post-delete");
-        $input.select();
+    function onEditButtonClick(e) {
+        e.preventDefault()
+        const t = data.findIndex(x => x.key == e.target.dataset.key)
+        $input.value = data[t].text
+        $time.value = data[t].realtime
+        $date.value = data[t].date
+        data.splice(t, 1)
+        e.target.parentNode.classList.add("post-delete")
+        $input.select()
         setTimeout(function() {
-            e.target.parentNode.remove();
-        }, 250);
+            e.target.parentNode.remove()
+        }, 250)
     }
 
-    function checkbox(todo, key) {
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.className = "check-box";
-        checkbox.dataset.key = key;
-        checkbox.addEventListener("click", checkPost)
+    function createElementCheckbox(todo, key) {
+        const checkbox = document.createElement("input")
+        checkbox.type = "checkbox"
+        checkbox.className = "check-box"
+        checkbox.dataset.key = key
+        checkbox.addEventListener("click", onCheckboxClick)
         if (todo.done === true) {
-            checkbox.checked = true;
+            checkbox.checked = true
         }
         else { 
-            checkbox.checked = false;
+            checkbox.checked = false
         }
-        return checkbox;
+        return checkbox
     }
 
-    function checkPost(e) {
-        const target = data.findIndex(x => x.key == e.target.dataset.key);
+    function onCheckboxClick(e) {
+        const target = data.findIndex(x => x.key == e.target.dataset.key)
         if (e.target.parentNode.classList.contains("checked")) {
-            e.target.parentNode.classList.remove("checked");
-            e.target.checked = false;
-            data[target].done = false;
-            save();
+            e.target.parentNode.classList.remove("checked")
+            e.target.checked = false
+            data[target].done = false
+            saveList()
         }
         else {
-            e.target.parentNode.classList.add("checked");
-            e.target.checked = true;
-            data[target].done = true;
-            save();
+            e.target.parentNode.classList.add("checked")
+            e.target.checked = true
+            data[target].done = true
+            saveList()
         }
     }
 
-    function deletePost(e) {
-        e.preventDefault();
-        let target = data.findIndex(x => x.key == e.target.dataset.key);
-        data.splice(target, 1);
-        e.target.parentNode.classList.add("post-delete");
+    function onDeleteButtonClick(e) {
+        e.preventDefault()
+        let target = data.findIndex(x => x.key == e.target.dataset.key)
+        data.splice(target, 1)
+        e.target.parentNode.classList.add("post-delete")
         setTimeout(function() {
-            e.target.parentNode.remove();
-        }, 250);
-        save();
+            e.target.parentNode.remove()
+        }, 250)
+        saveList()
     }
 
-    function dltBtn(key) {
-        const dltBtn = document.createElement("button");
-        dltBtn.dataset.key = key;
-        dltBtn.className = "delete-button button button-"+theme;
-        dltBtn.textContent = "Delete";
-        dltBtn.addEventListener("click", deletePost);
-        return dltBtn;
+    function createElementDeleteButton(key) {
+        const deleteButton = document.createElement("button")
+        deleteButton.dataset.key = key
+        deleteButton.className = "delete-button button button-"+currentTheme
+        deleteButton.textContent = "Delete"
+        deleteButton.addEventListener("click", onDeleteButtonClick)
+        return deleteButton
     }
 
-    function save() {
-        window.localStorage.setItem("tododata", JSON.stringify(data));
+    function saveList() {
+        window.localStorage.setItem("tododata", JSON.stringify(data))
     }
 
-    function getSaved() {
-        data = JSON.parse(window.localStorage.getItem("tododata"));
+    function getSavedList() {
+        data = JSON.parse(window.localStorage.getItem("tododata"))
         if (!data) {
-            data = [];
-            const dflt1 = {"key": 0, "text": "Delete this entry", "realtime": "", "date": $date.value, "done": true};
-            const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false};
-            data.push(dflt1, dflt2);
-            renderTodo(dflt1, 0);
-            renderTodo(dflt2, 1);
-            key = 2;
-            save();
+            data = []
+            const dflt1 = {"key": 0, "text": "Delete this entry", "realtime": "", "date": $date.value, "done": true}
+            const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
+            data.push(dflt1, dflt2)
+            renderTodo(dflt1, 0)
+            renderTodo(dflt2, 1)
+            key = 2
+            saveList()
         }
         else if (data.length>0) {
-            for (let i=0; i<data.length; i++) {
-                data[i].key = i;
-                renderTodo(data[i], i);
+            for (let i=0;i<data.length;i++) {
+                data[i].key = i
+                renderTodo(data[i], i)
             }
-            key = data[data.length - 1].key + 1;
+            key = data[data.length - 1].key + 1
         }
         else {
-            $list.innerHTML = "";
-            data = [];
-            key = 0;
+            $list.innerHTML = ""
+            data = []
+            key = 0
         }
     }
 
-    $time.value = "12:00";
-    $date.valueAsDate = getDate(new Date);
-    form.addEventListener("submit", formSubmit, false);
-    clrBtn.addEventListener("click", clrClick, false);
-    clsBtn.addEventListener("click", clrLS, false);
-    getSaved();
-    getTheme()
-});
+    $time.value = "12:00"
+    $date.valueAsDate = getDateObject(new Date)
+    form.addEventListener("submit", onFormSubmit, false)
+    clearList.addEventListener("click", onClearClick, false)
+    clearLS.addEventListener("click", onClearLSClick, false)
+    getSavedList()
+    getSavedTheme()
+})
