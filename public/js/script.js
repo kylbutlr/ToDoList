@@ -1,5 +1,43 @@
 $(function() {
-    let theme = JSON.parse(window.localStorage.getItem("todotheme"));
+    let theme
+    const themes = {
+        light: {
+            headerClass: 'header-light',
+            bodyClass: 'body-light',
+            containerClass: 'container-light',
+            formDivClass: 'form-div-light',
+            themeDivClass: 'theme-div-light',
+            listDivClass: 'list-div-light',
+            buttonClass: 'button-light',
+            textareaClass: 'textarea-light',
+            devDivClass: 'dev-div-light',
+            devBtnDivClass: 'dev-btn-div-light'
+        },
+        default: {
+            headerClass: 'header-default',
+            bodyClass: 'body-default',
+            containerClass: 'container-default',
+            formDivClass: 'form-div-default',
+            themeDivClass: 'theme-div-default',
+            listDivClass: 'list-div-default',
+            buttonClass: 'button-default',
+            textareaClass: 'textarea-default',
+            devDivClass: 'dev-div-default',
+            devBtnDivClass: 'dev-btn-div-default'
+        },
+        dark: {
+            headerClass: 'header-dark',
+            bodyClass: 'body-dark',
+            containerClass: 'container-dark',
+            formDivClass: 'form-div-dark',
+            themeDivClass: 'theme-div-dark',
+            listDivClass: 'list-div-dark',
+            buttonClass: 'button-dark',
+            textareaClass: 'textarea-dark',
+            devDivClass: 'dev-div-dark',
+            devBtnDivClass: 'dev-btn-div-dark'
+        }
+    }
     $("#input").focus();
     $(".container").hide().delay(500).slideToggle(1000)
     $(".container-glass").hide().delay(500).slideToggle(1000)
@@ -35,65 +73,60 @@ $(function() {
             this.valueAsDate = now;
             this.focus();
         }
-    });
+    });    
+
+    function getTheme() {
+        theme = JSON.parse(window.localStorage.getItem("todotheme"))
+        if (!theme) {
+            applyTheme("default")
+        }
+        else {
+            applyTheme(theme)
+        }
+    }
+
+    function applyTheme(theme) {
+        const keys = Object.keys(themes);
+        for (i=0;i<keys.length;i++) {
+            $(".header").removeClass("header-"+keys[i])
+            $("body").removeClass("body-"+keys[i])
+            $(".container").removeClass("container-"+keys[i])
+            $(".form-div").removeClass("form-div-"+keys[i])
+            $(".theme-div").removeClass("theme-div-"+keys[i])
+            $(".list-div").removeClass("list-div-"+keys[i])
+            $(".button").removeClass("button-"+keys[i])
+            $(".textarea").removeClass("textarea-"+keys[i])
+            $(".dev-div").removeClass("dev-div-"+keys[i])
+            $(".dev-btn-div").removeClass("dev-btn-div-"+keys[i])
+        }
+        $(".header").addClass("header-"+theme)
+        $("body").addClass("body-"+theme)
+        $(".container").addClass("container-"+theme)
+        $(".form-div").addClass("form-div-"+theme)
+        $(".theme-div").addClass("theme-div-"+theme)
+        $(".list-div").addClass("list-div-"+theme)
+        $(".button").addClass("button-"+theme)
+        $(".textarea").addClass("textarea-"+theme)
+        $(".dev-div").addClass("dev-div-"+theme)
+        $(".dev-btn-div").addClass("dev-btn-div-"+theme)
+    }
+
 
     $("#theme1").click(function(e) {
-        $(".header").removeClass("header-dark").removeClass("header-default").addClass("header-light");
-        $("body").removeClass("body-dark").removeClass("body-default").addClass("body-light");
-        $(".container").removeClass("container-dark").removeClass("container-default").addClass("container-light");
-        $(".form-div").removeClass("form-div-dark").removeClass("form-div-default").addClass("form-div-light");
-        $(".theme-div").removeClass("theme-div-dark").removeClass("theme-div-default").addClass("theme-div-light");
-        $(".list-div").removeClass("list-div-dark").removeClass("list-div-default").addClass("list-div-light");
-        $(".button").removeClass("button-dark").removeClass("button-default").addClass("button-light");
-        $(".ta").removeClass("ta-dark").removeClass("ta-default").addClass("ta-light");
-        $(".dev-div").removeClass("dev-div-dark").removeClass("dev-div-default").addClass("dev-div-light");
-        $(".dev-btn-div").removeClass("dev-btn-div-dark").removeClass("dev-btn-div-default").addClass("dev-btn-div-light");
-        theme = "light";
-        window.localStorage.setItem("todotheme", JSON.stringify(theme));
+        applyTheme("light")
+        window.localStorage.setItem("todotheme", JSON.stringify("light"));
     })
 
     $("#theme2").click(function(e) {
-        $(".header").removeClass("header-light").removeClass("header-dark").addClass("header-default");
-        $("body").removeClass("body-light").removeClass("body-dark").addClass("body-default");
-        $(".container").removeClass("container-light").removeClass("container-dark").addClass("container-default");
-        $(".form-div").removeClass("form-div-light").removeClass("form-div-dark").addClass("form-div-default");
-        $(".theme-div").removeClass("theme-div-light").removeClass("theme-div-dark").addClass("theme-div-default");
-        $(".list-div").removeClass("list-div-light").removeClass("list-div-dark").addClass("list-div-default");
-        $(".button").removeClass("button-light").removeClass("button-dark").addClass("button-default");
-        $(".ta").removeClass("ta-light").removeClass("ta-dark").addClass("ta-default");
-        $(".dev-div").removeClass("dev-div-light").removeClass("dev-div-dark").addClass("dev-div-default");
-        $(".dev-btn-div").removeClass("dev-btn-div-light").removeClass("dev-btn-div-dark").addClass("dev-btn-div-default");
-        theme = "default";
-        window.localStorage.setItem("todotheme", JSON.stringify(theme));
+        applyTheme("default")
+        window.localStorage.setItem("todotheme", JSON.stringify("default"));
     })
 
     $("#theme3").click(function(e) {
-        $(".header").removeClass("header-light").removeClass("header-default").addClass("header-dark");
-        $("body").removeClass("body-light").removeClass("body-default").addClass("body-dark");
-        $(".container").removeClass("container-light").removeClass("container-default").addClass("container-dark");
-        $(".form-div").removeClass("form-div-light").removeClass("form-div-default").addClass("form-div-dark");
-        $(".theme-div").removeClass("theme-div-light").removeClass("theme-div-default").addClass("theme-div-dark");
-        $(".list-div").removeClass("list-div-light").removeClass("list-div-default").addClass("list-div-dark");
-        $(".button").removeClass("button-light").removeClass("button-default").addClass("button-dark");
-        $(".ta").removeClass("ta-light").removeClass("ta-default").addClass("ta-dark");
-        $(".dev-div").removeClass("dev-div-light").removeClass("dev-div-default").addClass("dev-div-dark");
-        $(".dev-btn-div").removeClass("dev-btn-div-light").removeClass("dev-btn-div-default").addClass("dev-btn-div-dark");
-        theme = "dark";
-        window.localStorage.setItem("todotheme", JSON.stringify(theme));
+        applyTheme("dark")
+        window.localStorage.setItem("todotheme", JSON.stringify("dark"));
     })
 
-    if (!theme) {
-        $("#theme2").click();
-    }
-    if (theme === "light") {
-        $("#theme1").click();
-    }
-    if (theme === "default") {
-        $("#theme2").click();
-    }
-    if (theme === "dark") {
-        $("#theme3").click();
-    }
     
     let data = [];
     let key;
@@ -201,7 +234,6 @@ $(function() {
             newList.textContent = todo.text + " (by " + todo.time + ")";
         }
         else if (todo.time && todo.date) {
-            console.log("hi");
             newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
         }
         else {
@@ -331,4 +363,5 @@ $(function() {
     clrBtn.addEventListener("click", clrClick, false);
     clsBtn.addEventListener("click", clrLS, false);
     getSaved();
+    getTheme()
 });

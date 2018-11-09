@@ -82,13 +82,13 @@ li:hover > .delete-button {
 .clear-button {
     border-radius: 0 0 10px 10px;
 }
-.ta-light {
+.textarea-light {
     background: #ececec;
 }
-.ta-default {
+.textarea-default {
     background: #cccccc;
 }
-.ta-dark {
+.textarea-dark {
     background: #222222;
 }
 .button-light {
@@ -161,7 +161,7 @@ li:hover > .delete-button {
 .list-div-dark {
     color: #cecece;
 }
-.ta {
+.textarea {
     box-sizing: border-box;
     box-shadow: inset 0 2px 6px -2px black;
 }
