@@ -110,18 +110,12 @@ li:hover > .delete-button {
     cursor: pointer;
 }
 .input {
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     box-shadow: inset 0 3px 10px -3px black;
     height: 8vh;
     text-align: center;   
 }
 .date {
-    border-radius: 0 0 10px 10px;
-}
-.add-button {
-    border-radius: 10px 10px 0 0;
-}
-.clear-button {
     border-radius: 0 0 10px 10px;
 }
 .textarea {
@@ -131,9 +125,17 @@ li:hover > .delete-button {
 .form-div {
     border-radius: 15px;
     box-shadow: inset 0 5px 10px -3px black;
-    height: auto;
     margin: 10px;
     padding: 10px;
+    width: 200px;
+}
+.form-btn-div {
+    align-self: center;
+    border-radius: 15px;
+    box-shadow: inset 0 5px 10px -3px black;
+    margin: 10px;
+    padding: 10px;
+    position: absolute;
     width: 200px;
 }
 .list-div {
@@ -255,18 +257,21 @@ li:hover > .delete-button {
     background: #22222299;
 }
 .form-div-light,
+.form-btn-div-light,
 .theme-div-light,
 .list-div-light,
 .dev-btn-div-light {
     background: #ececec66;
 }
 .form-div-default,
+.form-btn-div-default,
 .theme-div-default,
 .list-div-default,
 .dev-btn-div-default {
     background: #ececec55;
 }
 .form-div-dark,
+.form-btn-div-dark,
 .theme-div-dark,
 .list-div-dark,
 .dev-btn-div-dark {

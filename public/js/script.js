@@ -14,6 +14,7 @@ $(function() {
             bodyClass: 'body-light',
             containerClass: 'container-light',
             formDivClass: 'form-div-light',
+            formBtnDivClass: 'form-btn-div-light',
             themeDivClass: 'theme-div-light',
             listDivClass: 'list-div-light',
             buttonClass: 'button-light',
@@ -26,6 +27,7 @@ $(function() {
             bodyClass: 'body-default',
             containerClass: 'container-default',
             formDivClass: 'form-div-default',
+            formBtnDivClass: 'form-btn-div-default',
             themeDivClass: 'theme-div-default',
             listDivClass: 'list-div-default',
             buttonClass: 'button-default',
@@ -38,6 +40,7 @@ $(function() {
             bodyClass: 'body-dark',
             containerClass: 'container-dark',
             formDivClass: 'form-div-dark',
+            formBtnDivClass: 'form-btn-div-dark',
             themeDivClass: 'theme-div-dark',
             listDivClass: 'list-div-dark',
             buttonClass: 'button-dark',
@@ -65,6 +68,7 @@ $(function() {
             $("body").removeClass("body-"+keys[i])
             $(".container").removeClass("container-"+keys[i])
             $(".form-div").removeClass("form-div-"+keys[i])
+            $(".form-btn-div").removeClass("form-btn-div-"+keys[i])
             $(".theme-div").removeClass("theme-div-"+keys[i])
             $(".list-div").removeClass("list-div-"+keys[i])
             $(".button").removeClass("button-"+keys[i])
@@ -76,6 +80,7 @@ $(function() {
         $("body").addClass("body-"+theme)
         $(".container").addClass("container-"+theme)
         $(".form-div").addClass("form-div-"+theme)
+        $(".form-btn-div").addClass("form-btn-div-"+theme)
         $(".theme-div").addClass("theme-div-"+theme)
         $(".list-div").addClass("list-div-"+theme)
         $(".button").addClass("button-"+theme)
@@ -319,19 +324,35 @@ $(function() {
         }
     })    
 
-    $("#input").focus()
     $(".container").hide().delay(500).slideToggle(1000)
     $(".container-glass").hide().delay(500).slideToggle(1000)
     $(".form-div").hide().delay(500).slideToggle(1000)
+    $(".form-btn-div").hide().delay(500).slideToggle(1000)
     $(".list-div").hide().delay(500).slideToggle(1000)
     $(".theme-div").hide().delay(500).slideToggle(1000)
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
+        $(".form-btn-div").slideToggle(1000)
         $(".list-div").slideToggle(1000)
         $(".theme-div").slideToggle(1000)
-        $("#input").focus()
+    })
+
+    $("#time").hide()
+    $("#date").hide()
+    $("#addToList").hide()
+    $("#input").focus(function(e) {
+        $("#input").css("border-radius", "10px 10px 0 0")
+        $("#time").slideDown(500)
+        $("#date").slideDown(500)
+        $("#addToList").slideDown(500)
+    })
+    $("#input").blur(function(e) {
+        $("#input").css("border-radius", "10px")
+        $("#time").slideUp(500)
+        $("#date").slideUp(500)
+        $("#addToList").slideUp(500)
     })
 
     $(".dev-div").hover(function(e){
