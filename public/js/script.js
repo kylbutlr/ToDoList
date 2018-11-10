@@ -345,14 +345,18 @@ $(function() {
     $("#input").focus(function(e) {
         $("#input").css("border-radius", "10px 10px 0 0")
         $("#time").slideDown(250, function() {
-        $("#date").slideDown(250, function () {
-        $("#addToList").slideDown(250)})})
+            $("#date").slideDown(250, function () {
+                $("#addToList").slideDown(250)
+            })
+        })
     })
     $("#input").blur(function(e) {
         $("#input").css("border-radius", "10px")
         $("#addToList").slideUp(250, function () {
-        $("#date").slideUp(250, function () {
-        $("#time").slideUp(250)})})
+            $("#date").slideUp(250, function () {
+                $("#time").slideUp(250)
+            })
+        })
     })
 
     $(".dev-div").hover(function(e){
