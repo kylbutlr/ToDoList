@@ -14,39 +14,42 @@ $(function() {
             bodyClass: 'body-light',
             containerClass: 'container-light',
             formDivClass: 'form-div-light',
-            formBtnDivClass: 'form-btn-div-light',
-            themeDivClass: 'theme-div-light',
             listDivClass: 'list-div-light',
             buttonClass: 'button-light',
             textareaClass: 'textarea-light',
-            devDivClass: 'dev-div-light',
-            devBtnDivClass: 'dev-btn-div-light'
+            clearDivClass: 'clear-div-light',
+            clearBtnDivClass: 'clear-btn-div-light',
+            themeDivClass: 'theme-div-light',
+            themeBtnDivClass: 'theme-btn-div-light',
+            h2Class: 'h2-light'
         },
         default: {
             headerClass: 'header-default',
             bodyClass: 'body-default',
             containerClass: 'container-default',
             formDivClass: 'form-div-default',
-            formBtnDivClass: 'form-btn-div-default',
-            themeDivClass: 'theme-div-default',
             listDivClass: 'list-div-default',
             buttonClass: 'button-default',
             textareaClass: 'textarea-default',
-            devDivClass: 'dev-div-default',
-            devBtnDivClass: 'dev-btn-div-default'
+            clearDivClass: 'clear-div-default',
+            clearBtnDivClass: 'clear-btn-div-default',
+            themeDivClass: 'theme-div-default',
+            themeBtnDivClass: 'theme-btn-div-default',
+            h2Class: 'h2-default'
         },
         dark: {
             headerClass: 'header-dark',
             bodyClass: 'body-dark',
             containerClass: 'container-dark',
             formDivClass: 'form-div-dark',
-            formBtnDivClass: 'form-btn-div-dark',
-            themeDivClass: 'theme-div-dark',
             listDivClass: 'list-div-dark',
             buttonClass: 'button-dark',
             textareaClass: 'textarea-dark',
-            devDivClass: 'dev-div-dark',
-            devBtnDivClass: 'dev-btn-div-dark'
+            clearDivClass: 'clear-div-dark',
+            clearBtnDivClass: 'clear-btn-div-dark',
+            themeDivClass: 'theme-div-dark',
+            themeBtnDivClass: 'theme-btn-div-dark',
+            h2Class: 'h2-dark'
         }
     }
 
@@ -62,19 +65,22 @@ $(function() {
     }
 
     function applyTheme(theme) {
-        const keys = Object.keys(themes)
-        for (i=0;i<keys.length;i++) {
-            $(".header").removeClass("header-"+keys[i])
-            $("body").removeClass("body-"+keys[i])
-            $(".container").removeClass("container-"+keys[i])
-            $(".form-div").removeClass("form-div-"+keys[i])
-            $(".form-btn-div").removeClass("form-btn-div-"+keys[i])
-            $(".theme-div").removeClass("theme-div-"+keys[i])
-            $(".list-div").removeClass("list-div-"+keys[i])
-            $(".button").removeClass("button-"+keys[i])
-            $(".textarea").removeClass("textarea-"+keys[i])
-            $(".dev-div").removeClass("dev-div-"+keys[i])
-            $(".dev-btn-div").removeClass("dev-btn-div-"+keys[i])
+        const themeList = Object.keys(themes)
+        for (i=0;i<themeList.length;i++) {
+            $(".header").removeClass("header-"+themeList[i])
+            $("body").removeClass("body-"+themeList[i])
+            $(".container").removeClass("container-"+themeList[i])
+            $(".form-div").removeClass("form-div-"+themeList[i])
+            $(".form-btn-div").removeClass("form-btn-div-"+themeList[i])
+            $(".theme-div").removeClass("theme-div-"+themeList[i])
+            $(".list-div").removeClass("list-div-"+themeList[i])
+            $(".button").removeClass("button-"+themeList[i])
+            $(".textarea").removeClass("textarea-"+themeList[i])
+            $(".clear-div").removeClass("clear-div-"+themeList[i])
+            $(".clear-btn-div").removeClass("clear-btn-div-"+themeList[i])
+            $(".theme-div").removeClass("theme-div-"+themeList[i])
+            $(".theme-btn-div").removeClass("theme-btn-div-"+themeList[i])
+            $("h2").removeClass("h2-"+themeList[i])
         }
         $(".header").addClass("header-"+theme)
         $("body").addClass("body-"+theme)
@@ -85,8 +91,11 @@ $(function() {
         $(".list-div").addClass("list-div-"+theme)
         $(".button").addClass("button-"+theme)
         $(".textarea").addClass("textarea-"+theme)
-        $(".dev-div").addClass("dev-div-"+theme)
-        $(".dev-btn-div").addClass("dev-btn-div-"+theme)
+        $(".clear-div").addClass("clear-div-"+theme)
+        $(".clear-btn-div").addClass("clear-btn-div-"+theme)
+        $(".theme-div").addClass("theme-div-"+theme)
+        $(".theme-btn-div").addClass("theme-btn-div-"+theme)
+        $("h2").addClass("h2-"+theme)
     }
 
     function saveList() {
@@ -235,7 +244,7 @@ $(function() {
     function createElementEditButton(key) {
         const editButton = document.createElement("button")
         editButton.dataset.key = key
-        editButton.className = "edit-button button button-"+currentTheme
+        editButton.className = "edit-button button"
         editButton.textContent = "Edit"
         editButton.addEventListener("click", onEditButtonClick)
         return editButton
@@ -249,7 +258,8 @@ $(function() {
         $date.value = data[t].date
         data.splice(t, 1)
         e.target.parentNode.classList.add("post-delete")
-        $input.select()
+        $input.focus()
+        checkInput(t)
         setTimeout(function() {
             e.target.parentNode.remove()
         }, 250)
@@ -258,7 +268,7 @@ $(function() {
     function createElementDeleteButton(key) {
         const deleteButton = document.createElement("button")
         deleteButton.dataset.key = key
-        deleteButton.className = "delete-button button button-"+currentTheme
+        deleteButton.className = "delete-button button"
         deleteButton.textContent = "Delete"
         deleteButton.addEventListener("click", onDeleteButtonClick)
         return deleteButton
@@ -327,46 +337,90 @@ $(function() {
     $(".container").hide().delay(500).slideToggle(1000)
     $(".container-glass").hide().delay(500).slideToggle(1000)
     $(".form-div").hide().delay(500).slideToggle(1000)
-    $(".form-btn-div").hide().delay(500).slideToggle(1000)
     $(".list-div").hide().delay(500).slideToggle(1000)
-    $(".theme-div").hide().delay(500).slideToggle(1000)
     $(".header").click(function(e) {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
-        $(".form-btn-div").slideToggle(1000)
         $(".list-div").slideToggle(1000)
-        $(".theme-div").slideToggle(1000)
     })
 
-    $("#time").hide()
-    $("#date").hide()
-    $("#addToList").hide()
+    $("#time").stop().animate({top:-35})
+    $("#date").stop().animate({top:-65})
+    $("#addToList").stop().animate({opacity:0.25})
     $("#input").focus(function(e) {
         $("#input").css("border-radius", "10px 10px 0 0")
-        $("#time").slideDown(250, function() {
-            $("#date").slideDown(250, function () {
-                $("#addToList").slideDown(250)
-            })
+        $("#time").stop().animate({top:0}, function() {
+            $("#date").stop().animate({top:0})
         })
     })
-    $("#input").blur(function(e) {
-        $("#input").css("border-radius", "10px")
-        $("#addToList").slideUp(250, function () {
-            $("#date").slideUp(250, function () {
-                $("#time").slideUp(250)
-            })
-        })
+    $("#input").on("change paste cut input", function() {
+        if (!$.trim(this.value).length) {
+            $("#addToList").stop().animate({opacity:0.25})
+        }
+        else {
+            $("#addToList").stop().animate({opacity:1})
+        }
     })
 
-    $(".dev-div").hover(function(e){
+    $(".textarea").blur(function() {
+        checkInput()
+    })
+
+    function checkInput(key) {
+        if (key != undefined) {
+            $("#addToList").stop().animate({opacity:1})
+        }
+        if (!$("#input").val() || key != undefined) {
+            if ($("#input").is(":active") 
+            || $("#time").is(":active") 
+            || $("#date").is(":active")
+            || $("#addToList").is(":active")) {}
+            else {
+                $("#date").stop().animate({top:-65}, function() {
+                    $("#time").stop().animate({top:-35}, function() {
+                        $("#input").css("border-radius", "10px")
+                    })
+                })
+            }
+        }
+        else {
+            $("#input").css("border-radius", "10px 10px 0 0")
+            $("#time").stop().animate({top:0}, function() {
+                $("#date").stop().animate({top:0})
+            })
+        }
+    }
+
+    $(".clear-div").hover(function(e){
+        $("#clearList").stop().animate({
+            opacity: e.type=="mouseenter" ? 1 : 0.5
+        }, 250)
         $("#clearLS").stop().animate({
             opacity: e.type=="mouseenter" ? 1 : 0.5
         }, 250)
-        $(".dev-div").stop().animate({
+        $(".clear-div").stop().animate({
             bottom: e.type=="mouseenter" ? -15 : -50
         }, 500)
-        $(".dev-div-glass").stop().animate({
+        $(".clear-div-glass").stop().animate({
+            top: e.type=="mouseenter" ? 15 : 50
+        }, 500)
+    })
+
+    $(".theme-div").hover(function(e){
+        $("#theme1").stop().animate({
+            opacity: e.type=="mouseenter" ? 1 : 0.5
+        }, 250)
+        $("#theme2").stop().animate({
+            opacity: e.type=="mouseenter" ? 1 : 0.5
+        }, 250)
+        $("#theme3").stop().animate({
+            opacity: e.type=="mouseenter" ? 1 : 0.5
+        }, 250)
+        $(".theme-div").stop().animate({
+            bottom: e.type=="mouseenter" ? -15 : -50
+        }, 500)
+        $(".theme-div-glass").stop().animate({
             top: e.type=="mouseenter" ? 15 : 50
         }, 500)
     })

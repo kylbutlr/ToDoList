@@ -15,30 +15,34 @@
     <div class="container">
         <div class="form-div">
             <form id="form">
-                <input class="block textarea input" id="input" placeholder="Add New ToDo (Max: 50)" maxlength="50" autocomplete="off" required>
+                <input class="block textarea input" id="input" placeholder="Add New Item" autocomplete="off" required>
                 <input class="block textarea time" type="time" id="time" value="" >
                 <input class="block textarea date" type="date" id="date" >
                 <button type="submit" class="button form-button block add-button" id="addToList">Add to List</button></form>
             </div>
-        <div class="theme-div">
-            <button class="button theme1-btn" id="theme1">Light</button>
-            <button class="button theme2-btn" id="theme2">Default</button>
-            <button class="button theme3-btn" id="theme3">Dark</button>
-        </div>
         <div class="list-div">
             <ul id="list"></ul>
         </div>
     </div>
     <div class="clear-div-glass"></div>
-    <div class="clear-div-glass">
+    <div class="clear-div">
         <div class="clear-btn-div">
-            <button class="button form-button block clear-button" id="clearList">Clear List</button>
+            <div class="clear-btn-div-title"><h2>Clear:</h2></div>
+            <div class="clear-buttons">
+                <button class="button clear-button" id="clearList">Clear List</button>
+                <button class="button clear-ls-button" id="clearLS">w.ls.clear()</button>
+            </div>
         </div>
     </div>
-    <div class="dev-div-glass"></div>
-    <div class="dev-div">
-        <div class="dev-btn-div">
-            <button class="button clear-ls-button" id="clearLS">w.ls.clear()</button>
+    <div class="theme-div-glass"></div>
+    <div class="theme-div">
+        <div class="theme-btn-div">
+            <div class="theme-btn-div-title"><h2>Themes:</h2></div>
+            <div class="theme-buttons">
+                <button class="button theme-btn theme1-btn" id="theme1">Light</button>
+                <button class="button theme-btn theme2-btn" id="theme2">Default</button>
+                <button class="button theme-btn theme3-btn" id="theme3">Dark</button>
+            </div>
         </div>
     </div>
 </body>

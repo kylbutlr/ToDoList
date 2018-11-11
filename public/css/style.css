@@ -1,7 +1,8 @@
 body,
 .header-glass,
 .container-glass,
-.dev-div-glass {
+.clear-div-glass,
+.theme-div-glass {
     background: url("images/0.jpg") 0 / cover fixed;
 }
 body {
@@ -13,6 +14,12 @@ h1 {
     font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
     font-size: 28px;
     font-weight: normal;
+}
+h2 {
+    font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    font-weight: normal;
+    margin: 0;
 }
 button, input, textarea {
     font-family: inherit;
@@ -48,7 +55,7 @@ li:hover > .delete-button {
 .header-glass {
     content: '';
     border-radius: 10px;
-    margin: 2.5vh 1vw 92.5vh;
+    margin: 2.6vh 1.5vw 92vh;
     position: absolute;
     top: 0;
     right: 0;
@@ -70,9 +77,9 @@ li:hover > .delete-button {
 .container-glass {
     content: '';
     border-radius: 20px;
-    margin: 10vh 10vw 19vh;
+    margin: 0 10vw 19.5vh;
     position: absolute;
-    top: 0;
+    top: 10.25vh;
     right: 0;
     bottom: 0;
     left: 0;
@@ -83,18 +90,10 @@ li:hover > .delete-button {
     display: inline-block;
     width: 100%;
 }
-.date {
-    padding: 0 0 0 10px;
-    text-align: center;
-}
-.time {
-    text-align: center;
-}
-.form-button {
-    height: 8vh;
-}
 .add-button {
     margin: 10px 0 0 0;
+    height: 8vh;
+    transition: opacity 0.1s;
 }
 .button {
     border-radius: 10px;
@@ -110,91 +109,136 @@ li:hover > .delete-button {
     cursor: pointer;
 }
 .input {
+    position: relative;
+    top: 10px;
     border-radius: 10px;
     box-shadow: inset 0 3px 10px -3px black;
     height: 8vh;
-    text-align: center;   
+    margin: 0 0 10px 0;
+    text-align: center;
+    z-index: 3;   
+}
+.time {
+    position: relative;
+    top: -35px;
+    height: 4vh;
+    text-align: center;
+    transition: opacity 0.25s;
+    z-index: 2;
 }
 .date {
+    position: relative;
+    top: -65px;
+    height: 4vh;
+    padding: 0 0 0 10px;
+    text-align: center;
     border-radius: 0 0 10px 10px;
+    transition: opacity 0.25s;
+    z-index: 1;
 }
 .textarea {
     box-sizing: border-box;
     box-shadow: inset 0 2px 6px -2px black;
 }
 .form-div {
+    position: relative;
+    top: 10px;
     border-radius: 15px;
     box-shadow: inset 0 5px 10px -3px black;
-    margin: 10px;
-    padding: 10px;
-    width: 200px;
+    margin: 0 10px 10px 10px;
+    padding: 0 10px 10px 10px;
+    width: 15vw;
 }
 .list-div {
+    position: relative;
+    top: 10px;
     border-radius: 15px;
     box-shadow: inset 0 5px 10px -3px black;
     cursor: default;
     flex: 1;
-    margin: 10px 10px 10px 0;
+    margin: 0 10px 10px 0;
     max-height: 67vh;
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 0 10px 0 0;
     vertical-align: top;
 }
 .theme-div {
-    border-radius: 15px;
-    box-shadow: inset 0 5px 10px -3px black;
+    position: absolute;
+    bottom: -50px;
+    right: 15vw;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+    width: 30vw;
+    height: 15vh;
+    box-shadow: 0 5px 15px -1px black;
+}
+.theme-div-glass {
+    content: '';
+    border-radius: 20px 20px 0 0;
+    margin: 85vh 0 0 55vw;
+    position: absolute;
+    top: 50px;
+    right: 15vw;
     bottom: 0;
+    left: 0;
+    filter:blur(5px);
+    z-index: -1;
+    min-width: 120px;
+}
+.theme-btn-div {
+    border-radius: 15px 15px 0 0;
+    box-shadow: inset 0 5px 10px -3px black;
     display: flex;
+    flex-direction: column;
     margin: 10px;
     padding: 10px;
-    position: absolute;
-    width: 200px;
+    height: auto;
+    width: auto;
+    position: relative;
+}
+.theme-btn-div-title {
+    text-justify: center;
+    margin: 0 auto;
+    padding: 0 0 5px 0;
+}
+.theme-buttons {
+    display: flex;
+}
+.theme-btn {
+    flex: 1;
+    height: 4vh;
+    opacity: 0.5;
+    transition: opacity 0.25s;
 }
 .theme1-btn {
     border-radius: 10px 0 0 10px;
-    flex: 1;
-    height: 4vh;
 }
 .theme2-btn {
     border-radius: 0;
-    flex: 1;
-    height: 4vh;
-    padding: 0 5px;
 }
 .theme3-btn {
     border-radius: 0 10px 10px 0;
-    flex: 1;
-    height: 4vh;
-}
-.form-btn-div {
-    align-self: center;
-    border-radius: 15px;
-    box-shadow: inset 0 5px 10px -3px black;
-    margin: 10px;
-    padding: 10px;
-    position: absolute;
-    width: 200px;
 }
 .clear-div {
     position: absolute;
     bottom: -50px;
-    right: 5vw;
+    left: 15vw;
     margin: 0;
     border-radius: 20px 20px 0 0;
-    width: 15vw;
-    height: 10vh;
+    width: 30vw;
+    height: 15vh;
     box-shadow: 0 5px 15px -1px black;
-    min-width: 120px;
 }
 .clear-div-glass {
     content: '';
     border-radius: 20px 20px 0 0;
-    margin: 90vh 0 0 80vw;
+    margin: 85vh 55vw 0 0;
     position: absolute;
     top: 50px;
-    right: 5vw;
+    right: 0;
     bottom: 0;
-    left: 0;
+    left: 15vw;
     filter:blur(5px);
     z-index: -1;
     min-width: 120px;
@@ -202,19 +246,35 @@ li:hover > .delete-button {
 .clear-btn-div {
     border-radius: 15px 15px 0 0;
     box-shadow: inset 0 5px 10px -3px black;
+    display: flex;
+    flex-direction: column;
     margin: 10px;
     padding: 10px;
     height: auto;
     width: auto;
     position: relative;
 }
+.clear-btn-div-title {
+    text-justify: center;
+    margin: 0 auto;
+    padding: 0 0 5px 0;
+}
+.clear-buttons {
+    display: flex;
+}
 .clear-button {
     opacity: 0.5;
-    border-radius: 10px;
-    width: 100%;
+    border-radius: 10px 0 0 10px;
+    flex: 1;
     height: 4vh;
     transition: opacity 0.25s;
-    position: relative;
+}
+.clear-ls-button {
+    opacity: 0.5;
+    border-radius: 0 10px 10px 0;
+    flex: 1;
+    height: 4vh;
+    transition: opacity 0.25s;
 }
 .edit-button {
     border-radius: 10px 0 0 10px;
@@ -284,38 +344,41 @@ li:hover > .delete-button {
 }
 .header-light,
 .container-light,
-.dev-div-light {
+.clear-div-light,
+.theme-div-light {
     background:#ececec33;
 }
 .header-default,
 .container-default,
-.dev-div-default {
+.clear-div-default,
+.theme-div-default {
     background: #22222255;
 }
 .header-dark,
 .container-dark,
-.dev-div-dark {
+.clear-div-dark,
+.theme-div-dark {
     background: #22222299;
 }
 .form-div-light,
 .form-btn-div-light,
-.theme-div-light,
 .list-div-light,
-.dev-btn-div-light {
+.clear-btn-div-light,
+.theme-btn-div-light {
     background: #ececec66;
 }
 .form-div-default,
 .form-btn-div-default,
-.theme-div-default,
 .list-div-default,
-.dev-btn-div-default {
+.clear-btn-div-default,
+.theme-btn-div-default {
     background: #ececec55;
 }
 .form-div-dark,
 .form-btn-div-dark,
-.theme-div-dark,
 .list-div-dark,
-.dev-btn-div-dark {
+.clear-btn-div-dark,
+.theme-btn-div-dark {
     background: #22222299;
 }
 .body-light,
@@ -326,55 +389,20 @@ li:hover > .delete-button {
 .list-div-default {
     color: #222222;
 }
-.header-dark,
-.header-default {
-    color: #ffffffbb;
-}
-.header-light {
-    color: #000000bb;
-}
 .body-dark,
 .list-div-dark {
     color: #cecece;
 }
-.dev-div {
-    position: absolute;
-    bottom: -50px;
-    right: 5vw;
-    margin: 0;
-    border-radius: 20px 20px 0 0;
-    width: 15vw;
-    height: 10vh;
-    box-shadow: 0 5px 15px -1px black;
-    min-width: 120px;
+.header-dark,
+.header-default,
+.h2-dark,
+.h2-dark,
+.h2-default,
+.h2-default {
+    color: #ffffffbb;
 }
-.dev-div-glass {
-    content: '';
-    border-radius: 20px 20px 0 0;
-    margin: 90vh 0 0 80vw;
-    position: absolute;
-    top: 50px;
-    right: 5vw;
-    bottom: 0;
-    left: 0;
-    filter:blur(5px);
-    z-index: -1;
-    min-width: 120px;
-}
-.dev-btn-div {
-    border-radius: 15px 15px 0 0;
-    box-shadow: inset 0 5px 10px -3px black;
-    margin: 10px;
-    padding: 10px;
-    height: auto;
-    width: auto;
-    position: relative;
-}
-.clear-ls-button {
-    opacity: 0.5;
-    border-radius: 10px;
-    width: 100%;
-    height: 4vh;
-    transition: opacity 0.25s;
-    position: relative;
+.header-light,
+.h2-light,
+.h2-light {
+    color: #000000bb;
 }
