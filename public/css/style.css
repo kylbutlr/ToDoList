@@ -31,6 +31,7 @@ h3 {
     font-size: 24px;
     font-weight: normal;
     margin: 0;
+    text-shadow: 1px 2px 5px black;
 }
 h4 {
     display: inline;
@@ -431,15 +432,14 @@ li:hover > .delete-button {
     color: #cecece;
 }
 .header-dark,
+.h3-dark,
 .header-default,
-.h3-dark,
-.h3-dark,
-.h3-default,
 .h3-default {
     color: #ffffffbb;
+    text-shadow: 1px 2px 2.5px black;
 }
 .header-light,
-.h3-light,
 .h3-light {
     color: #000000bb;
+    text-shadow: 1px 2px 2.5px #666666;
 }
