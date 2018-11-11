@@ -146,6 +146,7 @@ $(function() {
             newList.textContent = todo.text
         }
         newList.key = key
+        newList.addEventListener("click", onListItemClick)
         newList.appendChild(createElementEditButton(key))
         newList.appendChild(createElementDeleteButton(key))
         newList.insertBefore(createElementCheckbox(todo, key), newList.childNodes[0])
@@ -298,6 +299,22 @@ $(function() {
             checkbox.checked = false
         }
         return checkbox
+    }
+
+    function onListItemClick(e) {
+        const target = data.findIndex(x => x.key == e.target.children[0].dataset.key)
+        if (e.target.classList.contains("checked")) {
+            e.target.classList.remove("checked")
+            e.target.children[0].checked = false
+            data[target].done = false
+            saveList()
+        }
+        else {
+            e.target.classList.add("checked")
+            e.target.children[0].checked = true
+            data[target].done = true
+            saveList()
+        }
     }
 
     function onCheckboxClick(e) {
