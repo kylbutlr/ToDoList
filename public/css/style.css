@@ -110,6 +110,7 @@ li:hover > .delete-button {
     width: 100%;
 }
 .add-button {
+    font-size: 16px;
     margin: 10px 0 0 0;
     height: 8vh;
     transition: opacity 0.1s;
@@ -128,6 +129,7 @@ li:hover > .delete-button {
     cursor: pointer;
 }
 .input {
+    font-size: 16px;
     position: relative;
     top: 10px;
     border-radius: 10px;
