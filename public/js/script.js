@@ -21,7 +21,7 @@ $(function() {
             clearBtnDivClass: 'clear-btn-div-light',
             themeDivClass: 'theme-div-light',
             themeBtnDivClass: 'theme-btn-div-light',
-            h2Class: 'h2-light'
+            h3Class: 'h3-light'
         },
         default: {
             headerClass: 'header-default',
@@ -35,7 +35,7 @@ $(function() {
             clearBtnDivClass: 'clear-btn-div-default',
             themeDivClass: 'theme-div-default',
             themeBtnDivClass: 'theme-btn-div-default',
-            h2Class: 'h2-default'
+            h3Class: 'h3-default'
         },
         dark: {
             headerClass: 'header-dark',
@@ -49,7 +49,7 @@ $(function() {
             clearBtnDivClass: 'clear-btn-div-dark',
             themeDivClass: 'theme-div-dark',
             themeBtnDivClass: 'theme-btn-div-dark',
-            h2Class: 'h2-dark'
+            h3Class: 'h3-dark'
         }
     }
 
@@ -80,7 +80,7 @@ $(function() {
             $(".clear-btn-div").removeClass("clear-btn-div-"+themeList[i])
             $(".theme-div").removeClass("theme-div-"+themeList[i])
             $(".theme-btn-div").removeClass("theme-btn-div-"+themeList[i])
-            $("h2").removeClass("h2-"+themeList[i])
+            $("h3").removeClass("h3-"+themeList[i])
         }
         $(".header").addClass("header-"+theme)
         $("body").addClass("body-"+theme)
@@ -95,7 +95,7 @@ $(function() {
         $(".clear-btn-div").addClass("clear-btn-div-"+theme)
         $(".theme-div").addClass("theme-div-"+theme)
         $(".theme-btn-div").addClass("theme-btn-div-"+theme)
-        $("h2").addClass("h2-"+theme)
+        $("h3").addClass("h3-"+theme)
     }
 
     function saveList() {
@@ -130,24 +130,24 @@ $(function() {
 
     function renderTodo(todo, key) {
         const newList = document.createElement("li")
-        const h3 = document.createElement("h3")
+        const h4 = document.createElement("h4")
         const dateObject = new Date(todo.date)
         const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
         const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
         if (!todo.time && todo.date) {
-            h3.textContent = todo.text + " (by " + formattedDate + ")"
+            h4.textContent = todo.text + " (by " + formattedDate + ")"
         }
         else if (todo.time && !todo.date) {
-            h3.textContent = todo.text + " (by " + todo.time + ")"
+            h4.textContent = todo.text + " (by " + todo.time + ")"
         }
         else if (todo.time && todo.date) {
-            h3.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
+            h4.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
         }
         else {
-            h3.textContent = todo.text
+            h4.textContent = todo.text
         }
-        h3.addEventListener("click", onListItemClick)
-        newList.appendChild(h3)
+        h4.addEventListener("click", onListItemClick)
+        newList.appendChild(h4)
         newList.key = key
         newList.appendChild(createElementEditButton(key))
         newList.appendChild(createElementDeleteButton(key))

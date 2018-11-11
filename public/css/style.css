@@ -12,25 +12,34 @@ body {
 }
 h1 {
     position: relative;
-    bottom: 4px;
+    bottom: 0.25vh;
     font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
     font-size: 32px;
     font-weight: normal;
+    margin: 0;
+    padding: 0;
 }
 h2 {
+    position: relative;
+    bottom: 0.25vh;
+    font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    padding: 0;
+}
+h3 {
     font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
     font-size: 24px;
     font-weight: normal;
     margin: 0;
 }
-h3 {
+h4 {
     display: inline;
     font-family: inherit;
     font-size: inherit;
     font-weight: normal;
     margin: 0;
 }
-h3:hover {
+h4:hover {
     cursor: pointer;
 }
 button, input, textarea {
@@ -59,9 +68,13 @@ li:hover > .delete-button {
     opacity: 1;
 }
 .header {
+    align-items: center;
     border-radius: 10px;
     box-shadow: 0 5px 15px -1px black;
     cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     height: 5vh;
     margin: 2.5vh 1vw;
     text-align: center;
@@ -419,14 +432,14 @@ li:hover > .delete-button {
 }
 .header-dark,
 .header-default,
-.h2-dark,
-.h2-dark,
-.h2-default,
-.h2-default {
+.h3-dark,
+.h3-dark,
+.h3-default,
+.h3-default {
     color: #ffffffbb;
 }
 .header-light,
-.h2-light,
-.h2-light {
+.h3-light,
+.h3-light {
     color: #000000bb;
 }
