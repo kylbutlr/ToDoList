@@ -136,6 +136,7 @@ li:hover > .delete-button {
     box-shadow: inset 0 3px 10px -3px black;
     height: 8vh;
     margin: 0 0 10px 0;
+    padding: 0 10px;
     text-align: center;
     z-index: 3;   
 }
@@ -315,10 +316,11 @@ li:hover > .delete-button {
     border-radius: 5px;
     box-shadow: 0px 2px 4px -3px black;
     margin-right: 10px;
+    transform: scale(1.2)
 }
 .check-box:active {
     box-shadow: inset 0px 4px 6px -2px black;
-    transform: scale(0.8);
+    transform: scale(1);
 }
 .check-box:hover {
     cursor: pointer;

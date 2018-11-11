@@ -293,6 +293,7 @@ $(function() {
         checkbox.type = "checkbox"
         checkbox.className = "check-box"
         checkbox.dataset.key = key
+        checkbox.id = "cb"+key
         checkbox.addEventListener("click", onCheckboxClick)
         if (todo.done === true) {
             checkbox.checked = true
@@ -301,22 +302,6 @@ $(function() {
             checkbox.checked = false
         }
         return checkbox
-    }
-
-    function onListItemClick(e) {
-        const target = data.findIndex(x => x.key == e.target.parentNode.children[0].dataset.key)
-        if (e.target.parentNode.classList.contains("checked")) {
-            e.target.parentNode.classList.remove("checked")
-            e.target.parentNode.children[0].checked = false
-            data[target].done = false
-            saveList()
-        }
-        else {
-            e.target.parentNode.classList.add("checked")
-            e.target.parentNode.children[0].checked = true
-            data[target].done = true
-            saveList()
-        }
     }
 
     function onCheckboxClick(e) {
@@ -333,6 +318,11 @@ $(function() {
             data[target].done = true
             saveList()
         }
+    }
+
+    function onListItemClick(e) {
+        const target = data.findIndex(x => x.key == e.target.parentNode.children[0].dataset.key)
+        $("#cb"+target).trigger("click")
     }
 
     $time.value = "12:00"
