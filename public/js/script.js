@@ -322,7 +322,6 @@ $(function() {
 
     function onListItemClick(e) {
         const tkey = e.target.parentNode.children[0].dataset.key
-        console.log(tkey)
         $("#cb"+tkey).trigger("click")
     }
 
