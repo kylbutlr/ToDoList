@@ -419,10 +419,10 @@ $(function() {
             opacity: e.type=="mouseenter" ? 1 : 0.5
         }, 250)
         $(".clear-div").stop().animate({
-            bottom: e.type=="mouseenter" ? -15 : -50
+            bottom: e.type=="mouseenter" ? -10 : -46
         }, 500)
         $(".clear-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 15 : 50
+            top: e.type=="mouseenter" ? 10 : 46
         }, 500)
     })
 
@@ -437,10 +437,10 @@ $(function() {
             opacity: e.type=="mouseenter" ? 1 : 0.5
         }, 250)
         $(".theme-div").stop().animate({
-            bottom: e.type=="mouseenter" ? -15 : -50
+            bottom: e.type=="mouseenter" ? -10 : -46
         }, 500)
         $(".theme-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 15 : 50
+            top: e.type=="mouseenter" ? 10 : 46
         }, 500)
     })
 
