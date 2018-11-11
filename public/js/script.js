@@ -130,23 +130,25 @@ $(function() {
 
     function renderTodo(todo, key) {
         const newList = document.createElement("li")
+        const h3 = document.createElement("h3")
         const dateObject = new Date(todo.date)
         const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
         const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
         if (!todo.time && todo.date) {
-            newList.textContent = todo.text + " (by " + formattedDate + ")"
+            h3.textContent = todo.text + " (by " + formattedDate + ")"
         }
         else if (todo.time && !todo.date) {
-            newList.textContent = todo.text + " (by " + todo.time + ")"
+            h3.textContent = todo.text + " (by " + todo.time + ")"
         }
         else if (todo.time && todo.date) {
-            newList.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
+            h3.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
         }
         else {
-            newList.textContent = todo.text
+            h3.textContent = todo.text
         }
+        h3.addEventListener("click", onListItemClick)
+        newList.appendChild(h3)
         newList.key = key
-        newList.addEventListener("click", onListItemClick)
         newList.appendChild(createElementEditButton(key))
         newList.appendChild(createElementDeleteButton(key))
         newList.insertBefore(createElementCheckbox(todo, key), newList.childNodes[0])
@@ -302,16 +304,16 @@ $(function() {
     }
 
     function onListItemClick(e) {
-        const target = data.findIndex(x => x.key == e.target.children[0].dataset.key)
-        if (e.target.classList.contains("checked")) {
-            e.target.classList.remove("checked")
-            e.target.children[0].checked = false
+        const target = data.findIndex(x => x.key == e.target.parentNode.children[0].dataset.key)
+        if (e.target.parentNode.classList.contains("checked")) {
+            e.target.parentNode.classList.remove("checked")
+            e.target.parentNode.children[0].checked = false
             data[target].done = false
             saveList()
         }
         else {
-            e.target.classList.add("checked")
-            e.target.children[0].checked = true
+            e.target.parentNode.classList.add("checked")
+            e.target.parentNode.children[0].checked = true
             data[target].done = true
             saveList()
         }

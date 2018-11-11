@@ -21,10 +21,22 @@ h2 {
     font-weight: normal;
     margin: 0;
 }
+h3 {
+    display: inline;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: normal;
+    margin: 0;
+}
 button, input, textarea {
     font-family: inherit;
     outline: none;
     color: inherit;
+}
+input[type=checkbox] {
+    vertical-align: middle;
+    position: relative;
+    bottom: 1px;
 }
 ul {
     margin-left:-25px;
@@ -119,21 +131,22 @@ li:hover > .delete-button {
     z-index: 3;   
 }
 .time {
+    border-radius: 0;
     position: relative;
     top: -35px;
     height: 4vh;
     text-align: center;
-    transition: opacity 0.25s;
+    transition: top 0.1s ease;
     z-index: 2;
 }
 .date {
+    border-radius: 0 0 10px 10px;
     position: relative;
     top: -65px;
     height: 4vh;
     padding: 0 0 0 10px;
     text-align: center;
-    border-radius: 0 0 10px 10px;
-    transition: opacity 0.25s;
+    transition: top 0.1s ease;
     z-index: 1;
 }
 .textarea {
