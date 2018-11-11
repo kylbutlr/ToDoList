@@ -12,7 +12,7 @@ body {
 }
 h1 {
     position: relative;
-    bottom: 0.25vh;
+    top: 0.25vh;
     font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
     font-size: 32px;
     font-weight: normal;
