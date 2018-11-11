@@ -30,6 +30,9 @@ h3 {
     font-weight: normal;
     margin: 0;
 }
+h3:hover {
+    cursor: pointer;
+}
 button, input, textarea {
     font-family: inherit;
     outline: none;
