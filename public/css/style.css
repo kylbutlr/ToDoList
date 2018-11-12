@@ -96,6 +96,7 @@ li:hover > .delete-button {
     left: 0;
     filter:blur(5px);
     z-index: -1;
+    opacity: 0.8;
 }
 .container {
     align-items: flex-start;
@@ -118,6 +119,7 @@ li:hover > .delete-button {
     left: 0;
     filter:blur(5px);
     z-index: -1;
+    opacity: 0.8;
 }
 .block {
     display: inline-block;
@@ -222,6 +224,7 @@ li:hover > .delete-button {
     filter:blur(5px);
     z-index: -1;
     min-width: 120px;
+    opacity: 0.8;
 }
 .theme-btn-div {
     border-radius: 15px 15px 0 0;
@@ -279,6 +282,7 @@ li:hover > .delete-button {
     filter:blur(5px);
     z-index: -1;
     min-width: 120px;
+    opacity: 0.8;
 }
 .clear-btn-div {
     border-radius: 15px 15px 0 0;
@@ -384,33 +388,33 @@ li:hover > .delete-button {
 .container-light,
 .clear-div-light,
 .theme-div-light {
-    background:#ececec33;
+    background:#ececec44;
 }
 .header-default,
 .container-default,
 .clear-div-default,
 .theme-div-default {
-    background: #22222255;
+    background: #22222277;
 }
 .header-dark,
 .container-dark,
 .clear-div-dark,
 .theme-div-dark {
-    background: #22222299;
+    background: #222222aa;
 }
 .form-div-light,
 .form-btn-div-light,
 .list-div-light,
 .clear-btn-div-light,
 .theme-btn-div-light {
-    background: #ececec66;
+    background: #ececec88;
 }
 .form-div-default,
 .form-btn-div-default,
 .list-div-default,
 .clear-btn-div-default,
 .theme-btn-div-default {
-    background: #ececec55;
+    background: #ececec44;
 }
 .form-div-dark,
 .form-btn-div-dark,
