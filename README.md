@@ -1,2 +1,2 @@
 # To-Do List
-Basic To-Do List
+Javscript To-Do List
