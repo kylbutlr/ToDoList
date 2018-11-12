@@ -1,6 +1,9 @@
-let currentTheme = undefined
+/* jshint asi: true */
+/* jshint esversion: 6 */
+
+let currentTheme
 let data = []
-let key = undefined
+let key
 const $input = document.querySelector("#input")
 const $list = document.querySelector("#list")
 const $date = document.querySelector("#date")
@@ -183,7 +186,7 @@ const onFormSubmit = (e) => {
         key++
         $input.value = ""
         $time.value = "12:00"
-        $date.valueAsDate = getDateObject(new Date)
+        $date.valueAsDate = getDateObject(new Date())
         $input.focus()
     }
 }
@@ -329,10 +332,7 @@ function checkInput(key) {
         $("#addToList").stop().animate({opacity:1})
     }
     if (!$("#input").val() || key != undefined) {
-        if ($("#input").is(":active") 
-        || $("#time").is(":active") 
-        || $("#date").is(":active")
-        || $("#addToList").is(":active")) {}
+        if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addToList").is(":active")) {}
         else {
             $("#date").stop().animate({top:-65}, function() {
                 $("#time").stop().animate({top:-35}, function() {
@@ -350,7 +350,7 @@ function checkInput(key) {
 }
 
 $time.value = "12:00"
-$date.valueAsDate = getDateObject(new Date)
+$date.valueAsDate = getDateObject(new Date())
 form.addEventListener("submit", onFormSubmit, false)
 clearList.addEventListener("click", onClearClick, false)
 clearLS.addEventListener("click", onClearLSClick, false)
@@ -360,7 +360,7 @@ getSavedTheme()
 $(function() {
     $("#date").change(function() {
         const date = getDateObject(this.value)
-        const now = getDateObject(new Date)
+        const now = getDateObject(new Date())
         if (date < now) {
             alert("Entry must have a future date (or no date).")
             this.valueAsDate = now
