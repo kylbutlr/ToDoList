@@ -81,7 +81,7 @@ li:hover > .delete-button {
     text-align: center;
 }
 .header:active {
-    box-shadow: inset 0px 7px 20px -2px black;
+    box-shadow: inset 0px 5px 10px -2px black;
     transform: scale(0.975);
 }
 .header:active > .header-glass {
