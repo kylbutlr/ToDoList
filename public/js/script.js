@@ -324,6 +324,31 @@ function onListItemClick(e) {
     $("#cb"+tkey).trigger("click")
 }
 
+function checkInput(key) {
+    if (key != undefined) {
+        $("#addToList").stop().animate({opacity:1})
+    }
+    if (!$("#input").val() || key != undefined) {
+        if ($("#input").is(":active") 
+        || $("#time").is(":active") 
+        || $("#date").is(":active")
+        || $("#addToList").is(":active")) {}
+        else {
+            $("#date").stop().animate({top:-65}, function() {
+                $("#time").stop().animate({top:-35}, function() {
+                    $("#input").css("border-radius", "10px")
+                })
+            })
+        }
+    }
+    else {
+        $("#input").css("border-radius", "10px 10px 0 0")
+        $("#time").stop().animate({top:0}, function() {
+            $("#date").stop().animate({top:0})
+        })
+    }
+}
+
 $time.value = "12:00"
 $date.valueAsDate = getDateObject(new Date)
 form.addEventListener("submit", onFormSubmit, false)
@@ -375,31 +400,6 @@ $(function() {
     $(".textarea").blur(function() {
         checkInput()
     })
-
-    function checkInput(key) {
-        if (key != undefined) {
-            $("#addToList").stop().animate({opacity:1})
-        }
-        if (!$("#input").val() || key != undefined) {
-            if ($("#input").is(":active") 
-            || $("#time").is(":active") 
-            || $("#date").is(":active")
-            || $("#addToList").is(":active")) {}
-            else {
-                $("#date").stop().animate({top:-65}, function() {
-                    $("#time").stop().animate({top:-35}, function() {
-                        $("#input").css("border-radius", "10px")
-                    })
-                })
-            }
-        }
-        else {
-            $("#input").css("border-radius", "10px 10px 0 0")
-            $("#time").stop().animate({top:0}, function() {
-                $("#date").stop().animate({top:0})
-            })
-        }
-    }
 
     $(".clear-div").hover(function(e){
         $("#clearList").stop().animate({
