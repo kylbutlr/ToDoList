@@ -80,15 +80,17 @@ li:hover > .delete-button {
     margin: 2.5vh 2.5vw;
     text-align: center;
 }
-.header:active,
-.header-glass:active {
+.header:active {
     box-shadow: inset 0px 7px 20px -2px black;
+    transform: scale(0.975);
+}
+.header:active > .header-glass {
     transform: scale(0.975);
 }
 .header-glass {
     content: '';
     border-radius: 10px;
-    margin: 2.6vh 1.5vw 92vh;
+    margin: 2.5vh 3.25vw 92.5vh;
     position: absolute;
     top: 0;
     right: 0;
@@ -111,9 +113,9 @@ li:hover > .delete-button {
 .container-glass {
     content: '';
     border-radius: 20px;
-    margin: 0 10vw 19.5vh;
+    margin: 0 10vw 20vh;
     position: absolute;
-    top: 10.25vh;
+    top: 10vh;
     right: 0;
     bottom: 0;
     left: 0;
