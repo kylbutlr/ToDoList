@@ -23,7 +23,7 @@ const themes = {
         clearBtnDivClass: 'clear-btn-div-light',
         themeDivClass: 'theme-div-light',
         themeBtnDivClass: 'theme-btn-div-light',
-        h3Class: 'h3-light'
+        h2Class: 'h2-light'
     },
     default: {
         headerClass: 'header-default',
@@ -37,7 +37,7 @@ const themes = {
         clearBtnDivClass: 'clear-btn-div-default',
         themeDivClass: 'theme-div-default',
         themeBtnDivClass: 'theme-btn-div-default',
-        h3Class: 'h3-default'
+        h2Class: 'h2-default'
     },
     dark: {
         headerClass: 'header-dark',
@@ -51,7 +51,7 @@ const themes = {
         clearBtnDivClass: 'clear-btn-div-dark',
         themeDivClass: 'theme-div-dark',
         themeBtnDivClass: 'theme-btn-div-dark',
-        h3Class: 'h3-dark'
+        h2Class: 'h2-dark'
     }
 }
 
@@ -82,7 +82,7 @@ function applyTheme(theme) {
         $(".clear-btn-div").removeClass("clear-btn-div-"+themeList[i])
         $(".theme-div").removeClass("theme-div-"+themeList[i])
         $(".theme-btn-div").removeClass("theme-btn-div-"+themeList[i])
-        $("h3").removeClass("h3-"+themeList[i])
+        $("h2").removeClass("h2-"+themeList[i])
     }
     $(".header").addClass("header-"+theme)
     $("body").addClass("body-"+theme)
@@ -97,7 +97,7 @@ function applyTheme(theme) {
     $(".clear-btn-div").addClass("clear-btn-div-"+theme)
     $(".theme-div").addClass("theme-div-"+theme)
     $(".theme-btn-div").addClass("theme-btn-div-"+theme)
-    $("h3").addClass("h3-"+theme)
+    $("h2").addClass("h2-"+theme)
 }
 
 function saveList() {
@@ -108,7 +108,7 @@ function getSavedList() {
     data = JSON.parse(window.localStorage.getItem("tododata"))
     if (!data) {
         data = []
-        const dflt1 = {"key": 0, "text": "Delete this entry", "realtime": "", "date": $date.value, "done": true}
+        const dflt1 = {"key": 0, "text": "Delete this item", "realtime": "", "date": $date.value, "done": true}
         const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
         data.push(dflt1, dflt2)
         renderTodo(dflt1, 0)
@@ -132,24 +132,24 @@ function getSavedList() {
 
 function renderTodo(todo, key) {
     const newList = document.createElement("li")
-    const h4 = document.createElement("h4")
+    const h3 = document.createElement("h3")
     const dateObject = new Date(todo.date)
     const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
     const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
     if (!todo.time && todo.date) {
-        h4.textContent = todo.text + " (by " + formattedDate + ")"
+        h3.textContent = todo.text + " (by " + formattedDate + ")"
     }
     else if (todo.time && !todo.date) {
-        h4.textContent = todo.text + " (by " + todo.time + ")"
+        h3.textContent = todo.text + " (by " + todo.time + ")"
     }
     else if (todo.time && todo.date) {
-        h4.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
+        h3.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
     }
     else {
-        h4.textContent = todo.text
+        h3.textContent = todo.text
     }
-    h4.addEventListener("click", onListItemClick)
-    newList.appendChild(h4)
+    h3.addEventListener("click", onListItemClick)
+    newList.appendChild(h3)
     newList.key = key
     newList.appendChild(createElementEditButton(key))
     newList.appendChild(createElementDeleteButton(key))
@@ -167,7 +167,7 @@ function renderTodo(todo, key) {
 const onFormSubmit = (e) => {
     e.preventDefault()
     if ($input.value === " ") {
-        alert("Entry must have a name.")
+        alert("New item must have a name.")
         $input.value = ""
         $input.focus()
     }
@@ -362,7 +362,7 @@ $(function() {
         const date = getDateObject(this.value)
         const now = getDateObject(new Date())
         if (date < now) {
-            alert("Entry must have a future date (or no date).")
+            alert("New item must have a future date (or no date).")
             this.valueAsDate = now
             this.focus()
         }

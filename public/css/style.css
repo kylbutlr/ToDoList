@@ -20,27 +20,20 @@ h1 {
     padding: 0;
 }
 h2 {
-    position: relative;
-    bottom: 0.25vh;
-    font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
-    font-size: 16px;
-    padding: 0;
-}
-h3 {
     font-family: Brush Script MT, Brush Script Std, Arial, Helvetica, sans-serif;
     font-size: 24px;
     font-weight: normal;
     margin: 0;
     text-shadow: 1px 2px 5px black;
 }
-h4 {
+h3 {
     display: inline;
     font-family: inherit;
     font-size: inherit;
     font-weight: normal;
     margin: 0;
 }
-h4:hover {
+h3:hover {
     cursor: pointer;
 }
 button, input, textarea {
@@ -438,14 +431,14 @@ li:hover > .delete-button {
     color: #cecece;
 }
 .header-dark,
-.h3-dark,
+.h2-dark,
 .header-default,
-.h3-default {
+.h2-default {
     color: #ececec;
     text-shadow: 1px 2px 2.5px black;
 }
 .header-light,
-.h3-light {
+.h2-light {
     color: #000000bb;
     text-shadow: 1px 2px 2.5px #666666;
 }
