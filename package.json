@@ -1,0 +1,27 @@
+{
+  "name": "todo-list",
+  "version": "1.0.0",
+  "description": "Todo List",
+  "main": "todo.js",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kylbutlr/todo-list.git"
+  },
+  "keywords": [
+    "Todo",
+    "List"
+  ],
+  "author": "Kyle Butler",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kylbutlr/todo-list/issues"
+  },
+  "homepage": "https://github.com/kylbutlr/todo-list#readme"
+}
