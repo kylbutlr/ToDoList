@@ -11,8 +11,13 @@ const fs = require('fs')
 //todo.get('/', function(req, res){
 const server = http.createServer((req, res) => {
   console.log('Request was made: '+ req.url)
+  const todos = []
   res.setHeader("Access-Control-Allow-Origin", "*")
-  res.end('Hello World!')
+  if (req.url === '/todos') {
+    res.end(JSON.stringify({ todos }));
+  } else {
+    res.end('404: Not Found');
+  }
 })
 
 server.listen(3000)
