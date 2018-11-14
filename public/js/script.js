@@ -1,6 +1,3 @@
-/* jshint asi: true */
-/* jshint esversion: 6 */
-
 let currentTheme
 let data = []
 let key

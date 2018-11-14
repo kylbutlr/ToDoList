@@ -1,6 +1,3 @@
-/* jshint asi: true */
-/* jshint esversion: 6 */
-
 const http = require('http')
 const fs = require('fs')
 //const express = require('express')
