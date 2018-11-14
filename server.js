@@ -19,8 +19,8 @@ const server = http.createServer((req, res) => {
       body += chunk.toString(); // convert Buffer to string
     })
     req.on('end', () => {
-      console.log(body)
-      res.end('ok')
+      todos.push(body)
+      res.end('POSTed')
     })
   } 
   else {

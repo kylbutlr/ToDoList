@@ -1,5 +1,5 @@
 let currentTheme
-let data = []
+let todos = []
 let key
 const $input = document.querySelector("#input")
 const $list = document.querySelector("#list")
@@ -98,31 +98,37 @@ function applyTheme(theme) {
 }
 
 function saveList() {
-    window.localStorage.setItem("tododata", JSON.stringify(data))
+    //window.localStorage.setItem("tododata", JSON.stringify(todos))
+    //$.put
 }
 
 function getSavedList() {
-    data = JSON.parse(window.localStorage.getItem("tododata"))
-    if (!data) {
-        data = []
+    //todos = JSON.parse(window.localStorage.getItem("tododata"))
+    $.get('http://localhost:3000', (data) => todos.push(data));
+    console.log(todos)
+    if (!todos) {
+        console.log("NO SAVE")
+        todos = []
         const dflt1 = {"key": 0, "text": "Delete this item", "realtime": "", "date": $date.value, "done": true}
         const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
-        data.push(dflt1, dflt2)
+        todos.push(dflt1, dflt2)
         renderTodo(dflt1, 0)
         renderTodo(dflt2, 1)
         key = 2
         saveList()
     }
-    else if (data.length>0) {
-        for (let i=0;i<data.length;i++) {
-            data[i].key = i
-            renderTodo(data[i], i)
+    else if (todos.length>0) {
+        console.log("SAVED DATA")
+        for (let i=0;i<todos.length;i++) {
+            todos[i].key = i
+            renderTodo(todos[i], i)
         }
-        key = data[data.length - 1].key + 1
+        key = todos[todos.length - 1].key + 1
     }
     else {
+        console.log("SAVED NOTHING")
         $list.innerHTML = ""
-        data = []
+        todos = []
         key = 0
     }
 }
@@ -177,7 +183,8 @@ const onFormSubmit = (e) => {
         else {
             todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
         }
-        data.push(todo)
+        todos.push(todo)
+        $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
         renderTodo(todo, key)
         saveList()
         key++
@@ -229,7 +236,7 @@ const onClearClick = (e) => {
     else {
         $list.innerHTML = ""
     }
-    data = []
+    todos = []
     key = 0
     saveList()
 }
@@ -237,7 +244,7 @@ const onClearClick = (e) => {
 const onClearLSClick = (e) => {
     e.preventDefault()
     $list.innerHTML = ""
-    data = []
+    todos = []
     key = 0
     window.localStorage.clear()
     window.location.reload()
@@ -254,11 +261,11 @@ function createElementEditButton(key) {
 
 function onEditButtonClick(e) {
     e.preventDefault()
-    const t = data.findIndex(x => x.key == e.target.dataset.key)
-    $input.value = data[t].text
-    $time.value = data[t].realtime
-    $date.value = data[t].date
-    data.splice(t, 1)
+    const t = todos.findIndex(x => x.key == e.target.dataset.key)
+    $input.value = todos[t].text
+    $time.value = todos[t].realtime
+    $date.value = todos[t].date
+    todos.splice(t, 1)
     e.target.parentNode.classList.add("post-delete")
     $input.focus()
     checkInput(t)
@@ -278,8 +285,8 @@ function createElementDeleteButton(key) {
 
 function onDeleteButtonClick(e) {
     e.preventDefault()
-    let target = data.findIndex(x => x.key == e.target.dataset.key)
-    data.splice(target, 1)
+    let target = todos.findIndex(x => x.key == e.target.dataset.key)
+    todos.splice(target, 1)
     e.target.parentNode.classList.add("post-delete")
     setTimeout(function() {
         e.target.parentNode.remove()
@@ -304,17 +311,17 @@ function createElementCheckbox(todo, key) {
 }
 
 function onCheckboxClick(e) {
-    const target = data.findIndex(x => x.key == e.target.dataset.key)
+    const target = todos.findIndex(x => x.key == e.target.dataset.key)
     if (e.target.parentNode.classList.contains("checked")) {
         e.target.parentNode.classList.remove("checked")
         e.target.checked = false
-        data[target].done = false
+        todos[target].done = false
         saveList()
     }
     else {
         e.target.parentNode.classList.add("checked")
         e.target.checked = true
-        data[target].done = true
+        todos[target].done = true
         saveList()
     }
 }
@@ -355,7 +362,8 @@ getSavedList()
 getSavedTheme()
 
 $(function() {
-    $.get('http://localhost:3000', (data) => console.log(data));
+//    $.get('http://localhost:3000', (data) => console.log(data));
+//    $.post('http://localhost:3000/todos', { title: 'example todo' }, (data) => console.log('POST'))
 
     $("#date").change(function() {
         const date = getDateObject(this.value)
