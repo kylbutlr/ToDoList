@@ -358,6 +358,8 @@ getSavedList()
 getSavedTheme()
 
 $(function() {
+    $.get('http://localhost:3000', (data) => console.log(data));
+
     $("#date").change(function() {
         const date = getDateObject(this.value)
         const now = getDateObject(new Date())

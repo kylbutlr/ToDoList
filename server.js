@@ -11,8 +11,8 @@ const fs = require('fs')
 //todo.get('/', function(req, res){
 const server = http.createServer((req, res) => {
   console.log('Request was made: '+ req.url)
-  res.writeHead(200, {'Content-Type': 'text/html'})
-  fs.createReadStream(__dirname + '/public/index.html').pipe(res)
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.end('Hello World!')
 })
 
 server.listen(3000)
