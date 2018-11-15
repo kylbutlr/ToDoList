@@ -104,7 +104,13 @@ function saveList() {
 
 function getSavedList() {
     //todos = JSON.parse(window.localStorage.getItem("tododata"))
-    $.get('http://localhost:3000', (data) => todos.push(data));
+    $.get('http://localhost:3000', (data) => { 
+        todos = data.todos
+        /*if (!todos) {
+            todos = []
+            saveList()
+        }*/
+    
     console.log(todos)
     if (!todos) {
         console.log("NO SAVE")
@@ -131,6 +137,7 @@ function getSavedList() {
         todos = []
         key = 0
     }
+},JSON)
 }
 
 function renderTodo(todo, key) {
@@ -183,6 +190,8 @@ const onFormSubmit = (e) => {
         else {
             todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
         }
+        console.log(todos)
+        console.log(todo)
         todos.push(todo)
         $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
         renderTodo(todo, key)

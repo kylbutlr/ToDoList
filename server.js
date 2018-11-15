@@ -1,5 +1,5 @@
 const http = require('http')
-const fs = require('fs')
+const querystring = require('querystring');
 //const express = require('express')
 const todos = []
 //const todo = express()
@@ -19,7 +19,8 @@ const server = http.createServer((req, res) => {
       body += chunk.toString(); // convert Buffer to string
     })
     req.on('end', () => {
-      todos.push(body)
+      const todo = querystring.parse(body)
+      todos.push(todo)
       res.end('POSTed')
     })
   } 
