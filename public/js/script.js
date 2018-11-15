@@ -98,33 +98,32 @@ function applyTheme(theme) {
 }
 
 function saveList() {
-    //window.localStorage.setItem("tododata", JSON.stringify(todos))
-    //$.put
+    /*$.ajax({
+        url: 'http://localhost:3000/todos',
+        method: 'PUT',
+        data: todos,
+        dataType: 'JSON',
+        success: function() {
+            console.log(todos)
+        }
+    })*/
 }
 
 function getSavedList() {
-    //todos = JSON.parse(window.localStorage.getItem("tododata"))
     $.get('http://localhost:3000', (data) => { 
         todos = data.todos
-        /*if (!todos) {
-            todos = []
-            saveList()
-        }*/
-    
-    console.log(todos)
     if (!todos) {
-        console.log("NO SAVE")
-        todos = []
+        console.log("!todos")
+        /*todos = []
         const dflt1 = {"key": 0, "text": "Delete this item", "realtime": "", "date": $date.value, "done": true}
         const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
         todos.push(dflt1, dflt2)
         renderTodo(dflt1, 0)
         renderTodo(dflt2, 1)
         key = 2
-        saveList()
+        saveList()*/
     }
     else if (todos.length>0) {
-        console.log("SAVED DATA")
         for (let i=0;i<todos.length;i++) {
             todos[i].key = i
             renderTodo(todos[i], i)
@@ -132,7 +131,6 @@ function getSavedList() {
         key = todos[todos.length - 1].key + 1
     }
     else {
-        console.log("SAVED NOTHING")
         $list.innerHTML = ""
         todos = []
         key = 0
@@ -190,8 +188,6 @@ const onFormSubmit = (e) => {
         else {
             todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
         }
-        console.log(todos)
-        console.log(todo)
         todos.push(todo)
         $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
         renderTodo(todo, key)
@@ -371,9 +367,6 @@ getSavedList()
 getSavedTheme()
 
 $(function() {
-//    $.get('http://localhost:3000', (data) => console.log(data));
-//    $.post('http://localhost:3000/todos', { title: 'example todo' }, (data) => console.log('POST'))
-
     $("#date").change(function() {
         const date = getDateObject(this.value)
         const now = getDateObject(new Date())
