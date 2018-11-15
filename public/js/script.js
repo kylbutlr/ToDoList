@@ -137,7 +137,7 @@ function getSavedList() {
         todos = []
         key = 0
     }
-},JSON)
+},"JSON")
 }
 
 function renderTodo(todo, key) {
