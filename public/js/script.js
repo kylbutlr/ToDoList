@@ -131,32 +131,27 @@ const onFormSubmit = (e) => {
             todo = {"text": $input.value, "realtime": $time.value, "date": $date.value, "done": "false"}
         }
         if ($key.value.length > 0){
-          const key = $key.value
+          const key = parseInt($key.value)
           todo.key = key
           todos[key] = todo
-          console.log(todos[key])
           $.ajax({
               url: 'http://localhost:3000/todos',
               method: 'PUT',
               data: JSON.stringify(todos[key]),
               success: function() {
-                  console.log("PUT success")
-              }
-            },
-          $.get('http://localhost:3000', (data) => { 
-              todos = data.todos
-              $list.innerHTML = ""
-              /*for (i=0;i<key;i++) {
-                  renderTodo(todos[i])
-              }
-              for (i=key+1;i<todos.length;i++) {
-                renderTodo(todos[i])
-              } 
-              renderTodo(todos[key], key)*/
-              for (i=0;i<todos.length;i++){
-                renderTodo(todos[i])
-              }
-          },"JSON"))
+                  $.get('http://localhost:3000', (data) => { 
+                    todos = data.todos
+                    $list.innerHTML = ""
+                    for (i=0;i<key;i++) {
+                        renderTodo(todos[i])
+                    }
+                    for (i=key+1;i<todos.length;i++) {
+                      renderTodo(todos[i])
+                    } 
+                    renderTodo(todos[key], key)
+                  },"JSON")
+                }
+              })
         }
         else {
           $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
@@ -186,15 +181,12 @@ function renderTodo(todo, newTodoKey) {
     const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
     let currentKey;
     if (newTodoKey === todos.length-1){
-        console.log("A", newTodoKey)
         currentKey = newTodoKey
     }
     else if (newTodoKey >= 0){
-        console.log("B", newTodoKey)
         currentKey = newTodoKey
     }
     else {
-        console.log("C", todo.key)
         currentKey = todo.key
     }
     if (!todo.time && todo.date) {
@@ -224,7 +216,12 @@ function renderTodo(todo, newTodoKey) {
             newList.classList.add("post-visible")
         })
     }
-    $list.appendChild(newList)
+    if (newTodoKey >= 0 && newTodoKey != todos.length-1){
+        $list.insertBefore(newList, $list.children[newTodoKey])
+    }
+    else {
+        $list.appendChild(newList)
+    }
 }
 
 function getDateObject(date) {
