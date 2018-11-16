@@ -20,6 +20,7 @@ function findKey() {
 //todo.get('/', function(req, res){
 const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Headers", "*") 
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
   console.log('Request was made: '+ req.url)
   if (req.method === 'GET') {
@@ -33,7 +34,6 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       const todo = querystring.parse(body)
       todo.key = nextKey
-      console.log(todo)
       todos.push(todo)
       nextKey++
       res.end('POST')
@@ -45,12 +45,10 @@ const server = http.createServer((req, res) => {
       body += chunk.toString()
     })
     req.on('end', () => {
-      const savedTodos = querystring.parse(body)
-      console.log(body)
-      for (i=0;i<savedTodos.length;i++){
-        todos.push(savedTodos[i])
-      }
-      res.end("PUT")
+      const parsedBody = JSON.parse(body)
+      parsedBody.key = parseInt(parsedBody.key)
+      todos[parsedBody.key] = parsedBody
+      res.end('PUT')
     })
   }
   else {

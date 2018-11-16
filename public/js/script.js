@@ -102,7 +102,7 @@ function getSavedList() {
         todos = data.todos
         if (todos.length>0) {
             $list.innerHTML = ""
-            for (let i=0;i<todos.length;i++) {
+            for (i=0;i<todos.length;i++) {
                 todos[i].key = i
                 renderTodo(todos[i])
             }
@@ -131,23 +131,31 @@ const onFormSubmit = (e) => {
             todo = {"text": $input.value, "realtime": $time.value, "date": $date.value, "done": "false"}
         }
         if ($key.value.length > 0){
+          const key = $key.value
+          todo.key = key
+          todos[key] = todo
+          console.log(todos[key])
           $.ajax({
               url: 'http://localhost:3000/todos',
               method: 'PUT',
-              data: todos, 
-              dataType: 'JSON',
+              data: JSON.stringify(todos[key]),
               success: function() {
-                  console.log(todos)
+                  console.log("PUT success")
               }
           })
           $.get('http://localhost:3000', (data) => { 
               todos = data.todos
               $list.innerHTML = ""
-              for (let i=0;i<todos.length-1;i++) {
+              /*for (i=0;i<key;i++) {
                   renderTodo(todos[i])
               }
-              const newTodoKey = todos[todos.length-1].key
-              renderTodo(todos[newTodoKey], newTodoKey)
+              for (i=key+1;i<todos.length;i++) {
+                renderTodo(todos[i])
+              } 
+              renderTodo(todos[key], key)*/
+              for (i=0;i<todos.length;i++){
+                renderTodo(todos[i])
+              }
           },"JSON")
         }
         else {
@@ -155,7 +163,7 @@ const onFormSubmit = (e) => {
           $.get('http://localhost:3000', (data) => { 
               todos = data.todos
               $list.innerHTML = ""
-              for (let i=0;i<todos.length-1;i++) {
+              for (i=0;i<todos.length-1;i++) {
                   renderTodo(todos[i])
               }
               const newTodoKey = todos[todos.length-1].key
