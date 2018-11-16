@@ -142,7 +142,7 @@ const onFormSubmit = (e) => {
               success: function() {
                   console.log("PUT success")
               }
-          })
+            },
           $.get('http://localhost:3000', (data) => { 
               todos = data.todos
               $list.innerHTML = ""
@@ -156,7 +156,7 @@ const onFormSubmit = (e) => {
               for (i=0;i<todos.length;i++){
                 renderTodo(todos[i])
               }
-          },"JSON")
+          },"JSON"))
         }
         else {
           $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
