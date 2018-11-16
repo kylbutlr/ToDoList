@@ -222,11 +222,19 @@ function renderTodo(todo, newTodoKey) {
     }
 }
 
-function resetInput() {
+function resetInput(delay) {
     $input.value = ""
-    $time.value = "12:00"
-    $date.valueAsDate = getDateObject(new Date())
     $key.value = ""
+    if (delay){
+        setTimeout(function(){
+            $time.value = "12:00"
+            $date.valueAsDate = getDateObject(new Date())
+        }, delay)
+    }
+    else {
+        $time.value = "12:00"
+        $date.valueAsDate = getDateObject(new Date())
+    }
 }
 
 function getDateObject(date) {
@@ -303,10 +311,10 @@ function onEditButtonClick(e) {
     $key.value = todos[t].key
     $("#cancelButton").show()
     $("#addButton").addClass("edit")
-    $("#addButton").text("Update Item")
+    $("#addButton").text("Update")
     e.target.parentNode.classList.add("post-delete")
-    $input.focus()
     checkInput(t)
+    $input.focus()
     setTimeout(function() {
         e.target.parentNode.remove()
     }, 250)
@@ -368,14 +376,15 @@ function onListItemClick(e) {
 }
 
 function checkInput(key) {
-    if (key != undefined) {
-        $("#addButton").stop().animate({opacity:1})
+    if (key) {
+        $("#cancelButton").css("opacity", "0.25").stop().animate({opacity:1}, 500)
+        $("#addButton").stop().animate({opacity:1}, 500)
     }
-    if (!$("#input").val() || key != undefined) {
+    if (!$("#input").val() || key) {
         if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) {}
         else {
-            $("#date").stop().animate({top:-65}, function() {
-                $("#time").stop().animate({top:-35}, function() {
+            $("#date").stop().animate({top:-65},250, function() {
+                $("#time").stop().animate({top:-35},125, function() {
                     $("#input").css("border-radius", "10px")
                 })
             })
@@ -383,9 +392,8 @@ function checkInput(key) {
     }
     else {
         $("#input").css("border-radius", "10px 10px 0 0")
-        $("#time").stop().animate({top:0}, function() {
-            $("#date").stop().animate({top:0})
-        })
+        $("#time").stop().animate({top:0},250)
+        $("#date").stop().animate({top:0},500)
     }
 }
 
@@ -410,22 +418,21 @@ $(function() {
         $(".list-div").slideToggle(1000)
     })
 
-    $("#time").stop().animate({top:-35})
-    $("#date").stop().animate({top:-65})
-    $("#addButton").stop().animate({opacity:0.25})
+    $("#time").stop().animate({top:-35},0)
+    $("#date").stop().animate({top:-65},0)
+    $("#addButton").stop().animate({opacity:0.25},0)
     $("#input").focus(function(e) {
         $("#input").css("border-radius", "10px 10px 0 0")
-        $("#time").stop().animate({top:0}, function() {
-            $("#date").stop().animate({top:0})
-        })
+        $("#time").stop().animate({top:0},250)
+        $("#date").stop().animate({top:0},500)
     })
     
     $("#input").on("change paste cut input", function() {
         if (!$.trim(this.value).length) {
-            $("#addButton").stop().animate({opacity:0.25})
+            $("#addButton").stop().animate({opacity:0.25}, 250)
         }
         else {
-            $("#addButton").stop().animate({opacity:1})
+            $("#addButton").stop().animate({opacity:1}, 500)
         }
     })
 
@@ -498,8 +505,9 @@ $(function() {
     })
 
     $("#cancelButton").click(function(e) {
-        resetInput()
-        $("#addButton").stop().animate({opacity:0.25})
+        resetInput(500)
+        checkInput(1)
+        $("#addButton").stop().animate({opacity:0.25}, 250)
         $("#cancelButton").hide()
         $("#addButton").text("Add to List")
         $("#addButton").removeClass("edit")

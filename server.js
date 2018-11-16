@@ -2,8 +2,8 @@ const http = require('http')
 const querystring = require('querystring')
 //const express = require('express')
 //const todo = express()
-const todos = [{"key": 0, "text": "Delete this item", "realtime": "", "date": "2018-11-15", "done": "true"},
-    {"key": 1, "text": "Add more to my list", "realtime": "", "date": "2018-11-15", "done":"false"}]
+const todos = [{"text": "Delete this item", "realtime": "", "date": "2018-11-15", "done": "true", "key": 0},
+    {"text": "Add more to my list", "realtime": "", "date": "2018-11-15", "done":"false", "key": 1}]
 let nextKey = findKey()
 
 function findKey() {

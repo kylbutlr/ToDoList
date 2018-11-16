@@ -141,7 +141,6 @@ li:hover > .delete-button {
     flex: 5;
     font-size: 16px;
     height: 8vh;
-    transition: opacity 0.1s ease;
 }
 .add-button.edit {
     border-radius: 0 10px 10px 0;
