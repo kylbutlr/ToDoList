@@ -149,6 +149,7 @@ const onFormSubmit = (e) => {
                       renderTodo(todos[i])
                     } 
                     renderTodo(todos[key], key)
+                    $("#cancelButton").trigger("click")
                   },"JSON")
                 }
               })
@@ -165,10 +166,7 @@ const onFormSubmit = (e) => {
               renderTodo(todos[newTodoKey], newTodoKey)
           },"JSON")
         }
-        $input.value = ""
-        $time.value = "12:00"
-        $date.valueAsDate = getDateObject(new Date())
-        $key.value = ""
+        resetInput()
         $input.focus()
     }
 }
@@ -222,6 +220,13 @@ function renderTodo(todo, newTodoKey) {
     else {
         $list.appendChild(newList)
     }
+}
+
+function resetInput() {
+    $input.value = ""
+    $time.value = "12:00"
+    $date.valueAsDate = getDateObject(new Date())
+    $key.value = ""
 }
 
 function getDateObject(date) {
@@ -493,10 +498,14 @@ $(function() {
     })
 
     $("#cancelButton").click(function(e) {
-        $("#key").val("")
+        resetInput()
+        $("#addButton").stop().animate({opacity:0.25})
         $("#cancelButton").hide()
         $("#addButton").text("Add to List")
         $("#addButton").removeClass("edit")
-        //MAKE SURE "EDITING" ENTRY WAS DELETED
+        $list.innerHTML = ""
+        for (i=0;i<todos.length;i++) {
+            renderTodo(todos[i])
+        }
     })
 })
