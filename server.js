@@ -2,8 +2,19 @@ const http = require('http')
 const querystring = require('querystring')
 //const express = require('express')
 //const todo = express()
-const todos = []
-let key
+const todos = [{"key":0,"text":"Example Todo 1","time":"12:00 pm","realtime":"12:00","date":"2018-11-15","done":"false"}, 
+{"key":1,"text":"Example Todo 2","time":"12:00 pm","realtime":"12:00","date":"2018-11-15","done":"false"},
+{"key":2,"text":"Example Todo 3","time":"12:00 pm","realtime":"12:00","date":"2018-11-15","done":"false"}]
+let nextKey = findKey()
+
+function findKey() {
+  if (todos.length != 0){
+    return todos[todos.length-1].key + 1
+  }
+  else {
+    return 0
+  }
+}
 
 //todo.use('/css', express.static('css'))
 
@@ -22,9 +33,10 @@ const server = http.createServer((req, res) => {
     })
     req.on('end', () => {
       const todo = querystring.parse(body)
-      //todo.key = key
+      todo.key = nextKey
+      console.log(todo)
       todos.push(todo)
-      key++
+      nextKey++
       res.end('POST')
     })
   } 

@@ -1,6 +1,5 @@
 let currentTheme
 let todos = []
-let key
 const $input = document.querySelector("#input")
 const $list = document.querySelector("#list")
 const $date = document.querySelector("#date")
@@ -97,53 +96,75 @@ function applyTheme(theme) {
     $("h2").addClass("h2-"+theme)
 }
 
-function saveList() {
-    /*$.ajax({
-        url: 'http://localhost:3000/todos',
-        method: 'PUT',
-        data: todos,
-        dataType: 'JSON',
-        success: function() {
-            console.log(todos)
-        }
-    })*/
-}
-
 function getSavedList() {
     $.get('http://localhost:3000', (data) => { 
         todos = data.todos
-    if (!todos) {
-        console.log("!todos")
-        /*todos = []
-        const dflt1 = {"key": 0, "text": "Delete this item", "realtime": "", "date": $date.value, "done": true}
-        const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
-        todos.push(dflt1, dflt2)
-        renderTodo(dflt1, 0)
-        renderTodo(dflt2, 1)
-        key = 2
-        saveList()*/
-    }
-    else if (todos.length>0) {
-        for (let i=0;i<todos.length;i++) {
-            todos[i].key = i
-            renderTodo(todos[i], i)
+        /*if (!todos) {
+            todos = []
+            const dflt1 = {"key": 0, "text": "Delete this item", "realtime": "", "date": $date.value, "done": true}
+            const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
+            todos.push(dflt1, dflt2)
+            renderTodo(dflt1, 0)
+            renderTodo(dflt2, 1)
+            key = 2
+            saveList()
+        }*/
+        if (todos.length>0) {
+            $list.innerHTML = ""
+            for (let i=0;i<todos.length;i++) {
+                todos[i].key = i
+                renderTodo(todos[i], i)
+            }
         }
-        key = todos[todos.length - 1].key + 1
-    }
-    else {
-        $list.innerHTML = ""
-        todos = []
-        key = 0
-    }
-},"JSON")
+        else {
+            $list.innerHTML = ""
+            todos = []
+        }
+    },"JSON")
 }
 
-function renderTodo(todo, key) {
+const onFormSubmit = (e) => {
+    e.preventDefault()
+    if ($input.value === " ") {
+        alert("New item must have a name.")
+        $input.value = ""
+        $input.focus()
+    }
+    else {
+        let todo = {}
+        const time = $time.value
+        if (time.length>0) {
+            todo = {"text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false}
+        }
+        else {
+            todo = {"text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
+        }
+        todos.push(todo)
+        $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
+        $.get('http://localhost:3000', (data) => { 
+            todos = data.todos
+            $list.innerHTML = ""
+            for (let i=0;i<todos.length;i++) {
+                todos[i].key = i
+                renderTodo(todos[i], i)
+            }
+        },"JSON")
+        //renderTodo(todo)
+        //saveList()
+        $input.value = ""
+        $time.value = "12:00"
+        $date.valueAsDate = getDateObject(new Date())
+        $input.focus()
+    }
+}
+
+function renderTodo(todo) {
     const newList = document.createElement("li")
     const h3 = document.createElement("h3")
     const dateObject = new Date(todo.date)
     const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
     const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
+    const currentKey = todo.key
     if (!todo.time && todo.date) {
         h3.textContent = todo.text + " (by " + formattedDate + ")"
     }
@@ -158,10 +179,10 @@ function renderTodo(todo, key) {
     }
     h3.addEventListener("click", onListItemClick)
     newList.appendChild(h3)
-    newList.key = key
-    newList.appendChild(createElementEditButton(key))
-    newList.appendChild(createElementDeleteButton(key))
-    newList.insertBefore(createElementCheckbox(todo, key), newList.childNodes[0])
+    newList.key = currentKey
+    newList.appendChild(createElementEditButton(currentKey))
+    newList.appendChild(createElementDeleteButton(currentKey))
+    newList.insertBefore(createElementCheckbox(todo, currentKey), newList.childNodes[0])
     if (todo.done === true) {
         newList.classList.add("checked")
     }
@@ -170,34 +191,6 @@ function renderTodo(todo, key) {
     setTimeout(function() {
         newList.classList.add("post-visible")
     })
-}
-
-const onFormSubmit = (e) => {
-    e.preventDefault()
-    if ($input.value === " ") {
-        alert("New item must have a name.")
-        $input.value = ""
-        $input.focus()
-    }
-    else {
-        let todo = {}
-        const time = $time.value
-        if (time.length>0) {
-            todo = {"key": key, "text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false}
-        }
-        else {
-            todo = {"key": key, "text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
-        }
-        todos.push(todo)
-        $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
-        renderTodo(todo, key)
-        saveList()
-        key++
-        $input.value = ""
-        $time.value = "12:00"
-        $date.valueAsDate = getDateObject(new Date())
-        $input.focus()
-    }
 }
 
 function getDateObject(date) {
@@ -229,6 +222,7 @@ function getAMPM(time) {
 }
 
 const onClearClick = (e) => {
+    //NEEDS TO DELETE FROM SERVER
     e.preventDefault()
     if ($list.childElementCount>0) {
         for (i=0;i<$list.childElementCount;i++) {
@@ -243,10 +237,11 @@ const onClearClick = (e) => {
     }
     todos = []
     key = 0
-    saveList()
+    //saveList()
 }
 
 const onClearLSClick = (e) => {
+    //REMOVE THIS BUTTON
     e.preventDefault()
     $list.innerHTML = ""
     todos = []
@@ -265,6 +260,15 @@ function createElementEditButton(key) {
 }
 
 function onEditButtonClick(e) {
+    /*$.ajax({
+        url: 'http://localhost:3000/todos',
+        method: 'PUT',
+        data: todos,
+        dataType: 'JSON',
+        success: function() {
+            console.log(todos)
+        }
+    })*/
     e.preventDefault()
     const t = todos.findIndex(x => x.key == e.target.dataset.key)
     $input.value = todos[t].text
@@ -296,7 +300,7 @@ function onDeleteButtonClick(e) {
     setTimeout(function() {
         e.target.parentNode.remove()
     }, 250)
-    saveList()
+    //saveList()
 }
 
 function createElementCheckbox(todo, key) {
@@ -321,13 +325,13 @@ function onCheckboxClick(e) {
         e.target.parentNode.classList.remove("checked")
         e.target.checked = false
         todos[target].done = false
-        saveList()
+        //saveList()
     }
     else {
         e.target.parentNode.classList.add("checked")
         e.target.checked = true
         todos[target].done = true
-        saveList()
+        //saveList()
     }
 }
 
