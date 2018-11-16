@@ -46,7 +46,7 @@ const server = http.createServer((req, res) => {
     })
     req.on('end', () => {
       const savedTodos = querystring.parse(body)
-      console.log(todos)
+      console.log(body)
       for (i=0;i<savedTodos.length;i++){
         todos.push(savedTodos[i])
       }

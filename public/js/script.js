@@ -134,7 +134,7 @@ const onFormSubmit = (e) => {
           $.ajax({
               url: 'http://localhost:3000/todos',
               method: 'PUT',
-              data: todos,
+              data: todos, 
               dataType: 'JSON',
               success: function() {
                   console.log(todos)
@@ -485,5 +485,13 @@ $(function() {
         applyTheme(themeName)
         currentTheme = themeName
         window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
+    })
+
+    $("#cancelButton").click(function(e) {
+        $("#key").val("")
+        $("#cancelButton").hide()
+        $("#addButton").text("Add to List")
+        $("#addButton").removeClass("edit")
+        //MAKE SURE "EDITING" ENTRY WAS DELETED
     })
 })
