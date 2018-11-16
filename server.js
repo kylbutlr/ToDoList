@@ -21,7 +21,7 @@ function findKey() {
 const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Access-Control-Allow-Headers", "*") 
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
   console.log('Request was made: '+ req.url)
   if (req.method === 'GET') {
     res.end(JSON.stringify({ todos }))
@@ -51,6 +51,12 @@ const server = http.createServer((req, res) => {
       res.end('PUT')
     })
   }
+  else if (req.method === 'DELETE'){
+    
+    req.end('DELETE')
+  }
+  /*my $del3  = $test->request( DELETE '/api/v2/item/' . $items5->{items}[3]{'_id'}{'$oid'} );
+    is $del3->content, '{"ok":1}';*/
   else {
     res.end('404: Not Found')
   }

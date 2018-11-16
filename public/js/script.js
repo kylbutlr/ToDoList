@@ -330,10 +330,22 @@ function createElementDeleteButton(key) {
 }
 
 function onDeleteButtonClick(e) {
-    //NEEDS TO DELETE ONE FROM SERVER
     e.preventDefault()
     let target = todos.findIndex(x => x.key == e.target.dataset.key)
-    todos.splice(target, 1)
+    //todos.splice(target, 1)
+    jQuery.ajax({
+        url: 'http://localhost:3000/todos/' + target,
+        method: 'DELETE',
+        success: function(data) {
+            $.get('http://localhost:3000', (data) => { 
+                todos = data.todos
+                $list.innerHTML = ""
+                for (i=0;i<todos.length;i++) {
+                    renderTodo(todos[i])
+                }
+            },"JSON")
+        }
+    });
     e.target.parentNode.classList.add("post-delete")
     setTimeout(function() {
         e.target.parentNode.remove()
