@@ -120,12 +120,6 @@ li:hover > .delete-button {
     display: inline-block;
     width: 100%;
 }
-.add-button {
-    font-size: 16px;
-    margin: 10px 0 0 0;
-    height: 8vh;
-    transition: opacity 0.1s;
-}
 .button {
     border-radius: 10px;
     box-shadow: 0px 2px 4px -2px black;
@@ -137,6 +131,37 @@ li:hover > .delete-button {
     transform: scale(0.95);
 }
 .button:hover {
+    cursor: pointer;
+}
+.button-div {
+    display: flex;
+    flex-direction: row;
+}
+.add-button {
+    flex: 5;
+    font-size: 16px;
+    height: 8vh;
+    transition: opacity 0.1s ease;
+}
+.add-button.edit {
+    border-radius: 0 10px 10px 0;
+}
+.cancel-button {
+    background-image: linear-gradient(to bottom, #bd6666, #df6666);
+    border-radius: 10px 0 0 10px;
+    flex: 1;
+    font-size: 16px;
+    height: 8vh;
+    box-shadow: 0px 2px 4px -2px black;
+    text-align: center;
+    transition: transform scale 0.1s;
+}
+.cancel-button:active {
+    box-shadow: inset 0px 3px 6px -3px black;
+    transform: scale(0.95);
+}
+.cancel-button:hover {
+    background-image: linear-gradient(to bottom, #ac6666, #ce6666);
     cursor: pointer;
 }
 .input {
@@ -165,13 +190,14 @@ li:hover > .delete-button {
     position: relative;
     top: -65px;
     height: 4vh;
+    margin: 0 0 10px 0;
     padding: 0 0 0 10px;
     text-align: center;
     transition: top 0.1s ease;
     z-index: 1;
 }
 .key {
-    display: none;
+    /*display: none;*/
 }
 .textarea {
     box-sizing: border-box;
@@ -185,6 +211,7 @@ li:hover > .delete-button {
     margin: 0 10px 10px 10px;
     padding: 0 10px 10px 10px;
     width: 15vw;
+    height: auto;
 }
 .list-div {
     position: relative;

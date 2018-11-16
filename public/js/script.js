@@ -4,6 +4,7 @@ const $input = document.querySelector("#input")
 const $list = document.querySelector("#list")
 const $date = document.querySelector("#date")
 const $time = document.querySelector("#time")
+const $key = document.querySelector("#key")
 const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 const themes = {
@@ -99,21 +100,11 @@ function applyTheme(theme) {
 function getSavedList() {
     $.get('http://localhost:3000', (data) => { 
         todos = data.todos
-        /*if (!todos) {
-            todos = []
-            const dflt1 = {"key": 0, "text": "Delete this item", "realtime": "", "date": $date.value, "done": true}
-            const dflt2 = {"key": 1, "text": "Add more to my list", "realtime": "", "date": $date.value, "done": false}
-            todos.push(dflt1, dflt2)
-            renderTodo(dflt1, 0)
-            renderTodo(dflt2, 1)
-            key = 2
-            saveList()
-        }*/
         if (todos.length>0) {
             $list.innerHTML = ""
             for (let i=0;i<todos.length;i++) {
                 todos[i].key = i
-                renderTodo(todos[i], i)
+                renderTodo(todos[i])
             }
         }
         else {
@@ -134,37 +125,70 @@ const onFormSubmit = (e) => {
         let todo = {}
         const time = $time.value
         if (time.length>0) {
-            todo = {"text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": false}
+            todo = {"text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": "false"}
         }
         else {
-            todo = {"text": $input.value, "realtime": $time.value, "date": $date.value, "done": false}
+            todo = {"text": $input.value, "realtime": $time.value, "date": $date.value, "done": "false"}
         }
-        todos.push(todo)
-        $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
-        $.get('http://localhost:3000', (data) => { 
-            todos = data.todos
-            $list.innerHTML = ""
-            for (let i=0;i<todos.length;i++) {
-                todos[i].key = i
-                renderTodo(todos[i], i)
-            }
-        },"JSON")
-        //renderTodo(todo)
-        //saveList()
+        if ($key.value.length > 0){
+          $.ajax({
+              url: 'http://localhost:3000/todos',
+              method: 'PUT',
+              data: todos,
+              dataType: 'JSON',
+              success: function() {
+                  console.log(todos)
+              }
+          })
+          $.get('http://localhost:3000', (data) => { 
+              todos = data.todos
+              $list.innerHTML = ""
+              for (let i=0;i<todos.length-1;i++) {
+                  renderTodo(todos[i])
+              }
+              const newTodoKey = todos[todos.length-1].key
+              renderTodo(todos[newTodoKey], newTodoKey)
+          },"JSON")
+        }
+        else {
+          $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
+          $.get('http://localhost:3000', (data) => { 
+              todos = data.todos
+              $list.innerHTML = ""
+              for (let i=0;i<todos.length-1;i++) {
+                  renderTodo(todos[i])
+              }
+              const newTodoKey = todos[todos.length-1].key
+              renderTodo(todos[newTodoKey], newTodoKey)
+          },"JSON")
+        }
         $input.value = ""
         $time.value = "12:00"
         $date.valueAsDate = getDateObject(new Date())
+        $key.value = ""
         $input.focus()
     }
 }
 
-function renderTodo(todo) {
+function renderTodo(todo, newTodoKey) {
     const newList = document.createElement("li")
     const h3 = document.createElement("h3")
     const dateObject = new Date(todo.date)
     const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
     const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
-    const currentKey = todo.key
+    let currentKey;
+    if (newTodoKey === todos.length-1){
+        console.log("A", newTodoKey)
+        currentKey = newTodoKey
+    }
+    else if (newTodoKey >= 0){
+        console.log("B", newTodoKey)
+        currentKey = newTodoKey
+    }
+    else {
+        console.log("C", todo.key)
+        currentKey = todo.key
+    }
     if (!todo.time && todo.date) {
         h3.textContent = todo.text + " (by " + formattedDate + ")"
     }
@@ -183,14 +207,16 @@ function renderTodo(todo) {
     newList.appendChild(createElementEditButton(currentKey))
     newList.appendChild(createElementDeleteButton(currentKey))
     newList.insertBefore(createElementCheckbox(todo, currentKey), newList.childNodes[0])
-    if (todo.done === true) {
+    if (todo.done === "true") {
         newList.classList.add("checked")
     }
-    newList.classList.add("new-post")
+    if (newTodoKey){
+        newList.classList.add("new-post")
+        setTimeout(function() {
+            newList.classList.add("post-visible")
+        })
+    }
     $list.appendChild(newList)
-    setTimeout(function() {
-        newList.classList.add("post-visible")
-    })
 }
 
 function getDateObject(date) {
@@ -222,7 +248,7 @@ function getAMPM(time) {
 }
 
 const onClearClick = (e) => {
-    //NEEDS TO DELETE FROM SERVER
+    //NEEDS TO DELETE ALL FROM SERVER
     e.preventDefault()
     if ($list.childElementCount>0) {
         for (i=0;i<$list.childElementCount;i++) {
@@ -237,11 +263,10 @@ const onClearClick = (e) => {
     }
     todos = []
     key = 0
-    //saveList()
 }
 
 const onClearLSClick = (e) => {
-    //REMOVE THIS BUTTON
+    //WILL REMOVE THIS BUTTON
     e.preventDefault()
     $list.innerHTML = ""
     todos = []
@@ -260,21 +285,15 @@ function createElementEditButton(key) {
 }
 
 function onEditButtonClick(e) {
-    /*$.ajax({
-        url: 'http://localhost:3000/todos',
-        method: 'PUT',
-        data: todos,
-        dataType: 'JSON',
-        success: function() {
-            console.log(todos)
-        }
-    })*/
     e.preventDefault()
     const t = todos.findIndex(x => x.key == e.target.dataset.key)
     $input.value = todos[t].text
     $time.value = todos[t].realtime
     $date.value = todos[t].date
-    todos.splice(t, 1)
+    $key.value = todos[t].key
+    $("#cancelButton").show()
+    $("#addButton").addClass("edit")
+    $("#addButton").text("Update Item")
     e.target.parentNode.classList.add("post-delete")
     $input.focus()
     checkInput(t)
@@ -293,6 +312,7 @@ function createElementDeleteButton(key) {
 }
 
 function onDeleteButtonClick(e) {
+    //NEEDS TO DELETE ONE FROM SERVER
     e.preventDefault()
     let target = todos.findIndex(x => x.key == e.target.dataset.key)
     todos.splice(target, 1)
@@ -300,7 +320,6 @@ function onDeleteButtonClick(e) {
     setTimeout(function() {
         e.target.parentNode.remove()
     }, 250)
-    //saveList()
 }
 
 function createElementCheckbox(todo, key) {
@@ -310,7 +329,7 @@ function createElementCheckbox(todo, key) {
     checkbox.dataset.key = key
     checkbox.id = "cb"+key
     checkbox.addEventListener("click", onCheckboxClick)
-    if (todo.done === true) {
+    if (todo.done === "true") {
         checkbox.checked = true
     }
     else { 
@@ -324,14 +343,12 @@ function onCheckboxClick(e) {
     if (e.target.parentNode.classList.contains("checked")) {
         e.target.parentNode.classList.remove("checked")
         e.target.checked = false
-        todos[target].done = false
-        //saveList()
+        todos[target].done = "false"
     }
     else {
         e.target.parentNode.classList.add("checked")
         e.target.checked = true
-        todos[target].done = true
-        //saveList()
+        todos[target].done = "true"
     }
 }
 
@@ -342,10 +359,10 @@ function onListItemClick(e) {
 
 function checkInput(key) {
     if (key != undefined) {
-        $("#addToList").stop().animate({opacity:1})
+        $("#addButton").stop().animate({opacity:1})
     }
     if (!$("#input").val() || key != undefined) {
-        if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addToList").is(":active")) {}
+        if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) {}
         else {
             $("#date").stop().animate({top:-65}, function() {
                 $("#time").stop().animate({top:-35}, function() {
@@ -371,16 +388,7 @@ getSavedList()
 getSavedTheme()
 
 $(function() {
-    $("#date").change(function() {
-        const date = getDateObject(this.value)
-        const now = getDateObject(new Date())
-        if (date < now) {
-            alert("New item must have a future date (or no date).")
-            this.valueAsDate = now
-            this.focus()
-        }
-    })    
-
+    $("#cancelButton").hide()
     $(".container").hide().delay(500).slideToggle(1000)
     $(".container-glass").hide().delay(500).slideToggle(1000)
     $(".form-div").hide().delay(500).slideToggle(1000)
@@ -394,25 +402,36 @@ $(function() {
 
     $("#time").stop().animate({top:-35})
     $("#date").stop().animate({top:-65})
-    $("#addToList").stop().animate({opacity:0.25})
+    $("#addButton").stop().animate({opacity:0.25})
     $("#input").focus(function(e) {
         $("#input").css("border-radius", "10px 10px 0 0")
         $("#time").stop().animate({top:0}, function() {
             $("#date").stop().animate({top:0})
         })
     })
+    
     $("#input").on("change paste cut input", function() {
         if (!$.trim(this.value).length) {
-            $("#addToList").stop().animate({opacity:0.25})
+            $("#addButton").stop().animate({opacity:0.25})
         }
         else {
-            $("#addToList").stop().animate({opacity:1})
+            $("#addButton").stop().animate({opacity:1})
         }
     })
 
     $(".textarea").blur(function() {
         checkInput()
     })
+
+    $("#date").change(function() {
+        const date = getDateObject(this.value)
+        const now = getDateObject(new Date())
+        if (date < now) {
+            alert("New item must have a future date (or no date).")
+            this.valueAsDate = now
+            this.focus()
+        }
+    }) 
 
     $(".clear-div").hover(function(e){
         $("#clearList").stop().animate({
