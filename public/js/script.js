@@ -331,12 +331,12 @@ function createElementDeleteButton(key) {
 
 function onDeleteButtonClick(e) {
     e.preventDefault()
-    let target = todos.findIndex(x => x.key == e.target.dataset.key)
-    //todos.splice(target, 1)
+    const key = todos.findIndex(x => x.key == e.target.dataset.key)
     jQuery.ajax({
-        url: 'http://localhost:3000/todos/' + target,
+        url: 'http://localhost:3000/todos/',
         method: 'DELETE',
-        success: function(data) {
+        data: JSON.stringify(key),
+        success: function() {
             $.get('http://localhost:3000', (data) => { 
                 todos = data.todos
                 $list.innerHTML = ""
@@ -418,7 +418,6 @@ getSavedList()
 getSavedTheme()
 
 $(function() {
-    $("#cancelButton").hide()
     $(".container").hide().delay(500).slideToggle(1000)
     $(".container-glass").hide().delay(500).slideToggle(1000)
     $(".form-div").hide().delay(500).slideToggle(1000)

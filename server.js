@@ -52,11 +52,17 @@ const server = http.createServer((req, res) => {
     })
   }
   else if (req.method === 'DELETE'){
-    
-    req.end('DELETE')
+    //const key = todos.findIndex(x => x.key == data.key)
+    let body = ''
+    req.on('data', chunk => {
+      body += chunk.toString()
+    })
+    req.on('end', () => {
+      const key = parseInt(body)
+      todos.splice(key, 1)
+      res.end('DELETE')
+    })
   }
-  /*my $del3  = $test->request( DELETE '/api/v2/item/' . $items5->{items}[3]{'_id'}{'$oid'} );
-    is $del3->content, '{"ok":1}';*/
   else {
     res.end('404: Not Found')
   }
