@@ -139,7 +139,8 @@ const onFormSubmit = (e) => {
               method: 'PUT',
               data: JSON.stringify(todos[key]),
               success: function() {
-                  $.get('http://localhost:3000', (data) => { 
+                  $.get('http://localhost:3000/todos', (data) => { 
+                    console.log(data)
                     todos = data.todos
                     $list.innerHTML = ""
                     for (i=0;i<key;i++) {
@@ -266,19 +267,27 @@ function getAMPM(time) {
 }
 
 const onClearClick = (e) => {
-    //NEEDS TO DELETE ALL FROM SERVER
     e.preventDefault()
-    if ($list.childElementCount>0) {
-        for (i=0;i<$list.childElementCount;i++) {
-            $list.childNodes[i].classList.add("post-delete")
+    jQuery.ajax({
+        url: 'http://localhost:3000/todos/',
+        method: 'DELETE',
+        data: JSON.stringify(key),
+        success: function() {
+            $.get('http://localhost:3000', (data) => { 
+                todos = data.todos
+                $list.innerHTML = ""
+                for (i=0;i<todos.length;i++) {
+                    renderTodo(todos[i])
+                }
+            },"JSON")
         }
-        setTimeout(function() {
-            $list.innerHTML = ""
-        }, 250)
+    });
+    for (i=0;i<$list.childElementCount;i++) {
+        $list.childNodes[i].classList.add("post-delete")
     }
-    else {
+    setTimeout(function() {
         $list.innerHTML = ""
-    }
+    }, 250)
     todos = []
     key = 0
 }

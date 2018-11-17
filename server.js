@@ -26,6 +26,9 @@ const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
     res.end(JSON.stringify({ todos }))
   }
+  if (req.method === 'GET' && req.url === '/todos/*') {
+    res.end(JSON.stringify({ todos }))
+  }
   else if (req.method === 'POST'){
     let body = ''
     req.on('data', chunk => {
@@ -49,6 +52,12 @@ const server = http.createServer((req, res) => {
       parsedBody.key = parseInt(parsedBody.key)
       todos[parsedBody.key] = parsedBody
       res.end('PUT')
+    })
+  }
+  else if (req.method === 'DELETE' && req.data == undefined){
+    req.on('end', () => {
+      todos.splice(0,todos.length)
+      res.end('CLEARED ALL')
     })
   }
   else if (req.method === 'DELETE'){
