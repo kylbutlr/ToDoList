@@ -28,9 +28,9 @@ const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
     res.end(JSON.stringify({ todos }))
   }
-  if (req.method === 'GET' && req.url === /\/todos\/[0-9]+/.test(url)) {
-    const key = Number(req.url.match(/[0-9]+$/)[0]);
-    res.end(JSON.stringify({ todos }))
+  if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
+    const key = Number(req.url.match(/[0-9]+$/)[0])
+    res.end(JSON.stringify({ todo: todos.find(t => t.key === key) }))
   }
   else if (req.method === 'POST'){
     let body = ''
