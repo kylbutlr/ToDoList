@@ -28,7 +28,8 @@ const server = http.createServer((req, res) => {
   if (req.method === 'GET') {
     res.end(JSON.stringify({ todos }))
   }
-  if (req.method === 'GET' && req.url === '/todos/*') {
+  if (req.method === 'GET' && /\/todos\/[0-9]+/.test(url)) {
+    const key = Number(url.match(/[0-9]+$/)[0]);
     res.end(JSON.stringify({ todos }))
   }
   else if (req.method === 'POST'){
@@ -57,7 +58,6 @@ const server = http.createServer((req, res) => {
     })
   }
   else if (req.method === 'DELETE'){
-    console.log(req)
     todos.splice(0,todos.length)
     nextKey = findKey()
     res.end('CLEARED ALL')

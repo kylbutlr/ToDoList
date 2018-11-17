@@ -139,8 +139,7 @@ const onFormSubmit = (e) => {
               method: 'PUT',
               data: JSON.stringify(todos[key]),
               success: function() {
-                  $.get('http://localhost:3000/todos', (data) => { 
-                    console.log(data)
+                  $.get('http://localhost:3000/todos'+key+'', (data) => { 
                     todos = data.todos
                     $list.innerHTML = ""
                     for (i=0;i<key;i++) {
