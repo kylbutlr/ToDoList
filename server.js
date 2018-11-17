@@ -2,12 +2,14 @@ const http = require('http')
 const querystring = require('querystring')
 //const express = require('express')
 //const todo = express()
-const todos = [{"text": "Delete this item", "realtime": "", "date": "2018-11-15", "done": "true", "key": 0},
-    {"text": "Add more to my list", "realtime": "", "date": "2018-11-15", "done":"false", "key": 1}]
+const todos = []
+  //[{"text": "Delete this item", "realtime": "", "date": "2018-11-15", "done": "true", "key": 0},
+  //{"text": "Add more to my list", "realtime": "", "date": "2018-11-15", "done":"false", "key": 1}]
 let nextKey = findKey()
 
 function findKey() {
   if (todos.length != 0){
+    console.log(todos[todos.length-1].key + 1)
     return todos[todos.length-1].key + 1
   }
   else {
@@ -54,11 +56,11 @@ const server = http.createServer((req, res) => {
       res.end('PUT')
     })
   }
-  else if (req.method === 'DELETE' && req.data == undefined){
-    req.on('end', () => {
-      todos.splice(0,todos.length)
-      res.end('CLEARED ALL')
-    })
+  else if (req.method === 'DELETE'){
+    console.log(req)
+    todos.splice(0,todos.length)
+    nextKey = findKey()
+    res.end('CLEARED ALL')
   }
   else if (req.method === 'DELETE'){
     //const key = todos.findIndex(x => x.key == data.key)
@@ -69,6 +71,7 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       const key = parseInt(body)
       todos.splice(key, 1)
+      nextKey = findKey()
       res.end('DELETE')
     })
   }

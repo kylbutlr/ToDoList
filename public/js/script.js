@@ -156,16 +156,17 @@ const onFormSubmit = (e) => {
               })
         }
         else {
-          $.post('http://localhost:3000/todos', todo, (data) => console.log(data))
-          $.get('http://localhost:3000', (data) => { 
-              todos = data.todos
-              $list.innerHTML = ""
-              for (i=0;i<todos.length-1;i++) {
-                  renderTodo(todos[i])
-              }
-              const newTodoKey = todos[todos.length-1].key
-              renderTodo(todos[newTodoKey], newTodoKey)
-          },"JSON")
+            $.post('http://localhost:3000/todos', todo, () => {
+            $.get('http://localhost:3000', (data) => { 
+                todos = data.todos
+                $list.innerHTML = ""
+                for (i=0;i<todos.length-1;i++) {
+                    renderTodo(todos[i])
+                }
+                const newTodoKey = todos[todos.length-1].key
+                console.log(todos)
+                renderTodo(todos[newTodoKey], newTodoKey)
+            },"JSON")})
         }
         resetInput()
         $input.focus()
@@ -268,19 +269,11 @@ function getAMPM(time) {
 
 const onClearClick = (e) => {
     e.preventDefault()
+    todos = []
     jQuery.ajax({
         url: 'http://localhost:3000/todos/',
         method: 'DELETE',
-        data: JSON.stringify(key),
-        success: function() {
-            $.get('http://localhost:3000', (data) => { 
-                todos = data.todos
-                $list.innerHTML = ""
-                for (i=0;i<todos.length;i++) {
-                    renderTodo(todos[i])
-                }
-            },"JSON")
-        }
+        success: console.log(todos)
     });
     for (i=0;i<$list.childElementCount;i++) {
         $list.childNodes[i].classList.add("post-delete")
@@ -288,8 +281,6 @@ const onClearClick = (e) => {
     setTimeout(function() {
         $list.innerHTML = ""
     }, 250)
-    todos = []
-    key = 0
 }
 
 const onClearLSClick = (e) => {
@@ -297,7 +288,6 @@ const onClearLSClick = (e) => {
     e.preventDefault()
     $list.innerHTML = ""
     todos = []
-    key = 0
     window.localStorage.clear()
     window.location.reload()
 }
