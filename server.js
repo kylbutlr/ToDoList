@@ -9,7 +9,6 @@ let nextKey = findKey()
 
 function findKey() {
   if (todos.length != 0){
-    console.log(todos[todos.length-1].key + 1)
     return todos[todos.length-1].key + 1
   }
   else {
@@ -57,23 +56,16 @@ const server = http.createServer((req, res) => {
       res.end('PUT')
     })
   }
+  else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
+    const key = Number(req.url.match(/[0-9]+$/)[0])
+    todos.splice(key,1)
+    nextKey--
+    res.end('DELETE')
+  }
   else if (req.method === 'DELETE'){
     todos.splice(0,todos.length)
     nextKey = findKey()
-    res.end('CLEARED ALL')
-  }
-  else if (req.method === 'DELETE'){
-    //const key = todos.findIndex(x => x.key == data.key)
-    let body = ''
-    req.on('data', chunk => {
-      body += chunk.toString()
-    })
-    req.on('end', () => {
-      const key = parseInt(body)
-      todos.splice(key, 1)
-      nextKey = findKey()
-      res.end('DELETE')
-    })
+    res.end('CLEAR')
   }
   else {
     res.end('404: Not Found')

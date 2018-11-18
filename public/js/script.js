@@ -98,7 +98,7 @@ function applyTheme(theme) {
 }
 
 function getSavedList() {
-    $.get('http://localhost:3000', (data) => { 
+    $.get('http://localhost:3000/todos', (data) => { 
         todos = data.todos
         if (todos.length>0) {
             $list.innerHTML = ""
@@ -131,42 +131,29 @@ const onFormSubmit = (e) => {
             todo = {"text": $input.value, "realtime": $time.value, "date": $date.value, "done": "false"}
         }
         if ($key.value.length > 0){
-          const key = parseInt($key.value)
-          todo.key = key
-          todos[key] = todo
-          $.ajax({
-              url: 'http://localhost:3000/todos',
-              method: 'PUT',
-              data: JSON.stringify(todos[key]),
-              success: function() {
-                  $.get('http://localhost:3000/todos/'+key, (data) => { 
-                    console.log(data)
-                    todos = data.todos
-                    $list.innerHTML = ""
-                    for (i=0;i<key;i++) {
-                        renderTodo(todos[i])
-                    }
-                    for (i=key+1;i<todos.length;i++) {
-                      renderTodo(todos[i])
-                    } 
-                    renderTodo(todos[key], key)
-                    $("#cancelButton").trigger("click")
-                  },"JSON")
+            const key = parseInt($key.value)
+            todo.key = key
+            todos[key] = todo
+            $.ajax({
+                url: 'http://localhost:3000/todos',
+                method: 'PUT',
+                data: JSON.stringify(todos[key]),
+                success: function() {
+                    $.get('http://localhost:3000/todos/'+key, (data) => {
+                        renderTodo(todos[key], key)
+                        $("#cancelButton").trigger("click")
+                    },"JSON")
                 }
-              })
+            })
         }
         else {
             $.post('http://localhost:3000/todos', todo, () => {
-            $.get('http://localhost:3000', (data) => { 
-                todos = data.todos
-                $list.innerHTML = ""
-                for (i=0;i<todos.length-1;i++) {
-                    renderTodo(todos[i])
-                }
-                const newTodoKey = todos[todos.length-1].key
-                console.log(todos)
-                renderTodo(todos[newTodoKey], newTodoKey)
-            },"JSON")})
+                $.get('http://localhost:3000/todos', (data) => { 
+                    todos = data.todos
+                    const newTodoKey = todos[todos.length-1].key
+                    renderTodo(todos[newTodoKey], newTodoKey)
+                },"JSON")
+            })
         }
         resetInput()
         $input.focus()
@@ -179,11 +166,8 @@ function renderTodo(todo, newTodoKey) {
     const dateObject = new Date(todo.date)
     const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
     const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
-    let currentKey;
-    if (newTodoKey === todos.length-1){
-        currentKey = newTodoKey
-    }
-    else if (newTodoKey >= 0){
+    let currentKey
+    if (newTodoKey >= 0){
         currentKey = newTodoKey
     }
     else {
@@ -210,11 +194,12 @@ function renderTodo(todo, newTodoKey) {
     if (todo.done === "true") {
         newList.classList.add("checked")
     }
-    if (newTodoKey){
+    if (newTodoKey >= 0){
+        newList.classList.remove("post-visible")
         newList.classList.add("new-post")
         setTimeout(function() {
             newList.classList.add("post-visible")
-        })
+        },10)
     }
     if (newTodoKey >= 0 && newTodoKey != todos.length-1){
         $list.insertBefore(newList, $list.children[newTodoKey])
@@ -271,9 +256,8 @@ const onClearClick = (e) => {
     e.preventDefault()
     todos = []
     jQuery.ajax({
-        url: 'http://localhost:3000/todos/',
-        method: 'DELETE',
-        success: console.log(todos)
+        url: 'http://localhost:3000/todos',
+        method: 'DELETE'
     });
     for (i=0;i<$list.childElementCount;i++) {
         $list.childNodes[i].classList.add("post-delete")
@@ -332,14 +316,15 @@ function onDeleteButtonClick(e) {
     e.preventDefault()
     const key = todos.findIndex(x => x.key == e.target.dataset.key)
     jQuery.ajax({
-        url: 'http://localhost:3000/todos/',
+        url: 'http://localhost:3000/todos/'+key,
         method: 'DELETE',
         data: JSON.stringify(key),
         success: function() {
-            $.get('http://localhost:3000', (data) => { 
+            $.get('http://localhost:3000/todos', (data) => { 
                 todos = data.todos
                 $list.innerHTML = ""
                 for (i=0;i<todos.length;i++) {
+                    todos[i].key = i
                     renderTodo(todos[i])
                 }
             },"JSON")
@@ -421,7 +406,7 @@ $(function() {
     $(".container-glass").hide().delay(500).slideToggle(1000)
     $(".form-div").hide().delay(500).slideToggle(1000)
     $(".list-div").hide().delay(500).slideToggle(1000)
-    $(".header").click(function(e) {
+    $(".header").click(function() {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
         $(".form-div").slideToggle(1000)
@@ -431,7 +416,7 @@ $(function() {
     $("#time").stop().animate({top:-35},0)
     $("#date").stop().animate({top:-65},0)
     $("#addButton").stop().animate({opacity:0.25},0)
-    $("#input").focus(function(e) {
+    $("#input").focus(function() {
         $("#input").css("border-radius", "10px 10px 0 0")
         $("#time").stop().animate({top:0},250)
         $("#date").stop().animate({top:0},500)
@@ -493,28 +478,28 @@ $(function() {
         }, 500)
     })
 
-    $("#theme1").click(function(e) {
+    $("#theme1").click(function() {
         const themeName = "light"
         applyTheme(themeName)
         currentTheme = themeName
         window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
     })
 
-    $("#theme2").click(function(e) {
+    $("#theme2").click(function() {
         const themeName = "default"
         applyTheme(themeName)
         currentTheme = themeName
         window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
     })
 
-    $("#theme3").click(function(e) {
+    $("#theme3").click(function() {
         const themeName = "dark"
         applyTheme(themeName)
         currentTheme = themeName
         window.localStorage.setItem("todoTheme", JSON.stringify(themeName))
     })
 
-    $("#cancelButton").click(function(e) {
+    $("#cancelButton").click(function() {
         resetInput(500)
         checkInput(1)
         $("#addButton").stop().animate({opacity:0.25}, 250)
