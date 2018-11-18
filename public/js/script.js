@@ -358,11 +358,21 @@ function onCheckboxClick(e) {
         e.target.parentNode.classList.remove("checked")
         e.target.checked = false
         todos[target].done = "false"
+        $.ajax({
+            url: 'http://localhost:3000/todos',
+            method: 'PUT',
+            data: JSON.stringify(todos[target])
+        })
     }
     else {
         e.target.parentNode.classList.add("checked")
         e.target.checked = true
         todos[target].done = "true"
+        $.ajax({
+            url: 'http://localhost:3000/todos',
+            method: 'PUT',
+            data: JSON.stringify(todos[target])
+        })
     }
 }
 
