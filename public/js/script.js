@@ -125,10 +125,10 @@ const onFormSubmit = (e) => {
         let todo = {}
         const time = $time.value
         if (time.length>0) {
-            todo = {"text": $input.value, "time": getAMPM($time.value), "realtime": $time.value, "date": $date.value, "done": "false"}
+            todo = {"text": $input.value, "time": getAMPM($time.value), "time24": $time.value, "date": $date.value, "done": "false"}
         }
         else {
-            todo = {"text": $input.value, "realtime": $time.value, "date": $date.value, "done": "false"}
+            todo = {"text": $input.value, "time24": $time.value, "date": $date.value, "done": "false"}
         }
         if ($key.value.length > 0){
             const key = parseInt($key.value)
@@ -289,7 +289,7 @@ function onEditButtonClick(e) {
     e.preventDefault()
     const t = todos.findIndex(x => x.key == e.target.dataset.key)
     $input.value = todos[t].text
-    $time.value = todos[t].realtime
+    $time.value = todos[t].time24
     $date.value = todos[t].date
     $key.value = todos[t].key
     $("#cancelButton").show()

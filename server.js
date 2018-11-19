@@ -59,7 +59,6 @@ const server = http.createServer((req, res) => {
   else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
     const key = Number(req.url.match(/[0-9]+$/)[0])
     todos.splice(key,1)
-    nextKey--
     res.end('DELETE')
   }
   else if (req.method === 'DELETE'){
