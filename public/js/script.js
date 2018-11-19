@@ -412,10 +412,17 @@ getSavedList()
 getSavedTheme()
 
 $(function() {
-    $(".container").hide().delay(500).slideToggle(1000)
-    $(".container-glass").hide().delay(500).slideToggle(1000)
-    $(".form-div").hide().delay(500).slideToggle(1000)
-    $(".list-div").hide().delay(500).slideToggle(1000)
+    $(".header").hide().delay(500).fadeToggle(1000)
+    $(".header-glass").hide().delay(500).fadeToggle(1000)
+    $(".clear-div").hide().delay(500).fadeToggle(1000)
+    $(".clear-div-glass").hide().delay(500).fadeToggle(1000)
+    $(".theme-div").hide().delay(500).fadeToggle(1000)
+    $(".theme-div-glass").hide().delay(500).fadeToggle(1000)
+    $(".container").hide().delay(1500).slideToggle(1000)
+    $(".container-glass").hide().delay(1500).slideToggle(1000)
+    $(".form-div").hide().delay(1500).slideToggle(1000)
+    $(".list-div").hide().delay(1500).slideToggle(1000)
+
     $(".header").click(function() {
         $(".container").slideToggle(1000)
         $(".container-glass").slideToggle(1000)
