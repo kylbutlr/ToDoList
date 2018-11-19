@@ -133,14 +133,15 @@ const onFormSubmit = (e) => {
         if ($key.value.length > 0){
             const key = parseInt($key.value)
             todo.key = key
-//const t = todos.findIndex(x => x.key == e.target.dataset.key)
-            todos[key] = todo
+            prevKey = (key-1)
+            const t = todos.findIndex(x => x.key == prevKey)
+            todos[(t+1)] = todo
             $.ajax({
                 url: 'http://localhost:3000/todos',
                 method: 'PUT',
                 data: JSON.stringify(todos[key]),
                 success: function() {
-                    $.get('http://localhost:3000/todos/'+key, (data) => {
+                    $.get('http://localhost:3000/todos/'+key, () => {
                         renderTodo(todos[key], key)
                         $("#cancelButton").trigger("click")
                     },"JSON")
@@ -152,12 +153,14 @@ const onFormSubmit = (e) => {
                 $.get('http://localhost:3000/todos', (data) => { 
                     todos = data.todos
                     const newTodoKey = (todos[(todos.length-1)].key)
-                    renderTodo(todos[newTodoKey], newTodoKey)
+                    const t = todos.findIndex(x => x.key == newTodoKey)
+                    renderTodo(todos[t], newTodoKey)
                 },"JSON")
             })
         }
         resetInput()
         $input.focus()
+        $("#addButton").stop().animate({opacity:0.25}, 500)
     }
 }
 
@@ -383,11 +386,11 @@ function onListItemClick(e) {
 }
 
 function checkInput(key) {
-    if (key) {
+    if (key>=0) {
         $("#cancelButton").css("opacity", "0.25").stop().animate({opacity:1}, 500)
         $("#addButton").stop().animate({opacity:1}, 500)
     }
-    if (!$("#input").val() || key) {
+    if ($("#input").val().length === 0 || key>=0) {
         if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) {}
         else {
             $("#date").stop().animate({top:-65},250, function() {
@@ -434,6 +437,7 @@ $(function() {
     $("#time").stop().animate({top:-35},0)
     $("#date").stop().animate({top:-65},0)
     $("#addButton").stop().animate({opacity:0.25},0)
+
     $("#input").focus(function() {
         $("#input").css("border-radius", "10px 10px 0 0")
         $("#time").stop().animate({top:0},250)
