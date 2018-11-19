@@ -151,8 +151,7 @@ const onFormSubmit = (e) => {
             $.post('http://localhost:3000/todos', todo, () => {
                 $.get('http://localhost:3000/todos', (data) => { 
                     todos = data.todos
-                    const newTodoKey = todos.children[todos.length-1].key+1
-                    console.log(newTodoKey)
+                    const newTodoKey = (todos[(todos.length-1)].key)
                     renderTodo(todos[newTodoKey], newTodoKey)
                 },"JSON")
             })
@@ -282,7 +281,7 @@ function createElementEditButton(key) {
     const editButton = document.createElement("button")
     editButton.dataset.key = key
     editButton.className = "edit-button button"
-    editButton.textContent = "Edit"
+    editButton.textContent = ""
     editButton.addEventListener("click", onEditButtonClick)
     return editButton
 }
@@ -309,7 +308,7 @@ function createElementDeleteButton(key) {
     const deleteButton = document.createElement("button")
     deleteButton.dataset.key = key
     deleteButton.className = "delete-button button"
-    deleteButton.textContent = "Delete"
+    deleteButton.textContent = ""
     deleteButton.addEventListener("click", onDeleteButtonClick)
     return deleteButton
 }

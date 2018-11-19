@@ -343,17 +343,31 @@ li:hover > .delete-button {
     transition: opacity 0.25s;
 }
 .edit-button {
+    background-image:url("images/edit-icon.png");
+    background-position: contain;
+    background-repeat: no-repeat;
+    background-size: 80%;
     border-radius: 10px 0 0 10px;
+    content: "";
     font-size: 12px;
+    height: 20px;
     margin: 0 0 0 10px;
     opacity: 0;
     transition: opacity 0.5s;
+    width: 20px;
 }
 .delete-button {
+    background-image:url("images/delete-icon.png");
+    background-position: contain;
+    background-repeat: no-repeat;
+    background-size: auto 90%;
     border-radius: 0 10px 10px 0;
+    content: "";
     font-size: 12px;
+    height: 20px;
     opacity: 0;
     transition: opacity 0.5s;
+    width: 20px;
 }
 .check-box {
     border-radius: 5px;
