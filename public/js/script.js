@@ -272,7 +272,6 @@ const onClearClick = (e) => {
 }
 
 const onClearLSClick = (e) => {
-    //WILL REMOVE THIS BUTTON
     e.preventDefault()
     $list.innerHTML = ""
     todos = []

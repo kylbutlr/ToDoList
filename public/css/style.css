@@ -330,12 +330,13 @@ li:hover > .delete-button {
 }
 .clear-button {
     opacity: 0.5;
-    border-radius: 10px 0 0 10px;
+    border-radius: 10px;
     flex: 1;
     height: 4vh;
     transition: opacity 0.25s;
 }
 .clear-ls-button {
+    display: none;
     opacity: 0.5;
     border-radius: 0 10px 10px 0;
     flex: 1;
