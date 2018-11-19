@@ -230,20 +230,20 @@ li:hover > .delete-button {
 }
 .theme-div {
     position: absolute;
-    bottom: -46px;
+    bottom: -60px;
     right: 15vw;
     margin: 0;
     border-radius: 20px 20px 0 0;
     width: 30vw;
-    height: 15vh;
+    height: 17vh;
     box-shadow: 0 5px 15px -1px black;
 }
 .theme-div-glass {
     content: '';
     border-radius: 20px 20px 0 0;
-    margin: 85vh 0 0 55vw;
+    margin: 83vh 0 0 55vw;
     position: absolute;
-    top: 46px;
+    top: 60px;
     right: 15vw;
     bottom: 0;
     left: 0;
@@ -273,7 +273,7 @@ li:hover > .delete-button {
 }
 .theme-btn {
     flex: 1;
-    height: 4vh;
+    height: 6vh;
     opacity: 0.5;
     transition: opacity 0.25s;
 }
@@ -288,20 +288,20 @@ li:hover > .delete-button {
 }
 .clear-div {
     position: absolute;
-    bottom: -46px;
+    bottom: -60px;
     left: 15vw;
     margin: 0;
     border-radius: 20px 20px 0 0;
     width: 30vw;
-    height: 15vh;
+    height: 17vh;
     box-shadow: 0 5px 15px -1px black;
 }
 .clear-div-glass {
     content: '';
     border-radius: 20px 20px 0 0;
-    margin: 85vh 55vw 0 0;
+    margin: 83vh 55vw 0 0;
     position: absolute;
-    top: 46px;
+    top: 60px;
     right: 0;
     bottom: 0;
     left: 15vw;
@@ -333,7 +333,7 @@ li:hover > .delete-button {
     opacity: 0.5;
     border-radius: 10px;
     flex: 1;
-    height: 4vh;
+    height: 6vh;
     transition: opacity 0.25s;
 }
 .clear-ls-button {
@@ -341,7 +341,7 @@ li:hover > .delete-button {
     opacity: 0.5;
     border-radius: 0 10px 10px 0;
     flex: 1;
-    height: 4vh;
+    height: 6vh;
     transition: opacity 0.25s;
 }
 .edit-button {
