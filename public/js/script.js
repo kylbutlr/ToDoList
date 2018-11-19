@@ -133,6 +133,7 @@ const onFormSubmit = (e) => {
         if ($key.value.length > 0){
             const key = parseInt($key.value)
             todo.key = key
+//const t = todos.findIndex(x => x.key == e.target.dataset.key)
             todos[key] = todo
             $.ajax({
                 url: 'http://localhost:3000/todos',
@@ -150,7 +151,8 @@ const onFormSubmit = (e) => {
             $.post('http://localhost:3000/todos', todo, () => {
                 $.get('http://localhost:3000/todos', (data) => { 
                     todos = data.todos
-                    const newTodoKey = todos[todos.length-1].key
+                    const newTodoKey = todos.children[todos.length-1].key+1
+                    console.log(newTodoKey)
                     renderTodo(todos[newTodoKey], newTodoKey)
                 },"JSON")
             })
