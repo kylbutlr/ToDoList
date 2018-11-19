@@ -1,4 +1,5 @@
 const http = require('http')
+const fs = require('fs')
 const querystring = require('querystring')
 //const express = require('express')
 //const todo = express()
@@ -25,11 +26,18 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
   console.log('Request was made: '+ req.url)
   if (req.method === 'GET') {
-    res.end(JSON.stringify({ todos }))
+    req.on('end', () => {
+      fs.readFile('todos.json', 'utf-8', (err,data) => {
+        if (err) { throw err }
+        res.end(JSON.parse(data))
+      })
+    })
   }
   if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
     const key = Number(req.url.match(/[0-9]+$/)[0])
-    res.end(JSON.stringify({ todo: todos.find(t => t.key === key) }))
+    res.end(JSON.stringify({ 
+      todo: todos.find(t => t.key === key) 
+    }))
   }
   else if (req.method === 'POST'){
     let body = ''
@@ -37,11 +45,20 @@ const server = http.createServer((req, res) => {
       body += chunk.toString()
     })
     req.on('end', () => {
-      const todo = querystring.parse(body)
-      todo.key = nextKey
-      todos.push(todo)
-      nextKey++
-      res.end('POST')
+      fs.readFile('todos.json', 'utf8', (err,data) => {
+        if (err) { throw err }
+        let obj = JSON.parse(data)
+        const todo = querystring.parse(body)
+        todo.key = nextKey
+        nextKey++
+        console.log(obj)
+        obj.push(todo)
+        let newData = JSON.stringify(obj)
+        fs.writeFile('todos.json', newData, (err) => {
+          if (err) { throw err }
+        })
+        res.end('POST')
+      })
     })
   } 
   else if (req.method === 'PUT'){
