@@ -161,6 +161,7 @@ const onFormSubmit = (e) => {
         resetInput()
         $input.focus()
         $("#addButton").stop().animate({opacity:0.25}, 500)
+        $("#addButton").prop("disabled", true)
     }
 }
 
@@ -199,7 +200,6 @@ function renderTodo(todo, newTodoKey) {
         newList.classList.add("checked")
     }
     if (newTodoKey >= 0){
-        newList.classList.remove("post-visible")
         newList.classList.add("new-post")
         setTimeout(function() {
             newList.classList.add("post-visible")
@@ -325,11 +325,11 @@ function onDeleteButtonClick(e) {
         success: function() {
             $.get('http://localhost:3000/todos', (data) => { 
                 todos = data.todos
-                $list.innerHTML = ""
+                /*$list.innerHTML = ""
                 for (i=0;i<todos.length;i++) {
                     todos[i].key = i
                     renderTodo(todos[i])
-                }
+                }*/
             },"JSON")
         }
     });
@@ -388,6 +388,7 @@ function checkInput(key) {
     if (key>=0) {
         $("#cancelButton").css("opacity", "0.25").stop().animate({opacity:1}, 500)
         $("#addButton").stop().animate({opacity:1}, 500)
+        $("#addButton").prop("disabled", false)
     }
     if ($("#input").val().length === 0 || key>=0) {
         if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) {}
@@ -436,7 +437,8 @@ $(function() {
     $("#time").stop().animate({top:-35},0)
     $("#date").stop().animate({top:-65},0)
     $("#addButton").stop().animate({opacity:0.25},0)
-
+    $("#addButton").prop("disabled", true)
+    
     $("#input").focus(function() {
         $("#input").css("border-radius", "10px 10px 0 0")
         $("#time").stop().animate({top:0},250)
@@ -446,9 +448,11 @@ $(function() {
     $("#input").on("change paste cut input", function() {
         if (!$.trim(this.value).length) {
             $("#addButton").stop().animate({opacity:0.25}, 250)
+            $("#addButton").prop("disabled", true)
         }
         else {
             $("#addButton").stop().animate({opacity:1}, 500)
+            $("#addButton").prop("disabled", false)
         }
     })
 
@@ -523,7 +527,9 @@ $(function() {
     $("#cancelButton").click(function() {
         resetInput(500)
         checkInput(1)
+        $("#input").focus()
         $("#addButton").stop().animate({opacity:0.25}, 250)
+        $("#addButton").prop("disabled", true)
         $("#cancelButton").hide()
         $("#addButton").text("Add to List")
         $("#addButton").removeClass("edit")
