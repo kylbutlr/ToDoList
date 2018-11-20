@@ -15,7 +15,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
   console.log('Request was made: '+ req.url)
 
-  //WORKING?
+  //WORKING
   if (req.method === 'GET' && req.url === '/todos') {
     fs.readFile('todos.json', 'utf-8', (err,data) => {
       if (err) { throw err }
@@ -23,18 +23,18 @@ const server = http.createServer((req, res) => {
     })
   }
 
-  //NEEDS WORK
+  //NEEDS WORK?
   else if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
     const key = Number(req.url.match(/[0-9]+$/)[0])
     fs.readFile('todos.json', 'utf-8', (err,data) => {
       if (err) { throw err }
       res.end(JSON.stringify({ 
-        todo: data.find(t => t.key === key) 
+        todo: data.find(t => t.key === key)
       }))
     })
   }
 
-  //WORKING?
+  //WORKING
   else if (req.method === 'POST' && req.url === '/todos'){
     let body = ''
     req.on('data', chunk => {
@@ -85,7 +85,7 @@ const server = http.createServer((req, res) => {
     res.end('CLEAR')
   }
 
-  //WORKING?
+  //WORKING
   else {
     res.end('404: Not Found')
   }
@@ -105,7 +105,6 @@ fs.readFile('todos.json', 'utf-8', (err,data) => {
   todos = JSON.parse(data)
   nextKey = findKey()
   server.listen(3000)
-  //todo.listen(3000)
   console.log("Listening on post 3000")
 })
 
