@@ -25,11 +25,12 @@ const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Headers", "*") 
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
   console.log('Request was made: '+ req.url)
+
   if (req.method === 'GET') {
     req.on('end', () => {
       fs.readFile('todos.json', 'utf-8', (err,data) => {
         if (err) { throw err }
-        res.end(JSON.parse(data))
+        res.end(JSON.stringify({data}))
       })
     })
   }
@@ -39,6 +40,7 @@ const server = http.createServer((req, res) => {
       todo: todos.find(t => t.key === key) 
     }))
   }
+
   else if (req.method === 'POST'){
     let body = ''
     req.on('data', chunk => {
@@ -51,7 +53,6 @@ const server = http.createServer((req, res) => {
         const todo = querystring.parse(body)
         todo.key = nextKey
         nextKey++
-        console.log(obj)
         obj.push(todo)
         let newData = JSON.stringify(obj)
         fs.writeFile('todos.json', newData, (err) => {
@@ -61,6 +62,7 @@ const server = http.createServer((req, res) => {
       })
     })
   } 
+
   else if (req.method === 'PUT'){
     let body = ''
     req.on('data', chunk => {
@@ -73,6 +75,7 @@ const server = http.createServer((req, res) => {
       res.end('PUT')
     })
   }
+
   else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
     const key = Number(req.url.match(/[0-9]+$/)[0])
     todos.splice(key,1)
@@ -83,6 +86,7 @@ const server = http.createServer((req, res) => {
     nextKey = findKey()
     res.end('CLEAR')
   }
+
   else {
     res.end('404: Not Found')
   }
