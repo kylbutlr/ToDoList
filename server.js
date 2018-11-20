@@ -15,7 +15,6 @@ const server = http.createServer((req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
   console.log('Request was made: '+ req.url)
 
-  //WORKING
   if (req.method === 'GET' && req.url === '/todos') {
     fs.readFile('todos.json', 'utf-8', (err,data) => {
       if (err) { throw err }
@@ -23,18 +22,17 @@ const server = http.createServer((req, res) => {
     })
   }
 
-  //NEEDS WORK?
   else if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
     const key = Number(req.url.match(/[0-9]+$/)[0])
     fs.readFile('todos.json', 'utf-8', (err,data) => {
       if (err) { throw err }
+      parsedData = JSON.parse(data)
       res.end(JSON.stringify({ 
-        todo: data.find(t => t.key === key)
+        todo: parsedData.find(t => t.key === key)
       }))
     })
   }
 
-  //WORKING
   else if (req.method === 'POST' && req.url === '/todos'){
     let body = ''
     req.on('data', chunk => {
@@ -43,12 +41,12 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       fs.readFile('todos.json', 'utf8', (err,data) => {
         if (err) { throw err }
-        let obj = JSON.parse(data)
+        const obj = JSON.parse(data)
         const todo = querystring.parse(body)
         todo.key = nextKey
         nextKey++
         obj.push(todo)
-        let newData = JSON.stringify(obj, null, 2)
+        const newData = JSON.stringify(obj, null, 2)
         fs.writeFile('todos.json', newData, (err) => {
           if (err) { throw err }
         })
@@ -57,7 +55,6 @@ const server = http.createServer((req, res) => {
     })
   } 
 
-  //NOT STARTED
   else if (req.method === 'PUT' && req.url === '/todos'){
     let body = ''
     req.on('data', chunk => {
@@ -66,26 +63,36 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       const parsedBody = JSON.parse(body)
       parsedBody.key = parseInt(parsedBody.key)
-      todos[parsedBody.key] = parsedBody
+      const t = todos.findIndex(x => x.key == parsedBody.key)
+      todos[t] = parsedBody
+      const newData = JSON.stringify(todos, null, 2)
+      fs.writeFile('todos.json', newData, (err) => {
+        if (err) { throw err }
+      })
       res.end('PUT')
     })
   }
 
-  //NOT STARTED
-  else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
-    const key = Number(req.url.match(/[0-9]+$/)[0])
-    todos.splice(key,1)
-    res.end('DELETE')
-  }
-
-  //NOT STARTED
   else if (req.method === 'DELETE' && req.url === '/todos'){
     todos.splice(0,todos.length)
     nextKey = findKey()
+    fs.writeFile('todos.json', "[]", (err) => {
+      if (err) { throw err }
+    })
     res.end('CLEAR')
   }
 
-  //WORKING
+  else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
+    const key = Number(req.url.match(/[0-9]+$/)[0])
+    const t = todos.findIndex(x => x.key == key)
+    todos.splice(t,1)
+    const newData = JSON.stringify(todos, null, 2)
+    fs.writeFile('todos.json', newData, (err) => {
+      if (err) { throw err }
+    })
+    res.end('DELETE')
+  }
+
   else {
     res.end('404: Not Found')
   }
