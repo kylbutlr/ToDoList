@@ -99,9 +99,7 @@ function applyTheme(theme) {
 
 function getSavedList() {
     $.get('http://localhost:3000/todos', (data) => { 
-        console.log(data)
-        console.log(data.todos)
-        todos = data.todos
+        todos = data
         if (todos.length>0) {
             $list.innerHTML = ""
             for (i=0;i<todos.length;i++) {
@@ -153,9 +151,11 @@ const onFormSubmit = (e) => {
         else {
             $.post('http://localhost:3000/todos', todo, () => {
                 $.get('http://localhost:3000/todos', (data) => { 
-                    todos = data.todos
+                    todos = data
                     const newTodoKey = (todos[(todos.length-1)].key)
+                    console.log(newTodoKey)
                     const t = todos.findIndex(x => x.key == newTodoKey)
+                    console.log(t)
                     renderTodo(todos[t], newTodoKey)
                 },"JSON")
             })
@@ -326,7 +326,7 @@ function onDeleteButtonClick(e) {
         data: JSON.stringify(key),
         success: function() {
             $.get('http://localhost:3000/todos', (data) => { 
-                todos = data.todos
+                todos = data
                 /*$list.innerHTML = ""
                 for (i=0;i<todos.length;i++) {
                     todos[i].key = i
