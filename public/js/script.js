@@ -153,9 +153,7 @@ const onFormSubmit = (e) => {
                 $.get('http://localhost:3000/todos', (data) => { 
                     todos = data
                     const newTodoKey = (todos[(todos.length-1)].key)
-                    console.log(newTodoKey)
                     const t = todos.findIndex(x => x.key == newTodoKey)
-                    console.log(t)
                     renderTodo(todos[t], newTodoKey)
                 },"JSON")
             })
@@ -327,11 +325,6 @@ function onDeleteButtonClick(e) {
         success: function() {
             $.get('http://localhost:3000/todos', (data) => { 
                 todos = data
-                /*$list.innerHTML = ""
-                for (i=0;i<todos.length;i++) {
-                    todos[i].key = i
-                    renderTodo(todos[i])
-                }*/
             },"JSON")
         }
     });
