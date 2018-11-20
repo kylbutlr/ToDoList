@@ -27,11 +27,9 @@ const server = http.createServer((req, res) => {
   console.log('Request was made: '+ req.url)
 
   if (req.method === 'GET') {
-    req.on('end', () => {
-      fs.readFile('todos.json', 'utf-8', (err,data) => {
-        if (err) { throw err }
-        res.end(JSON.stringify({data}))
-      })
+    fs.readFile('todos.json', 'utf-8', (err,data) => {
+      if (err) { throw err }
+      res.end({data})
     })
   }
   if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
