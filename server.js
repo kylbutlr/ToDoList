@@ -27,18 +27,17 @@ const server = http.createServer((req, res) => {
   console.log('Request was made: '+ req.url)
 
   if (req.method === 'GET') {
-    if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
-      const key = Number(req.url.match(/[0-9]+$/)[0])
-      res.end(JSON.stringify({ 
-        todo: todos.find(t => t.key === key) 
-      }))
-    }
-    else {
-      fs.readFile('todos.json', 'utf-8', (err,data) => {
-        if (err) { throw err }
-        res.end(data)
-      })
-    }
+    fs.readFile('todos.json', 'utf-8', (err,data) => {
+      if (err) { throw err }
+      res.end(data)
+    })
+  }
+  
+  else if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
+    const key = Number(req.url.match(/[0-9]+$/)[0])
+    res.end(JSON.stringify({ 
+      todo: todos.find(t => t.key === key) 
+    }))
   }
 
   else if (req.method === 'POST'){
