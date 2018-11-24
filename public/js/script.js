@@ -103,8 +103,7 @@ function getSavedList() {
         if (todos.length>0) {
             $list.innerHTML = ""
             for (i=0;i<todos.length;i++) {
-                todos[i].key = i
-                renderTodo(todos[i])
+                renderTodo(todos[i], todos[i].key)
             }
         }
         else {
@@ -153,7 +152,7 @@ const onFormSubmit = (e) => {
                     todos = data.todos
                     const newKey = data.nextKey
                     const t = todos.findIndex(x => x.key == newKey-1)
-                    renderTodo(todos[t])
+                    renderTodo(todos[t], todos[t].key)
                 },"JSON")
             })
         }
@@ -170,13 +169,7 @@ function renderTodo(todo, newTodoKey) {
     const dateObject = new Date(todo.date)
     const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000)
     const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate()
-    let currentKey
-    if (newTodoKey >= 0){
-        currentKey = newTodoKey
-    }
-    else {
-        currentKey = todo.key
-    }
+    let currentKey = newTodoKey
     if (!todo.time && todo.date) {
         h3.textContent = todo.text + " (by " + formattedDate + ")"
     }
@@ -289,8 +282,6 @@ function createElementEditButton(key) {
 
 function onEditButtonClick(e) {
     e.preventDefault()
-    console.log(todos)
-    console.log(e.target.dataset.key)
     const t = todos.findIndex(x => x.key == e.target.dataset.key)
     $input.value = todos[t].text
     $time.value = todos[t].time24
@@ -318,14 +309,18 @@ function createElementDeleteButton(key) {
 
 function onDeleteButtonClick(e) {
     e.preventDefault()
-    const key = todos.findIndex(x => x.key == e.target.dataset.key)
+    console.log(todos)
+    const key = e.target.dataset.key
+    const t = todos.findIndex(x => x.key == key)
+    todos.splice(t,1)
+    console.log(todos)
     jQuery.ajax({
         url: 'http://localhost:3000/todos/'+key,
         method: 'DELETE',
         data: JSON.stringify(key),
         success: function() {
             $.get('http://localhost:3000/todos', (data) => { 
-                todos = data
+                todos = data.todos
             },"JSON")
         }
     });
@@ -531,7 +526,7 @@ $(function() {
         $("#addButton").removeClass("edit")
         $list.innerHTML = ""
         for (i=0;i<todos.length;i++) {
-            renderTodo(todos[i])
+            renderTodo(todos[i], todos[i].key)
         }
     })
 })

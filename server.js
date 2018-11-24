@@ -13,7 +13,7 @@ const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Access-Control-Allow-Headers", "*") 
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
-  console.log('Request was made: '+ req.url)
+  console.log('Request: '+ req.url)
 
   if (req.method === 'GET' && req.url === '/todos') {
     fs.readFile('todos.json', 'utf-8', (err,data) => {
@@ -53,8 +53,8 @@ const server = http.createServer((req, res) => {
         }, null, 2)
         fs.writeFile('todos.json', newData, (err) => {
           if (err) { throw err }
+          res.end('POST')
         })
-        res.end('POST')
       })
     })
   } 
@@ -75,8 +75,8 @@ const server = http.createServer((req, res) => {
       }, null, 2)
       fs.writeFile('todos.json', newData, (err) => {
         if (err) { throw err }
+        res.end('PUT')
       })
-      res.end('PUT')
     })
   }
 
@@ -88,8 +88,8 @@ const server = http.createServer((req, res) => {
     }, null, 2)
     fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
+      res.end('CLEAR')
     })
-    res.end('CLEAR')
   }
 
   else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
@@ -102,8 +102,8 @@ const server = http.createServer((req, res) => {
     }, null, 2)
     fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
+      res.end('DELETE')
     })
-    res.end('DELETE')
   }
 
   else {
@@ -117,7 +117,6 @@ fs.readFile('todos.json', 'utf-8', (err,data) => {
   nextKey = parsedData.nextKey
   todos = parsedData.todos
   server.listen(3000)
-  console.log("Listening on post 3000")
 })
 
 //{"text": "Delete this item", "time24": "", "date": "2018-11-15", "done": "true", "key": 0}
