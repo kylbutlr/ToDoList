@@ -28,7 +28,7 @@ const server = http.createServer((req, res) => {
       if (err) { throw err }
       parsedData = JSON.parse(data)
       res.end(JSON.stringify({ 
-        todo: parsedData.find(t => t.key === key)
+        todo: parsedData.todos.find(t => t.key === key)
       }))
     })
   }
@@ -46,6 +46,7 @@ const server = http.createServer((req, res) => {
         todo.key = nextKey
         nextKey++
         todosData.todos.push(todo)
+        todos = todosData.todos
         const newData = JSON.stringify({ 
           "nextKey": nextKey, 
           "todos": todosData.todos
@@ -66,9 +67,13 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       const parsedBody = JSON.parse(body)
       parsedBody.key = parseInt(parsedBody.key)
+      console.log(todos)
       const t = todos.findIndex(x => x.key == parsedBody.key)
       todos[t] = parsedBody
-      const newData = JSON.stringify(todos, null, 2)
+      const newData = JSON.stringify({ 
+        "nextKey": nextKey, 
+        "todos": todos
+      }, null, 2)
       fs.writeFile('todos.json', newData, (err) => {
         if (err) { throw err }
       })
@@ -112,8 +117,9 @@ function findKey() {
 
 fs.readFile('todos.json', 'utf-8', (err,data) => {
   if (err) { throw err }
-  todosData = JSON.parse(data)
-  nextKey = todosData.nextKey
+  parsedData = JSON.parse(data)
+  nextKey = parsedData.nextKey
+  todos = parsedData.todos
   server.listen(3000)
   console.log("Listening on post 3000")
 })

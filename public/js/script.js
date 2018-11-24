@@ -133,13 +133,12 @@ const onFormSubmit = (e) => {
         if ($key.value.length > 0){
             const key = parseInt($key.value)
             todo.key = key
-            prevKey = (key-1)
-            const t = todos.findIndex(x => x.key == prevKey)
+            const t = todos.findIndex(x => x.key == key-1)
             todos[(t+1)] = todo
             $.ajax({
                 url: 'http://localhost:3000/todos',
                 method: 'PUT',
-                data: JSON.stringify(todos[key]),
+                data: JSON.stringify(todos[key], null, 2),
                 success: function() {
                     $.get('http://localhost:3000/todos/'+key, () => {
                         renderTodo(todos[key], key)
@@ -154,7 +153,7 @@ const onFormSubmit = (e) => {
                     todos = data.todos
                     const newKey = data.nextKey
                     const t = todos.findIndex(x => x.key == newKey-1)
-                    renderTodo(todos[t], newKey)
+                    renderTodo(todos[t])
                 },"JSON")
             })
         }
@@ -177,6 +176,7 @@ function renderTodo(todo, newTodoKey) {
     }
     else {
         currentKey = todo.key
+        console.log(todo.key)
     }
     if (!todo.time && todo.date) {
         h3.textContent = todo.text + " (by " + formattedDate + ")"
@@ -290,6 +290,8 @@ function createElementEditButton(key) {
 
 function onEditButtonClick(e) {
     e.preventDefault()
+    console.log(todos)
+    console.log(e.target.dataset.key)
     const t = todos.findIndex(x => x.key == e.target.dataset.key)
     $input.value = todos[t].text
     $time.value = todos[t].time24
