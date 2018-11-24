@@ -99,7 +99,7 @@ function applyTheme(theme) {
 
 function getSavedList() {
     $.get('http://localhost:3000/todos', (data) => { 
-        todos = data
+        todos = data.todos
         if (todos.length>0) {
             $list.innerHTML = ""
             for (i=0;i<todos.length;i++) {
@@ -151,9 +151,9 @@ const onFormSubmit = (e) => {
         else {
             $.post('http://localhost:3000/todos', todo, () => {
                 $.get('http://localhost:3000/todos', (data) => { 
-                    todos = data
-                    const newTodoKey = (todos[(todos.length-1)].key)
-                    const t = todos.findIndex(x => x.key == newTodoKey)
+                    todos = data.todos
+                    const newKey = data.nextKey
+                    const t = todos.findIndex(x => x.key == newKey)
                     renderTodo(todos[t], newTodoKey)
                 },"JSON")
             })

@@ -41,12 +41,15 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       fs.readFile('todos.json', 'utf8', (err,data) => {
         if (err) { throw err }
-        const obj = JSON.parse(data)
+        const todosData = JSON.parse(data)
         const todo = querystring.parse(body)
         todo.key = nextKey
         nextKey++
-        obj.push(todo)
-        const newData = JSON.stringify(obj, null, 2)
+        todosData.todos.push(todo)
+        const newData = JSON.stringify({ 
+          "nextKey": nextKey, 
+          "todos": todosData
+        }, null, 2)
         fs.writeFile('todos.json', newData, (err) => {
           if (err) { throw err }
         })
@@ -109,8 +112,8 @@ function findKey() {
 
 fs.readFile('todos.json', 'utf-8', (err,data) => {
   if (err) { throw err }
-  todos = JSON.parse(data)
-  nextKey = findKey()
+  todosData = JSON.parse(data)
+  nextKey = todosData.nextKey
   server.listen(3000)
   console.log("Listening on post 3000")
 })
