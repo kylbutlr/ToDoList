@@ -67,7 +67,6 @@ const server = http.createServer((req, res) => {
     req.on('end', () => {
       const parsedBody = JSON.parse(body)
       parsedBody.key = parseInt(parsedBody.key)
-      console.log(todos)
       const t = todos.findIndex(x => x.key == parsedBody.key)
       todos[t] = parsedBody
       const newData = JSON.stringify({ 
@@ -83,8 +82,11 @@ const server = http.createServer((req, res) => {
 
   else if (req.method === 'DELETE' && req.url === '/todos'){
     todos.splice(0,todos.length)
-    nextKey = findKey()
-    fs.writeFile('todos.json', "[]", (err) => {
+    const newData = JSON.stringify({
+      "nextKey": nextKey, 
+      "todos": []
+    }, null, 2)
+    fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
     })
     res.end('CLEAR')
@@ -94,7 +96,10 @@ const server = http.createServer((req, res) => {
     const key = Number(req.url.match(/[0-9]+$/)[0])
     const t = todos.findIndex(x => x.key == key)
     todos.splice(t,1)
-    const newData = JSON.stringify(todos, null, 2)
+    const newData = JSON.stringify({ 
+      "nextKey": nextKey, 
+      "todos": todos
+    }, null, 2)
     fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
     })
@@ -106,15 +111,6 @@ const server = http.createServer((req, res) => {
   }
 })
 
-function findKey() {
-  if (todos.length != 0){
-    return todos[todos.length-1].key + 1
-  }
-  else {
-    return 0
-  }
-}
-
 fs.readFile('todos.json', 'utf-8', (err,data) => {
   if (err) { throw err }
   parsedData = JSON.parse(data)
@@ -124,5 +120,5 @@ fs.readFile('todos.json', 'utf-8', (err,data) => {
   console.log("Listening on post 3000")
 })
 
-  //[{"text": "Delete this item", "realtime": "", "date": "2018-11-15", "done": "true", "key": 0},
-  //{"text": "Add more to my list", "realtime": "", "date": "2018-11-15", "done":"false", "key": 1}]
+//{"text": "Delete this item", "time24": "", "date": "2018-11-15", "done": "true", "key": 0}
+//{"text": "Add more to my list", "time24": "", "date": "2018-11-15", "done":"false", "key": 1}

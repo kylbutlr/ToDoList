@@ -176,7 +176,6 @@ function renderTodo(todo, newTodoKey) {
     }
     else {
         currentKey = todo.key
-        console.log(todo.key)
     }
     if (!todo.time && todo.date) {
         h3.textContent = todo.text + " (by " + formattedDate + ")"
