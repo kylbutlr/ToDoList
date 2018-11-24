@@ -153,8 +153,8 @@ const onFormSubmit = (e) => {
                 $.get('http://localhost:3000/todos', (data) => { 
                     todos = data.todos
                     const newKey = data.nextKey
-                    const t = todos.findIndex(x => x.key == newKey)
-                    renderTodo(todos[t], newTodoKey)
+                    const t = todos.findIndex(x => x.key == newKey-1)
+                    renderTodo(todos[t], newKey)
                 },"JSON")
             })
         }

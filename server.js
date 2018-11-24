@@ -48,7 +48,7 @@ const server = http.createServer((req, res) => {
         todosData.todos.push(todo)
         const newData = JSON.stringify({ 
           "nextKey": nextKey, 
-          "todos": todosData
+          "todos": todosData.todos
         }, null, 2)
         fs.writeFile('todos.json', newData, (err) => {
           if (err) { throw err }
