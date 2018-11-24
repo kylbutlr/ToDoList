@@ -18,6 +18,7 @@ const server = http.createServer((req, res) => {
   if (req.method === 'GET' && req.url === '/todos') {
     fs.readFile('todos.json', 'utf-8', (err,data) => {
       if (err) { throw err }
+      res.statusCode = 200
       res.end(data)
     })
   }
@@ -27,6 +28,7 @@ const server = http.createServer((req, res) => {
     fs.readFile('todos.json', 'utf-8', (err,data) => {
       if (err) { throw err }
       parsedData = JSON.parse(data)
+      res.statusCode = 200
       res.end(JSON.stringify({ 
         todo: parsedData.todos.find(t => t.key === key)
       }))
@@ -53,6 +55,7 @@ const server = http.createServer((req, res) => {
         }, null, 2)
         fs.writeFile('todos.json', newData, (err) => {
           if (err) { throw err }
+          res.statusCode = 201
           res.end('POST')
         })
       })
@@ -75,6 +78,7 @@ const server = http.createServer((req, res) => {
       }, null, 2)
       fs.writeFile('todos.json', newData, (err) => {
         if (err) { throw err }
+        res.statusCode = 201
         res.end('PUT')
       })
     })
@@ -88,6 +92,7 @@ const server = http.createServer((req, res) => {
     }, null, 2)
     fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
+      res.statusCode = 200
       res.end('CLEAR')
     })
   }
@@ -102,11 +107,13 @@ const server = http.createServer((req, res) => {
     }, null, 2)
     fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
+      res.statusCode = 200
       res.end('DELETE')
     })
   }
 
   else {
+    res.statusCode = 404
     res.end('404: Not Found')
   }
 })
