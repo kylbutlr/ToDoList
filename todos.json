@@ -1,5 +1,5 @@
 {
-  "nextKey": 3,
+  "nextKey": 2,
   "todos": [
     {
       "text": "Delete this item",
@@ -14,9 +14,6 @@
       "date": "2018-11-15",
       "done": "false",
       "key": 1
-    },
-    {
-      "key": 2
     }
   ]
 }

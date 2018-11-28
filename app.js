@@ -78,7 +78,7 @@ const server = http.createServer((req, res) => {
       }, null, 2)
       fs.writeFile('todos.json', newData, (err) => {
         if (err) { throw err }
-        res.statusCode = 201
+        res.statusCode = 204
         res.end('PUT')
       })
     })
@@ -92,7 +92,7 @@ const server = http.createServer((req, res) => {
     }, null, 2)
     fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
-      res.statusCode = 200
+      res.statusCode = 204
       res.end('CLEAR')
     })
   }
@@ -107,7 +107,7 @@ const server = http.createServer((req, res) => {
     }, null, 2)
     fs.writeFile('todos.json', newData, (err) => {
       if (err) { throw err }
-      res.statusCode = 200
+      res.statusCode = 204
       res.end('DELETE')
     })
   }

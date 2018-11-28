@@ -1,5 +1,5 @@
-const app = require('./app')
 const request = require('supertest')
+const app = require('./app')
 
 describe('GET /todos', function() {
   it('respond with json', function (done) {
