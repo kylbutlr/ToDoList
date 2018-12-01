@@ -124,10 +124,21 @@ const onFormSubmit = (e) => {
         let todo = {}
         const time = $time.value
         if (time.length>0) {
-            todo = {"text": $input.value, "time": getAMPM($time.value), "time24": $time.value, "date": $date.value, "done": "false"}
+            todo = {
+                "text": $input.value, 
+                "time": getAMPM($time.value), 
+                "time24": $time.value, 
+                "date": $date.value, 
+                "done": "false"
+            }
         }
         else {
-            todo = {"text": $input.value, "time24": $time.value, "date": $date.value, "done": "false"}
+            todo = {
+                "text": $input.value, 
+                "time24": $time.value, 
+                "date": $date.value, 
+                "done": "false"
+            }
         }
         if ($key.value.length > 0){
             const key = parseInt($key.value)

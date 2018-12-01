@@ -9,18 +9,65 @@ afterAll(() => {
   ]}, null, 2))
 })
 
-describe('GET /todos', function() {
-  it('respond with json', function (done) {
+describe('GET all /todos', function() {
+  it('should return all todos', function (done) {
     request(app)
       .get('/todos')
       .expect(200, done)
   })
 })
 
-describe('POST /todos', function() {
-  it('post with json', function (done) {
+describe('GET one /todos', function() {
+  it('should return first todo', function (done) {
+    request(app)
+      .get('/todos/0')
+      .expect(200, done)
+  })
+})
+
+describe('POST to /todos', function() {
+  it('should post a todo entry', function (done) {
+    const todo = {
+      "text": "NEW ENTRY",
+      "time24": "",
+      "date": "2018-11-15",
+      "done": "false"
+    }
     request(app)
       .post('/todos')
+      .send(todo)
       .expect(201, done)
+  })
+})
+
+describe('PUT to /todos', function() {
+  it('should edit first todo entry', function (done) {
+    const todo = {
+      "text": "EDITED ENTRY",
+      "time24": "",
+      "date": "2018-11-15",
+      "done": "false",
+      "key": 0
+    }
+    request(app)
+      .put('/todos')
+      .send(todo)
+      .expect(204, done)
+  })
+})
+
+describe('DELETE one /todos', function() {
+  it('should delete second todo entry', function (done) {
+    request(app)
+      .delete('/todos/1')
+      .expect(204, done)
+  })
+})
+
+describe('DELETE all /todos', function() {
+  it('should delete all todos', function (done) {
+    request(app)
+      .delete('/todos')
+      .expect(204, done)
   })
 })
