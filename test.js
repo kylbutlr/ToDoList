@@ -5,8 +5,8 @@ const app = require('./app')
 
 afterAll(() => {
   fs.writeFile('todos.json', JSON.stringify({ "nextKey": 2, "todos": [
-    {"text": "Delete this item", "time24": "", "date": "2018-11-15", "done": "true", "key": 0},
-    {"text": "Add more to my list", "time24": "", "date": "2018-11-15", "done":"false", "key": 1}
+    {"text": "Delete this item", "time24": "", "date": "2018-12-1", "done": "true", "key": 0},
+    {"text": "Add more to my list", "time24": "", "date": "2018-12-1", "done":"false", "key": 1}
   ]}, null, 2))
 })
 
@@ -31,7 +31,7 @@ describe('POST to /todos', function() {
     const todo = querystring.stringify({
       "text": "NEW ENTRY",
       "time24": "",
-      "date": "2018-11-15",
+      "date": "",
       "done": "false"
     })
     request(app)
@@ -46,7 +46,7 @@ describe('PUT to /todos', function() {
     const todo = {
       "text": "EDITED ENTRY",
       "time24": "",
-      "date": "2018-11-15",
+      "date": "",
       "done": "false",
       "key": 0
     }
