@@ -1,13 +1,14 @@
 const fs = require('fs')
 const request = require('supertest')
+const querystring = require('querystring')
 const app = require('./app')
 
-afterAll(() => {
+/*afterAll(() => {
   fs.writeFile('todos.json', JSON.stringify({ "nextKey": 2, "todos": [
     {"text": "Delete this item", "time24": "", "date": "2018-11-15", "done": "true", "key": 0},
     {"text": "Add more to my list", "time24": "", "date": "2018-11-15", "done":"false", "key": 1}
   ]}, null, 2))
-})
+})*/
 
 describe('GET all /todos', function() {
   it('should return all todos', function (done) {
@@ -27,12 +28,12 @@ describe('GET one /todos', function() {
 
 describe('POST to /todos', function() {
   it('should post a todo entry', function (done) {
-    const todo = {
+    const todo = querystring.stringify({
       "text": "NEW ENTRY",
       "time24": "",
       "date": "2018-11-15",
       "done": "false"
-    }
+    })
     request(app)
       .post('/todos')
       .send(todo)
@@ -64,10 +65,10 @@ describe('DELETE one /todos', function() {
   })
 })
 
-describe('DELETE all /todos', function() {
+/*describe('DELETE all /todos', function() {
   it('should delete all todos', function (done) {
     request(app)
       .delete('/todos')
       .expect(204, done)
   })
-})
+})*/

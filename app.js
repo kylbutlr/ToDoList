@@ -44,7 +44,9 @@ const server = http.createServer((req, res) => {
       fs.readFile('todos.json', 'utf8', (err,data) => {
         if (err) { throw err }
         const todosData = JSON.parse(data)
+        console.log(body)
         const todo = querystring.parse(body)
+        console.log(todo)
         todo.key = nextKey
         nextKey++
         todosData.todos.push(todo)
