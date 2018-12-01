@@ -1,19 +1,19 @@
 {
-  "nextKey": 3,
+  "nextKey": 2,
   "todos": [
     {
-      "text": "EDITED ENTRY",
+      "text": "Delete this item",
       "time24": "",
       "date": "2018-11-15",
-      "done": "false",
+      "done": "true",
       "key": 0
     },
     {
-      "text": "NEW ENTRY",
+      "text": "Add more to my list",
       "time24": "",
       "date": "2018-11-15",
       "done": "false",
-      "key": 2
+      "key": 1
     }
   ]
 }
