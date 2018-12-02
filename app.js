@@ -1,6 +1,7 @@
 const fs = require('fs')
 const querystring = require('querystring')
 const express = require('express')
+const cors = require('cors')
 const app = express()
 let todos
 let nextKey
@@ -113,12 +114,7 @@ const deleteOneTodo = (req,res,next) => {
 
 //app.use('/css', express.static('css'))
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*")
-  res.setHeader("Access-Control-Allow-Headers", "*") 
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-  next()
-})
+app.use(cors())
 
 app.get('/todos', getAllTodos)
 app.get('/todos/:id', getOneTodo)
