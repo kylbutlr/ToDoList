@@ -5,34 +5,6 @@ const app = express()
 let todos
 let nextKey
 
-//app.use('/css', express.static('css'))
-
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*")
-  res.setHeader("Access-Control-Allow-Headers", "*") 
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-  console.log('Request: '+ req.url)
-  /*if (req.method === 'GET' && req.url === '/todos') {
-    getAllTodos(req,res)
-  } else*/ if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
-    getOneTodo(req,res)
-  } else if (req.method === 'POST' && req.url === '/todos'){
-    postTodo(req,res)
-  } else if (req.method === 'PUT' && req.url === '/todos'){
-    editTodo(req,res)
-  } else if (req.method === 'DELETE' && req.url === '/todos'){
-    deleteAllTodos(req,res)
-  } else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
-    deleteOneTodo(req,res)
-  } else {
-    next()
-    //res.statusCode = 404
-    //res.end('404: Not Found')
-  }
-})
-
-app.get('/todos', getAllTodos);
-
 const getAllTodos = (req,res) => {
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err }
@@ -42,7 +14,7 @@ const getAllTodos = (req,res) => {
 }
 
 const getOneTodo = (req,res) => {
-  const key = Number(req.url.match(/[0-9]+$/)[0])
+  const key = Number(req.params.id)
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err }
     parsedData = JSON.parse(data)
@@ -116,7 +88,7 @@ const deleteAllTodos = (req,res) => {
 }
 
 const deleteOneTodo = (req,res) => {
-  const key = Number(req.url.match(/[0-9]+$/)[0])
+  const key = Number(req.params.id)
   const t = todos.findIndex(x => x.key == key)
   todos.splice(t,1)
   const newData = JSON.stringify({ 
@@ -129,6 +101,22 @@ const deleteOneTodo = (req,res) => {
     res.end('DELETE')
   })
 }
+
+//app.use('/css', express.static('css'))
+
+app.use((req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Headers", "*") 
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
+  console.log('Request: '+ req.url)
+})
+
+app.get('/todos', getAllTodos)
+app.get('/todos/:id', getOneTodo)
+app.post('/todos', postTodo)
+app.put('/todos', editTodo)
+app.delete('/todos/:id', deleteOneTodo)
+app.delete('/todos', deleteAllTodos)
 
 fs.readFile('todos.json', 'utf-8', (err,data) => {
   if (err) { throw err }
