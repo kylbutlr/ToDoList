@@ -1,15 +1,14 @@
 const http = require('http')
 const fs = require('fs')
 const querystring = require('querystring')
-//const express = require('express')
-//const todo = express()
+const express = require('express')
+const app = express()
 let todos
 let nextKey
 
-//todo.use('/css', express.static('css'))
+//app.use('/css', express.static('css'))
 
-//todo.get('/', function(req, res){
-const server = http.createServer((req, res) => {
+app.use((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Access-Control-Allow-Headers", "*") 
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
@@ -61,9 +60,7 @@ const postTodo = (req,res) => {
     fs.readFile('todos.json', 'utf8', (err,data) => {
       if (err) { throw err }
       const todosData = JSON.parse(data)
-      console.log(body)
       const todo = querystring.parse(body)
-      console.log(todo)
       todo.key = nextKey
       nextKey++
       todosData.todos.push(todo)
@@ -138,7 +135,7 @@ fs.readFile('todos.json', 'utf-8', (err,data) => {
   todos = parsedData.todos
 })
 
-module.exports = server
+module.exports = app
 
 //{"text": "Delete this item", "time24": "", "date": "2018-11-15", "done": "true", "key": 0}
 //{"text": "Add more to my list", "time24": "", "date": "2018-11-15", "done":"false", "key": 1}
