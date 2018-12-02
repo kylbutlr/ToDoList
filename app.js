@@ -104,13 +104,6 @@ const deleteOneTodo = (req,res) => {
 
 //app.use('/css', express.static('css'))
 
-app.use((req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*")
-  res.setHeader("Access-Control-Allow-Headers", "*") 
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-  console.log('Request: '+ req.url)
-})
-
 app.get('/todos', getAllTodos)
 app.get('/todos/:id', getOneTodo)
 app.post('/todos', postTodo)
