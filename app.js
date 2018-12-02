@@ -13,11 +13,14 @@ const getAllTodos = (req,res) => {
   })
 }
 
-const getOneTodo = (req,res) => {
+const getOneTodo = (req,res,next) => {
   const key = Number(req.params.id)
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err }
     parsedData = JSON.parse(data)
+    if (!parsedData.todos[key]) {
+      next()
+    }
     res.statusCode = 200
     res.end(JSON.stringify({ 
       todo: parsedData.todos.find(t => t.key === key)
@@ -52,7 +55,7 @@ const postTodo = (req,res) => {
   })
 }
 
-const editTodo = (req,res) => {
+const editTodo = (req,res,next) => {
   let body = ''
   req.on('data', chunk => {
     body += chunk.toString()
@@ -61,6 +64,9 @@ const editTodo = (req,res) => {
     const parsedBody = JSON.parse(body)
     parsedBody.key = parseInt(parsedBody.key)
     const t = todos.findIndex(x => x.key == parsedBody.key)
+    if (t < 0) {
+      next()
+    }
     todos[t] = parsedBody
     const newData = JSON.stringify({ 
       "nextKey": nextKey, 
@@ -87,9 +93,12 @@ const deleteAllTodos = (req,res) => {
   })
 }
 
-const deleteOneTodo = (req,res) => {
+const deleteOneTodo = (req,res,next) => {
   const key = Number(req.params.id)
   const t = todos.findIndex(x => x.key == key)
+  if (t < 0) {
+    next()
+  }
   todos.splice(t,1)
   const newData = JSON.stringify({ 
     "nextKey": nextKey, 
@@ -104,12 +113,20 @@ const deleteOneTodo = (req,res) => {
 
 //app.use('/css', express.static('css'))
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*")
+  res.setHeader("Access-Control-Allow-Headers", "*") 
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
+  next()
+})
+
 app.get('/todos', getAllTodos)
 app.get('/todos/:id', getOneTodo)
 app.post('/todos', postTodo)
 app.put('/todos', editTodo)
 app.delete('/todos/:id', deleteOneTodo)
 app.delete('/todos', deleteAllTodos)
+app.use((req, res) => res.status(404).send('404: Not Found'));
 
 fs.readFile('todos.json', 'utf-8', (err,data) => {
   if (err) { throw err }
@@ -119,6 +136,3 @@ fs.readFile('todos.json', 'utf-8', (err,data) => {
 })
 
 module.exports = app
-
-//{"text": "Delete this item", "time24": "", "date": "2018-11-15", "done": "true", "key": 0}
-//{"text": "Add more to my list", "time24": "", "date": "2018-11-15", "done":"false", "key": 1}

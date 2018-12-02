@@ -26,6 +26,14 @@ describe('GET one /todos', function() {
   })
 })
 
+describe('GET INVALID /todos', function() {
+  it('should 404 because invalid entry', function (done) {
+    request(app)
+      .get('/todos/343434343434')
+      .expect(404, done)
+  })
+})
+
 describe('POST to /todos', function() {
   it('should post a todo entry', function (done) {
     const todo = querystring.stringify({
@@ -57,7 +65,23 @@ describe('PUT to /todos', function() {
   })
 })
 
-describe('DELETE one /todos', function() {
+describe('PUT INVALID /todos', function() {
+  it('should 404 because invalid entry', function (done) {
+    const todo = {
+      "text": "INVALID ENTRY",
+      "time24": "",
+      "date": "",
+      "done": "false",
+      "key": 2525252525
+    }
+    request(app)
+      .put('/todos')
+      .send(todo)
+      .expect(404, done)
+  })
+})
+
+describe('DELETE one /todo', function() {
   it('should delete second todo entry', function (done) {
     request(app)
       .delete('/todos/1')
@@ -70,5 +94,21 @@ describe('DELETE all /todos', function() {
     request(app)
       .delete('/todos')
       .expect(204, done)
+  })
+})
+
+describe('DELETE INVALID /todo', function() {
+  it('should 404 because invalid entry', function (done) {
+    request(app)
+      .delete('/todos/16161616161616')
+      .expect(404, done)
+  })
+})
+
+describe('404', function() {
+  it('should 404', function (done) {
+    request(app)
+      .get('/nothing')
+      .expect(404, done)
   })
 })
