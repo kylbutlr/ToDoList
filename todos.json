@@ -1,1 +1,19 @@
-[]
+{
+  "nextKey": 2,
+  "todos": [
+    {
+      "text": "Delete this item",
+      "time24": "",
+      "date": "2018-12-1",
+      "done": "true",
+      "key": 0
+    },
+    {
+      "text": "Add more to my list",
+      "time24": "",
+      "date": "2018-12-1",
+      "done": "false",
+      "key": 1
+    }
+  ]
+}
