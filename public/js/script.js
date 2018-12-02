@@ -57,8 +57,7 @@ function getSavedTheme() {
     if (!currentTheme) {
         applyTheme("default")
         window.localStorage.setItem("todoTheme", JSON.stringify("default"))
-    }
-    else {
+    } else {
         applyTheme(currentTheme)
     }
 }
@@ -105,8 +104,7 @@ function getSavedList() {
             for (i=0;i<todos.length;i++) {
                 renderTodo(todos[i], todos[i].key)
             }
-        }
-        else {
+        } else {
             $list.innerHTML = ""
             todos = []
         }
@@ -119,8 +117,7 @@ const onFormSubmit = (e) => {
         alert("New item must have a name.")
         $input.value = ""
         $input.focus()
-    }
-    else {
+    } else {
         let todo = {}
         const time = $time.value
         if (time.length>0) {
@@ -131,8 +128,7 @@ const onFormSubmit = (e) => {
                 "date": $date.value, 
                 "done": "false"
             }
-        }
-        else {
+        } else {
             todo = {
                 "text": $input.value, 
                 "time24": $time.value, 
@@ -156,8 +152,7 @@ const onFormSubmit = (e) => {
                     },"JSON")
                 }
             })
-        }
-        else {
+        } else {
             $.post('http://localhost:3000/todos', todo, () => {
                 $.get('http://localhost:3000/todos', (data) => { 
                     todos = data.todos
@@ -183,14 +178,11 @@ function renderTodo(todo, newTodoKey) {
     let currentKey = newTodoKey
     if (!todo.time && todo.date) {
         h3.textContent = todo.text + " (by " + formattedDate + ")"
-    }
-    else if (todo.time && !todo.date) {
+    } else if (todo.time && !todo.date) {
         h3.textContent = todo.text + " (by " + todo.time + ")"
-    }
-    else if (todo.time && todo.date) {
+    } else if (todo.time && todo.date) {
         h3.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")"
-    }
-    else {
+    } else {
         h3.textContent = todo.text
     }
     h3.addEventListener("click", onListItemClick)
@@ -210,8 +202,7 @@ function renderTodo(todo, newTodoKey) {
     }
     if (newTodoKey >= 0 && newTodoKey != todos.length-1){
         $list.insertBefore(newList, $list.children[newTodoKey])
-    }
-    else {
+    } else {
         $list.appendChild(newList)
     }
 }
@@ -224,8 +215,7 @@ function resetInput(delay) {
             $time.value = "12:00"
             $date.valueAsDate = getDateObject(new Date())
         }, delay)
-    }
-    else {
+    } else {
         $time.value = "12:00"
         $date.valueAsDate = getDateObject(new Date())
     }
@@ -243,16 +233,13 @@ function getAMPM(time) {
     if (0 < h && h < 10) {
         ampm = "am"
         h = h.substr(1)
-    }
-    else if (h == 12) {
+    } else if (h == 12) {
         ampm = "pm"
         h = 12
-    }
-    else if (12 < h && h < 24) {
+    } else if (12 < h && h < 24) {
         ampm = "pm"
         h -= 12
-    }   
-    else {
+    } else {
         ampm = "am"
         h = 12
     }
@@ -265,7 +252,7 @@ const onClearClick = (e) => {
     jQuery.ajax({
         url: 'http://localhost:3000/todos',
         method: 'DELETE'
-    });
+    })
     for (i=0;i<$list.childElementCount;i++) {
         $list.childNodes[i].classList.add("post-delete")
     }
@@ -334,7 +321,7 @@ function onDeleteButtonClick(e) {
                 todos = data.todos
             },"JSON")
         }
-    });
+    })
     e.target.parentNode.classList.add("post-delete")
     setTimeout(function() {
         e.target.parentNode.remove()
@@ -350,8 +337,7 @@ function createElementCheckbox(todo, key) {
     checkbox.addEventListener("click", onCheckboxClick)
     if (todo.done === "true") {
         checkbox.checked = true
-    }
-    else { 
+    } else { 
         checkbox.checked = false
     }
     return checkbox
@@ -368,8 +354,7 @@ function onCheckboxClick(e) {
             method: 'PUT',
             data: JSON.stringify(todos[target])
         })
-    }
-    else {
+    } else {
         e.target.parentNode.classList.add("checked")
         e.target.checked = true
         todos[target].done = "true"
@@ -393,16 +378,16 @@ function checkInput(key) {
         $("#addButton").prop("disabled", false)
     }
     if ($("#input").val().length === 0 || key>=0) {
-        if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) {}
-        else {
+        if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) {
+            //Do Nothing
+        } else {
             $("#date").stop().animate({top:-65},250, function() {
                 $("#time").stop().animate({top:-35},125, function() {
                     $("#input").css("border-radius", "10px")
                 })
             })
         }
-    }
-    else {
+    } else {
         $("#input").css("border-radius", "10px 10px 0 0")
         $("#time").stop().animate({top:0},250)
         $("#date").stop().animate({top:0},500)
@@ -451,8 +436,7 @@ $(function() {
         if (!$.trim(this.value).length) {
             $("#addButton").stop().animate({opacity:0.25}, 250)
             $("#addButton").prop("disabled", true)
-        }
-        else {
+        } else {
             $("#addButton").stop().animate({opacity:1}, 500)
             $("#addButton").prop("disabled", false)
         }

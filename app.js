@@ -3,8 +3,8 @@ const fs = require('fs')
 const querystring = require('querystring')
 //const express = require('express')
 //const todo = express()
-let todos;
-let nextKey;
+let todos
+let nextKey
 
 //todo.use('/css', express.static('css'))
 
@@ -12,34 +12,21 @@ let nextKey;
 const server = http.createServer((req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Access-Control-Allow-Headers", "*") 
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
   console.log('Request: '+ req.url)
-
   if (req.method === 'GET' && req.url === '/todos') {
     getAllTodos(res)
-  }
-
-  else if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
+  } else if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
     getOneTodo(req,res)
-  }
-
-  else if (req.method === 'POST' && req.url === '/todos'){
+  } else if (req.method === 'POST' && req.url === '/todos'){
     postTodo(req,res)
-  } 
-
-  else if (req.method === 'PUT' && req.url === '/todos'){
+  } else if (req.method === 'PUT' && req.url === '/todos'){
     editTodo(req,res)
-  }
-
-  else if (req.method === 'DELETE' && req.url === '/todos'){
+  } else if (req.method === 'DELETE' && req.url === '/todos'){
     deleteAllTodos(req,res)
-  }
-
-  else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
+  } else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
     deleteOneTodo(req,res)
-  }
-
-  else {
+  } else {
     res.statusCode = 404
     res.end('404: Not Found')
   }
