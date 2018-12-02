@@ -1,4 +1,3 @@
-const http = require('http')
 const fs = require('fs')
 const querystring = require('querystring')
 const express = require('express')
@@ -8,14 +7,14 @@ let nextKey
 
 //app.use('/css', express.static('css'))
 
-app.use((req, res) => {
+app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*")
   res.setHeader("Access-Control-Allow-Headers", "*") 
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
   console.log('Request: '+ req.url)
-  if (req.method === 'GET' && req.url === '/todos') {
-    getAllTodos(res)
-  } else if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
+  /*if (req.method === 'GET' && req.url === '/todos') {
+    getAllTodos(req,res)
+  } else*/ if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
     getOneTodo(req,res)
   } else if (req.method === 'POST' && req.url === '/todos'){
     postTodo(req,res)
@@ -26,12 +25,15 @@ app.use((req, res) => {
   } else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
     deleteOneTodo(req,res)
   } else {
-    res.statusCode = 404
-    res.end('404: Not Found')
+    next()
+    //res.statusCode = 404
+    //res.end('404: Not Found')
   }
 })
 
-const getAllTodos = (res) => {
+app.get('/todos', getAllTodos);
+
+const getAllTodos = (req,res) => {
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err }
     res.statusCode = 200

@@ -1,5 +1,5 @@
 {
-  "nextKey": 4,
+  "nextKey": 2,
   "todos": [
     {
       "text": "Delete this item",
@@ -14,22 +14,6 @@
       "date": "2018-12-1",
       "done": "false",
       "key": 1
-    },
-    {
-      "text": "3",
-      "time": "12:00 pm",
-      "time24": "12:00",
-      "date": "2018-12-01",
-      "done": "false",
-      "key": 2
-    },
-    {
-      "text": "2",
-      "time": "12:00 pm",
-      "time24": "12:00",
-      "date": "2018-12-01",
-      "done": "false",
-      "key": 3
     }
   ]
 }
