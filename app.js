@@ -1,38 +1,12 @@
-const http = require('http')
 const fs = require('fs')
 const querystring = require('querystring')
-//const express = require('express')
-//const todo = express()
+const express = require('express')
+const cors = require('cors')
+const app = express()
 let todos
 let nextKey
 
-//todo.use('/css', express.static('css'))
-
-//todo.get('/', function(req, res){
-const server = http.createServer((req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*")
-  res.setHeader("Access-Control-Allow-Headers", "*") 
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE')
-  console.log('Request: '+ req.url)
-  if (req.method === 'GET' && req.url === '/todos') {
-    getAllTodos(res)
-  } else if (req.method === 'GET' && /\/todos\/[0-9]+/.test(req.url)) {
-    getOneTodo(req,res)
-  } else if (req.method === 'POST' && req.url === '/todos'){
-    postTodo(req,res)
-  } else if (req.method === 'PUT' && req.url === '/todos'){
-    editTodo(req,res)
-  } else if (req.method === 'DELETE' && req.url === '/todos'){
-    deleteAllTodos(req,res)
-  } else if (req.method === 'DELETE' && /\/todos\/[0-9]+/.test(req.url)){
-    deleteOneTodo(req,res)
-  } else {
-    res.statusCode = 404
-    res.end('404: Not Found')
-  }
-})
-
-const getAllTodos = (res) => {
+const getAllTodos = (req,res) => {
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err }
     res.statusCode = 200
@@ -40,11 +14,14 @@ const getAllTodos = (res) => {
   })
 }
 
-const getOneTodo = (req,res) => {
-  const key = Number(req.url.match(/[0-9]+$/)[0])
+const getOneTodo = (req,res,next) => {
+  const key = Number(req.params.id)
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err }
     parsedData = JSON.parse(data)
+    if (!parsedData.todos[key]) {
+      next()
+    }
     res.statusCode = 200
     res.end(JSON.stringify({ 
       todo: parsedData.todos.find(t => t.key === key)
@@ -61,9 +38,7 @@ const postTodo = (req,res) => {
     fs.readFile('todos.json', 'utf8', (err,data) => {
       if (err) { throw err }
       const todosData = JSON.parse(data)
-      console.log(body)
       const todo = querystring.parse(body)
-      console.log(todo)
       todo.key = nextKey
       nextKey++
       todosData.todos.push(todo)
@@ -81,7 +56,7 @@ const postTodo = (req,res) => {
   })
 }
 
-const editTodo = (req,res) => {
+const editTodo = (req,res,next) => {
   let body = ''
   req.on('data', chunk => {
     body += chunk.toString()
@@ -90,6 +65,9 @@ const editTodo = (req,res) => {
     const parsedBody = JSON.parse(body)
     parsedBody.key = parseInt(parsedBody.key)
     const t = todos.findIndex(x => x.key == parsedBody.key)
+    if (t < 0) {
+      next()
+    }
     todos[t] = parsedBody
     const newData = JSON.stringify({ 
       "nextKey": nextKey, 
@@ -116,9 +94,12 @@ const deleteAllTodos = (req,res) => {
   })
 }
 
-const deleteOneTodo = (req,res) => {
-  const key = Number(req.url.match(/[0-9]+$/)[0])
+const deleteOneTodo = (req,res,next) => {
+  const key = Number(req.params.id)
   const t = todos.findIndex(x => x.key == key)
+  if (t < 0) {
+    next()
+  }
   todos.splice(t,1)
   const newData = JSON.stringify({ 
     "nextKey": nextKey, 
@@ -131,6 +112,18 @@ const deleteOneTodo = (req,res) => {
   })
 }
 
+//app.use('/css', express.static('css'))
+
+app.use(cors())
+
+app.get('/todos', getAllTodos)
+app.get('/todos/:id', getOneTodo)
+app.post('/todos', postTodo)
+app.put('/todos', editTodo)
+app.delete('/todos/:id', deleteOneTodo)
+app.delete('/todos', deleteAllTodos)
+app.use((req, res) => res.status(404).send('404: Not Found'));
+
 fs.readFile('todos.json', 'utf-8', (err,data) => {
   if (err) { throw err }
   parsedData = JSON.parse(data)
@@ -138,7 +131,4 @@ fs.readFile('todos.json', 'utf-8', (err,data) => {
   todos = parsedData.todos
 })
 
-module.exports = server
-
-//{"text": "Delete this item", "time24": "", "date": "2018-11-15", "done": "true", "key": 0}
-//{"text": "Add more to my list", "time24": "", "date": "2018-11-15", "done":"false", "key": 1}
+module.exports = app

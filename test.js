@@ -5,8 +5,8 @@ const app = require('./app')
 
 afterAll(() => {
   fs.writeFile('todos.json', JSON.stringify({ "nextKey": 2, "todos": [
-    {"text": "Delete this item", "time24": "", "date": "2018-12-1", "done": "true", "key": 0},
-    {"text": "Add more to my list", "time24": "", "date": "2018-12-1", "done":"false", "key": 1}
+    {"text": "Delete this item", "time24": "", "date": "2018-12-01", "done": "true", "key": 0},
+    {"text": "Add more to my list", "time24": "", "date": "2018-12-01", "done":"false", "key": 1}
   ]}, null, 2))
 })
 
@@ -23,6 +23,14 @@ describe('GET one /todos', function() {
     request(app)
       .get('/todos/0')
       .expect(200, done)
+  })
+})
+
+describe('GET INVALID /todos', function() {
+  it('should 404 because invalid entry', function (done) {
+    request(app)
+      .get('/todos/343434343434')
+      .expect(404, done)
   })
 })
 
@@ -57,7 +65,23 @@ describe('PUT to /todos', function() {
   })
 })
 
-describe('DELETE one /todos', function() {
+describe('PUT INVALID /todos', function() {
+  it('should 404 because invalid entry', function (done) {
+    const todo = {
+      "text": "INVALID ENTRY",
+      "time24": "",
+      "date": "",
+      "done": "false",
+      "key": 2525252525
+    }
+    request(app)
+      .put('/todos')
+      .send(todo)
+      .expect(404, done)
+  })
+})
+
+describe('DELETE one /todo', function() {
   it('should delete second todo entry', function (done) {
     request(app)
       .delete('/todos/1')
@@ -70,5 +94,21 @@ describe('DELETE all /todos', function() {
     request(app)
       .delete('/todos')
       .expect(204, done)
+  })
+})
+
+describe('DELETE INVALID /todo', function() {
+  it('should 404 because invalid entry', function (done) {
+    request(app)
+      .delete('/todos/16161616161616')
+      .expect(404, done)
+  })
+})
+
+describe('404', function() {
+  it('should 404', function (done) {
+    request(app)
+      .get('/nothing')
+      .expect(404, done)
   })
 })
