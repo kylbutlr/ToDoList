@@ -3,8 +3,22 @@ const querystring = require('querystring')
 const express = require('express')
 const cors = require('cors')
 const app = express()
+const { Client } = require('pg')
+const client = new Client({
+  user: 'postgres',
+  password: 'pass',
+  database: 'playground'
+})
+client.connect()
 let todos
 let nextKey
+
+const db = {
+  getAll: cb => client.query('SELECT * FROM todos', (err, res) => {
+    if (err) return cb(err);
+    cb(null, res.rows);
+  })
+}
 
 const getAllTodos = (req,res) => {
   fs.readFile('todos.json', 'utf-8', (err,data) => {
