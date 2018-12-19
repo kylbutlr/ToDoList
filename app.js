@@ -15,9 +15,14 @@ let nextKey
 
 const db = {
   getAll: cb => client.query('SELECT * FROM todos', (err, res) => {
-    if (err) return cb(err);
-    cb(null, res.rows);
+    if (err) return cb(err)
+    cb(null, res.rows)
   })
+  //getTodo:
+  //createTodo: 
+  //updateTodo:
+  //deleteAll:
+  //deleteTodo:
 }
 
 const getAllTodos = (req,res) => {
