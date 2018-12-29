@@ -1,153 +1,154 @@
-const fs = require('fs')
-const querystring = require('querystring')
-const express = require('express')
-const cors = require('cors')
-const app = express()
-const { Client } = require('pg')
+const fs = require('fs');
+const querystring = require('querystring');
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const { Client } = require('pg');
 const client = new Client({
   user: 'postgres',
   password: 'pass',
   database: 'playground'
-})
-client.connect()
-let todos
-let nextKey
+});
+client.connect();
+let todos;
+let nextKey;
 
 const db = {
   getAll: cb => client.query('SELECT * FROM todos', (err, res) => {
-    if (err) return cb(err)
-    cb(null, res.rows)
+    if (err) return cb(err);
+    cb(null, res.rows);
+  }),
+  getTodo: cb => client.query('SELECT * FROM todos', (err, res) => {
+    if (err) return cb(err);
+    cb(null, res.rows);
   })
-  //getTodo:
   //createTodo: 
   //updateTodo:
   //deleteAll:
   //deleteTodo:
-}
+};
 
 const getAllTodos = (req,res) => {
   fs.readFile('todos.json', 'utf-8', (err,data) => {
-    if (err) { throw err }
-    res.statusCode = 200
-    res.end(data)
-  })
-}
+    if (err) { throw err; }
+    res.statusCode = 200;
+    res.end(data);
+  });
+};
 
 const getOneTodo = (req,res,next) => {
-  const key = Number(req.params.id)
+  const key = Number(req.params.id);
   fs.readFile('todos.json', 'utf-8', (err,data) => {
-    if (err) { throw err }
-    parsedData = JSON.parse(data)
+    if (err) { throw err; }
+    parsedData = JSON.parse(data);
     if (!parsedData.todos[key]) {
-      next()
+      next();
     }
-    res.statusCode = 200
+    res.statusCode = 200;
     res.end(JSON.stringify({ 
       todo: parsedData.todos.find(t => t.key === key)
-    }))
-  })
-}
+    }));
+  });
+};
 
 const postTodo = (req,res) => {
-  let body = ''
+  let body = '';
   req.on('data', chunk => {
-    body += chunk.toString()
-  })
+    body += chunk.toString();
+  });
   req.on('end', () => {
     fs.readFile('todos.json', 'utf8', (err,data) => {
-      if (err) { throw err }
-      const todosData = JSON.parse(data)
-      const todo = querystring.parse(body)
-      todo.key = nextKey
-      nextKey++
-      todosData.todos.push(todo)
-      todos = todosData.todos
+      if (err) { throw err; }
+      const todosData = JSON.parse(data);
+      const todo = querystring.parse(body);
+      todo.key = nextKey;
+      nextKey++;
+      todosData.todos.push(todo);
+      todos = todosData.todos;
       const newData = JSON.stringify({ 
         "nextKey": nextKey, 
         "todos": todosData.todos
-      }, null, 2)
+      }, null, 2);
       fs.writeFile('todos.json', newData, (err) => {
-        if (err) { throw err }
-        res.statusCode = 201
-        res.end('POST')
-      })
-    })
-  })
-}
+        if (err) { throw err; }
+        res.statusCode = 201;
+        res.end('POST');
+      });
+    });
+  });
+};
 
 const editTodo = (req,res,next) => {
-  let body = ''
+  let body = '';
   req.on('data', chunk => {
-    body += chunk.toString()
-  })
+    body += chunk.toString();
+  });
   req.on('end', () => {
-    const parsedBody = JSON.parse(body)
-    parsedBody.key = parseInt(parsedBody.key)
-    const t = todos.findIndex(x => x.key == parsedBody.key)
+    const parsedBody = JSON.parse(body);
+    parsedBody.key = parseInt(parsedBody.key);
+    const t = todos.findIndex(x => x.key == parsedBody.key);
     if (t < 0) {
-      next()
+      next();
     }
-    todos[t] = parsedBody
+    todos[t] = parsedBody;
     const newData = JSON.stringify({ 
       "nextKey": nextKey, 
       "todos": todos
-    }, null, 2)
+    }, null, 2);
     fs.writeFile('todos.json', newData, (err) => {
-      if (err) { throw err }
-      res.statusCode = 204
-      res.end('PUT')
-    })
-  })
-}
+      if (err) { throw err; }
+      res.statusCode = 204;
+      res.end('PUT');
+    });
+  });
+};
 
 const deleteAllTodos = (req,res) => {
-  todos.splice(0,todos.length)
+  todos.splice(0,todos.length);
   const newData = JSON.stringify({
     "nextKey": nextKey, 
     "todos": []
-  }, null, 2)
+  }, null, 2);
   fs.writeFile('todos.json', newData, (err) => {
-    if (err) { throw err }
-    res.statusCode = 204
-    res.end('CLEAR')
-  })
-}
+    if (err) { throw err; }
+    res.statusCode = 204;
+    res.end('CLEAR');
+  });
+};
 
 const deleteOneTodo = (req,res,next) => {
-  const key = Number(req.params.id)
-  const t = todos.findIndex(x => x.key == key)
+  const key = Number(req.params.id);
+  const t = todos.findIndex(x => x.key == key);
   if (t < 0) {
-    next()
+    next();
   }
-  todos.splice(t,1)
+  todos.splice(t,1);
   const newData = JSON.stringify({ 
     "nextKey": nextKey, 
     "todos": todos
-  }, null, 2)
+  }, null, 2);
   fs.writeFile('todos.json', newData, (err) => {
-    if (err) { throw err }
-    res.statusCode = 204
-    res.end('DELETE')
-  })
-}
+    if (err) { throw err; }
+    res.statusCode = 204;
+    res.end('DELETE');
+  });
+};
 
-//app.use('/css', express.static('css'))
+app.use(cors());
 
-app.use(cors())
-
-app.get('/todos', getAllTodos)
-app.get('/todos/:id', getOneTodo)
-app.post('/todos', postTodo)
-app.put('/todos', editTodo)
-app.delete('/todos/:id', deleteOneTodo)
-app.delete('/todos', deleteAllTodos)
+app.get('/todos', getAllTodos);
+app.get('/todos/:id', getOneTodo);
+app.post('/todos', postTodo);
+app.put('/todos', editTodo);
+app.delete('/todos/:id', deleteOneTodo);
+app.delete('/todos', deleteAllTodos);
 app.use((req, res) => res.status(404).send('404: Not Found'));
 
 fs.readFile('todos.json', 'utf-8', (err,data) => {
-  if (err) { throw err }
-  parsedData = JSON.parse(data)
-  nextKey = parsedData.nextKey
-  todos = parsedData.todos
-})
+  if (err) { throw err; }
+  parsedData = JSON.parse(data);
+  nextKey = parsedData.nextKey;
+  todos = parsedData.todos;
+});
 
-module.exports = app
+module.exports = app;
