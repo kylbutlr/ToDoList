@@ -86,7 +86,7 @@ const editTodo = (req,res,next) => {
   req.on('end', () => {
     const parsedBody = JSON.parse(body);
     parsedBody.key = parseInt(parsedBody.key);
-    const t = todos.findIndex(x => x.key == parsedBody.key);
+    const t = todos.findIndex(x => x.key === parsedBody.key);
     if (t < 0) {
       next();
     }
@@ -118,7 +118,7 @@ const deleteAllTodos = (req,res) => {
 
 const deleteOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
-  const t = todos.findIndex(x => x.key == key);
+  const t = todos.findIndex(x => x.key === key);
   if (t < 0) {
     next();
   }

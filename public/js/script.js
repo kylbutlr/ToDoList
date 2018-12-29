@@ -139,7 +139,7 @@ const onFormSubmit = (e) => {
         if ($key.value.length > 0){
             const key = parseInt($key.value);
             todo.key = key;
-            const t = todos.findIndex(x => x.key == key-1);
+            const t = todos.findIndex(x => x.key === key-1);
             todos[(t+1)] = todo;
             $.ajax({
                 url: 'http://localhost:3000/todos',
@@ -157,7 +157,7 @@ const onFormSubmit = (e) => {
                 $.get('http://localhost:3000/todos', (data) => { 
                     todos = data.todos;
                     const newKey = data.nextKey;
-                    const t = todos.findIndex(x => x.key == newKey-1);
+                    const t = todos.findIndex(x => x.key === newKey-1);
                     renderTodo(todos[t], todos[t].key);
                 },"JSON");
             });
@@ -233,7 +233,7 @@ function getAMPM(time) {
     if (0 < h && h < 10) {
         ampm = "am";
         h = h.substr(1);
-    } else if (h == 12) {
+    } else if (h === 12) {
         ampm = "pm";
         h = 12;
     } else if (12 < h && h < 24) {
@@ -280,7 +280,7 @@ function createElementEditButton(key) {
 
 function onEditButtonClick(e) {
     e.preventDefault();
-    const t = todos.findIndex(x => x.key == e.target.dataset.key);
+    const t = todos.findIndex(x => x.key === e.target.dataset.key);
     $input.value = todos[t].text;
     $time.value = todos[t].time24;
     $date.value = todos[t].date;
@@ -309,7 +309,7 @@ function onDeleteButtonClick(e) {
     e.preventDefault();
     console.log(todos);
     const key = e.target.dataset.key;
-    const t = todos.findIndex(x => x.key == key);
+    const t = todos.findIndex(x => x.key === key);
     todos.splice(t,1);
     console.log(todos);
     jQuery.ajax({
@@ -344,7 +344,7 @@ function createElementCheckbox(todo, key) {
 }
 
 function onCheckboxClick(e) {
-    const target = todos.findIndex(x => x.key == e.target.dataset.key);
+    const target = todos.findIndex(x => x.key === e.target.dataset.key);
     if (e.target.parentNode.classList.contains("checked")) {
         e.target.parentNode.classList.remove("checked");
         e.target.checked = false;
@@ -457,34 +457,34 @@ $(function() {
 
     $(".clear-div").hover(function(e){
         $("#clearList").stop().animate({
-            opacity: e.type=="mouseenter" ? 1 : 0.5
+            opacity: e.type==="mouseenter" ? 1 : 0.5
         }, 250);
         $("#clearLS").stop().animate({
-            opacity: e.type=="mouseenter" ? 1 : 0.5
+            opacity: e.type==="mouseenter" ? 1 : 0.5
         }, 250);
         $(".clear-div").stop().animate({
-            bottom: e.type=="mouseenter" ? -10 : -60
+            bottom: e.type==="mouseenter" ? -10 : -60
         }, 500);
         $(".clear-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 10 : 60
+            top: e.type==="mouseenter" ? 10 : 60
         }, 500);
     });
 
     $(".theme-div").hover(function(e){
         $("#theme1").stop().animate({
-            opacity: e.type=="mouseenter" ? 1 : 0.5
+            opacity: e.type==="mouseenter" ? 1 : 0.5
         }, 250);
         $("#theme2").stop().animate({
-            opacity: e.type=="mouseenter" ? 1 : 0.5
+            opacity: e.type==="mouseenter" ? 1 : 0.5
         }, 250);
         $("#theme3").stop().animate({
-            opacity: e.type=="mouseenter" ? 1 : 0.5
+            opacity: e.type==="mouseenter" ? 1 : 0.5
         }, 250);
         $(".theme-div").stop().animate({
-            bottom: e.type=="mouseenter" ? -10 : -60
+            bottom: e.type==="mouseenter" ? -10 : -60
         }, 500);
         $(".theme-div-glass").stop().animate({
-            top: e.type=="mouseenter" ? 10 : 60
+            top: e.type==="mouseenter" ? 10 : 60
         }, 500);
     });
 
