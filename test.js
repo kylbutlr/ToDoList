@@ -4,9 +4,24 @@ const querystring = require('querystring');
 const app = require('./app');
 
 afterAll(() => {
-  fs.writeFile('todos.json', JSON.stringify({ "nextKey": 2, "todos": [
-    {"text": "Delete this item", "time24": "", "date": "2018-01-01", "done": "true", "key": 0},
-    {"text": "Add more to my list", "time24": "", "date": "2018-01-01", "done":"false", "key": 1}
+  fs.writeFile('todos.json', JSON.stringify(
+    { 
+      nextKey: 2, 
+      todos: [
+        {
+          text: "Delete this item", 
+          time24: "", 
+          date: "2018-01-01", 
+          done: "true", 
+          key: 0
+        },
+        {
+          text: "Add more to my list", 
+          time24: "", 
+          date: "2018-01-01", 
+          done:"false", 
+          key: 1
+        }
   ]}, null, 2));
 });
 
