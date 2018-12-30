@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Lato|Cedarville+Cursive" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato|Cedarville+Cursive" rel="stylesheet">
 	<title>Todo List</title>
 </head>
 <body>
-    <div class="header-glass"></div>
-    <div class="header">
-    <h1>Todo List</h1>
-    </div>
-    <div class="container-glass"></div>
-    <div class="container">
-        <div class="form-div">
-            <form id="form">
-                <input class="block textarea input" id="input" placeholder="Add New Item" autocomplete="off" required>
-                <input class="block textarea time" type="time" id="time" value="">
-                <input class="block textarea date" type="date" id="date">
-                <input class="key" id="key">
-                <div class="button-div">
-                    <button type="button" class="block cancel-button" id="cancelButton">X</button>
-                    <button type="submit" class="button block add-button" id="addButton">Add to List</button></form>
-                </div>
-            </div>
-        <div class="list-div">
-            <ul id="list"></ul>
+  <div class="header-glass"></div>
+  <div class="header">
+  <h1>Todo List</h1>
+  </div>
+  <div class="container-glass"></div>
+  <div class="container">
+    <div class="form-div">
+      <form id="form">
+        <input class="block textarea input" id="input" placeholder="Add New Item" autocomplete="off" required>
+        <input class="block textarea time" type="time" id="time" value="">
+        <input class="block textarea date" type="date" id="date">
+        <input class="key" id="key">
+        <div class="button-div">
+          <button type="button" class="block cancel-button" id="cancelButton">X</button>
+          <button type="submit" class="button block add-button" id="addButton">Add to List</button></form>
         </div>
+      </div>
+    <div class="list-div">
+      <ul id="list"></ul>
     </div>
-    <div class="clear-div-glass"></div>
-    <div class="clear-div">
-        <div class="clear-btn-div">
-            <div class="clear-btn-div-title"><h2>Clear:</h2></div>
-            <div class="clear-buttons">
-                <button class="button clear-button" id="clearList">Clear List</button>
-                <button class="button clear-ls-button" id="clearLS">w.ls.clear()</button>
-            </div>
-        </div>
+  </div>
+  <div class="clear-div-glass"></div>
+  <div class="clear-div">
+    <div class="clear-btn-div">
+      <div class="clear-btn-div-title"><h2>Clear:</h2></div>
+      <div class="clear-buttons">
+        <button class="button clear-button" id="clearList">Clear List</button>
+        <button class="button clear-ls-button" id="clearLS">w.ls.clear()</button>
+      </div>
     </div>
-    <div class="theme-div-glass"></div>
-    <div class="theme-div">
-        <div class="theme-btn-div">
-            <div class="theme-btn-div-title"><h2>Themes:</h2></div>
-            <div class="theme-buttons">
-                <button class="button theme-btn theme1-btn" id="theme1">Light</button>
-                <button class="button theme-btn theme2-btn" id="theme2">Default</button>
-                <button class="button theme-btn theme3-btn" id="theme3">Dark</button>
-            </div>
-        </div>
+  </div>
+  <div class="theme-div-glass"></div>
+  <div class="theme-div">
+    <div class="theme-btn-div">
+      <div class="theme-btn-div-title"><h2>Themes:</h2></div>
+      <div class="theme-buttons">
+        <button class="button theme-btn theme1-btn" id="theme1">Light</button>
+        <button class="button theme-btn theme2-btn" id="theme2">Default</button>
+        <button class="button theme-btn theme3-btn" id="theme3">Dark</button>
+      </div>
     </div>
+  </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="./js/script.js"></script>
