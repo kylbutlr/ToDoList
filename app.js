@@ -21,12 +21,12 @@ const db = {
   getTodo: (id, cb) => client.query('SELECT * FROM todos WHERE id = $1', [id], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
-  })/*,
-  createTodo: cb => client.query('INSERT INTO todos', (err, res) => {
+  }),
+  createTodo: (todo, cb) => client.query('INSERT INTO todos (title) VALUES ($1)', [id], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  updateTodo: cb => client.query('UPDATE '+ 0 +' FROM todos', (err, res) => {
+  updateTodo: (id, cb) => client.query('UPDATE $1 FROM todos', (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
@@ -34,10 +34,10 @@ const db = {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  deleteTodo: cb => client.query('DELETE '+ 0 +' FROM todos', (err, res) => {
+  deleteTodo: (id, cb) => client.query('DELETE $1 FROM todos', (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
-  })*/
+  })
 };
 
 const getAllTodos = (req,res) => {
