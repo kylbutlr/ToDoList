@@ -17,11 +17,11 @@ const db = {
   getAll: cb => client.query('SELECT * FROM todos', (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
-  })/*,
-  getTodo: cb => client.query('SELECT '+ 0 +' FROM todos', (err, res) => {
+  }),
+  getTodo: (id, cb) => client.query('SELECT * FROM todos WHERE id = $1', [id], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
-  }),
+  })/*,
   createTodo: cb => client.query('INSERT INTO todos', (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
