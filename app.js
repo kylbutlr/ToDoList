@@ -17,15 +17,27 @@ const db = {
   getAll: cb => client.query('SELECT * FROM todos', (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
-  }),
-  getTodo: cb => client.query('SELECT * FROM todos', (err, res) => {
+  })/*,
+  getTodo: cb => client.query('SELECT '+ 0 +' FROM todos', (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
-  })
-  //createTodo: 
-  //updateTodo:
-  //deleteAll:
-  //deleteTodo:
+  }),
+  createTodo: cb => client.query('INSERT INTO todos', (err, res) => {
+    if (err) return cb(err);
+    cb(null, res.rows);
+  }),
+  updateTodo: cb => client.query('UPDATE '+ 0 +' FROM todos', (err, res) => {
+    if (err) return cb(err);
+    cb(null, res.rows);
+  }),
+  deleteAll: cb => client.query('DELETE * FROM todos', (err, res) => {
+    if (err) return cb(err);
+    cb(null, res.rows);
+  }),
+  deleteTodo: cb => client.query('DELETE '+ 0 +' FROM todos', (err, res) => {
+    if (err) return cb(err);
+    cb(null, res.rows);
+  })*/
 };
 
 const getAllTodos = (req,res) => {
