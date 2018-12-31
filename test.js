@@ -5,9 +5,10 @@ const app = require('./app');
 const { Client } = require('pg');
 const DB = require('./db');
 let db;
+let client;
 
 beforeAll(() => {
-  const client = new Client({
+  client = new Client({
     user: 'postgres',
     password: 'pass',
     database: 'todos_test'
@@ -36,6 +37,7 @@ afterAll(() => {
           key: 1
         }
   ]}, null, 2));
+  client.end();
 });
 
 describe('GET all /todos', function() {
