@@ -13,7 +13,7 @@
     "supertest": "^3.3.0"
   },
   "scripts": {
-    "test": "psql -U postgres -d todos_test -f createTablesTest.sql && npx jest test.js --forceExit"
+    "test": "psql -U postgres -d todos_test -f createTablesTest.sql && npx jest test.js"
   },
   "repository": {
     "type": "git",

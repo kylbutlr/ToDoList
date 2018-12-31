@@ -18,6 +18,7 @@ beforeAll(() => {
 });
 
 afterAll(() => {
+  client.end();
   fs.writeFile('todos.json', JSON.stringify(
     { 
       nextKey: 2, 
@@ -37,7 +38,6 @@ afterAll(() => {
           key: 1
         }
   ]}, null, 2));
-  //client.end();
 });
 
 describe('GET all /todos', function() {

@@ -1,6 +1,7 @@
 {
   "nextKey": 2,
-  "todos": [{
+  "todos": [
+    {
       "text": "Delete this item",
       "time24": "",
       "date": "2018-01-01",
