@@ -2,6 +2,17 @@ const fs = require('fs');
 const request = require('supertest');
 const querystring = require('querystring');
 const app = require('./app');
+const { Client } = require('pg');
+const DB = require('./db');
+let db;
+
+beforeAll(() => {
+  const client = new Client({
+    database: 'todos_test'
+  });
+  client.connect();
+  db = DB(client);
+});
 
 afterAll(() => {
   fs.writeFile('todos.json', JSON.stringify(
@@ -125,5 +136,17 @@ describe('404', function() {
     request(app)
       .get('/nothing')
       .expect(404, done);
+  });
+});
+
+describe('db', () => {
+  describe('getTodo()', () => {
+    it('should return test record', (done) => {
+      db.getTodo(1, (err, res) => {
+        if (err) throw err;
+        expect(res).toHaveLength(1);
+        done();
+      });
+    });
   });
 });
