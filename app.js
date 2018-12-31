@@ -22,11 +22,11 @@ const db = {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  createTodo: (todo, cb) => client.query('INSERT INTO todos (title) VALUES ($1)', [id], (err, res) => {
+  createTodo: (title, cb) => client.query('INSERT INTO todos (title) VALUES ($1)', [title], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  updateTodo: (id, cb) => client.query('UPDATE $1 FROM todos', (err, res) => {
+  updateTodo: (id, cb) => client.query('UPDATE $1 FROM todos', [id], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
@@ -34,7 +34,7 @@ const db = {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  deleteTodo: (id, cb) => client.query('DELETE $1 FROM todos', (err, res) => {
+  deleteTodo: (id, cb) => client.query('DELETE $1 FROM todos', [id], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   })
