@@ -52,7 +52,7 @@ const themes = {
   }
 };
 
-function getSavedTheme() {
+const getSavedTheme = () => {
   currentTheme = JSON.parse(window.localStorage.getItem("todoTheme"));
   if (!currentTheme) {
     applyTheme("default");
@@ -62,7 +62,7 @@ function getSavedTheme() {
   }
 }
 
-function applyTheme(theme) {
+const applyTheme = (theme) => {
   const themeList = Object.keys(themes);
   for (i=0;i<themeList.length;i++) {
     $(".header").removeClass("header-"+themeList[i]);
@@ -96,7 +96,7 @@ function applyTheme(theme) {
   $("h2").addClass("h2-"+theme);
 }
 
-function getSavedList() {
+const getSavedList = () => {
   $.get('http://localhost:3000/todos', (data) => { 
     todos = data.todos;
     if (todos.length>0) {
@@ -145,7 +145,7 @@ const onFormSubmit = (e) => {
         url: 'http://localhost:3000/todos',
         method: 'PUT',
         data: JSON.stringify(todos[key], null, 2),
-        success: function() {
+        success: () => {
           $.get('http://localhost:3000/todos/'+key, () => {
             renderTodo(todos[key], key);
             $("#cancelButton").trigger("click");
@@ -169,7 +169,7 @@ const onFormSubmit = (e) => {
   }
 };
 
-function renderTodo(todo, newTodoKey) {
+const renderTodo = (todo, newTodoKey) => {
   const newList = document.createElement("li");
   const h3 = document.createElement("h3");
   const dateObject = new Date(todo.date);
@@ -196,7 +196,7 @@ function renderTodo(todo, newTodoKey) {
   }
   if (newTodoKey >= 0){
     newList.classList.add("new-post");
-    setTimeout(function() {
+    setTimeout(() => {
       newList.classList.add("post-visible");
     },10);
   }
@@ -207,11 +207,11 @@ function renderTodo(todo, newTodoKey) {
   }
 }
 
-function resetInput(delay) {
+const resetInput = (delay) => {
   $input.value = "";
   $key.value = "";
   if (delay){
-    setTimeout(function(){
+    setTimeout(() => {
       $time.value = "12:00";
       $date.valueAsDate = getDateObject(new Date());
     }, delay);
@@ -221,13 +221,13 @@ function resetInput(delay) {
   }
 }
 
-function getDateObject(date) {
+const getDateObject = (date) => {
   const dateObject = new Date(date);
   const timeObject = new Date(dateObject.getTime() - dateObject.getTimezoneOffset() * 60000);
   return timeObject;
 }
 
-function getAMPM(time) {
+const getAMPM = (time) => {
   let [h,m] = time.split(":");
   let ampm;
   if (0 < h && h < 10) {
@@ -256,7 +256,7 @@ const onClearClick = (e) => {
   for (i=0;i<$list.childElementCount;i++) {
     $list.childNodes[i].classList.add("post-delete");
   }
-  setTimeout(function() {
+  setTimeout(() => {
     $list.innerHTML = "";
   }, 250);
 };
@@ -269,7 +269,7 @@ const onClearLSClick = (e) => {
   window.location.reload();
 };
 
-function createElementEditButton(key) {
+const createElementEditButton = (key) => {
   const editButton = document.createElement("button");
   editButton.dataset.key = key;
   editButton.className = "edit-button button";
@@ -278,7 +278,7 @@ function createElementEditButton(key) {
   return editButton;
 }
 
-function onEditButtonClick(e) {
+const onEditButtonClick = (e) => {
   e.preventDefault();
   const t = todos.findIndex(x => x.key === e.target.dataset.key);
   $input.value = todos[t].text;
@@ -291,12 +291,12 @@ function onEditButtonClick(e) {
   e.target.parentNode.classList.add("post-delete");
   checkInput(t);
   $input.focus();
-  setTimeout(function() {
+  setTimeout(() => {
     e.target.parentNode.remove();
   }, 250);
 }
 
-function createElementDeleteButton(key) {
+const createElementDeleteButton = (key) => {
   const deleteButton = document.createElement("button");
   deleteButton.dataset.key = key;
   deleteButton.className = "delete-button button";
@@ -305,7 +305,7 @@ function createElementDeleteButton(key) {
   return deleteButton;
 }
 
-function onDeleteButtonClick(e) {
+const onDeleteButtonClick = (e) => {
   e.preventDefault();
   console.log(todos);
   const key = e.target.dataset.key;
@@ -316,19 +316,19 @@ function onDeleteButtonClick(e) {
     url: 'http://localhost:3000/todos/'+key,
     method: 'DELETE',
     data: JSON.stringify(key),
-    success: function() {
+    success: () => {
       $.get('http://localhost:3000/todos', (data) => { 
         todos = data.todos;
       },"JSON");
     }
   });
   e.target.parentNode.classList.add("post-delete");
-  setTimeout(function() {
+  setTimeout(() => {
     e.target.parentNode.remove();
   }, 250);
 }
 
-function createElementCheckbox(todo, key) {
+const createElementCheckbox = (todo, key) => {
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.className = "check-box";
@@ -343,7 +343,7 @@ function createElementCheckbox(todo, key) {
   return checkbox;
 }
 
-function onCheckboxClick(e) {
+const onCheckboxClick = (e) => {
   const target = todos.findIndex(x => x.key === e.target.dataset.key);
   if (e.target.parentNode.classList.contains("checked")) {
     e.target.parentNode.classList.remove("checked");
@@ -366,12 +366,12 @@ function onCheckboxClick(e) {
   }
 }
 
-function onListItemClick(e) {
+const onListItemClick = (e) => {
   const tkey = e.target.parentNode.children[0].dataset.key;
   $("#cb"+tkey).trigger("click");
 }
 
-function checkInput(key) {
+const checkInput = (key) => {
   if (key>=0) {
     $("#cancelButton").css("opacity", "0.25").stop().animate({opacity:1}, 500);
     $("#addButton").stop().animate({opacity:1}, 500);
@@ -380,8 +380,8 @@ function checkInput(key) {
   if ($("#input").val().length === 0 || key>=0) {
     if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) { //Do nothing
     } else {
-      $("#date").stop().animate({top:-65},250, function() {
-        $("#time").stop().animate({top:-35},125, function() {
+      $("#date").stop().animate({top:-65},250, () => {
+        $("#time").stop().animate({top:-35},125, () => {
           $("#input").css("border-radius", "10px");
         });
       });
@@ -401,7 +401,7 @@ clearLS.addEventListener("click", onClearLSClick, false);
 getSavedList();
 getSavedTheme();
 
-$(function() {
+$(() => {
   $(".header").hide().delay(500).fadeToggle(1000);
   $(".header-glass").hide().delay(500).fadeToggle(1000);
   $(".clear-div").hide().delay(500).fadeToggle(1000);
@@ -413,7 +413,7 @@ $(function() {
   $(".form-div").hide().delay(1500).slideToggle(1000);
   $(".list-div").hide().delay(1500).slideToggle(1000);
 
-  $(".header").click(function() {
+  $(".header").click(() => {
     $(".container").slideToggle(1000);
     $(".container-glass").slideToggle(1000);
     $(".form-div").slideToggle(1000);
@@ -425,13 +425,13 @@ $(function() {
   $("#addButton").stop().animate({opacity:0.25},0);
   $("#addButton").prop("disabled", true);
     
-  $("#input").focus(function() {
+  $("#input").focus(() => {
     $("#input").css("border-radius", "10px 10px 0 0");
     $("#time").stop().animate({top:0},250);
     $("#date").stop().animate({top:0},500);
   });
     
-  $("#input").on("change paste cut input", function() {
+  $("#input").on("change paste cut input", () => {
     if (!$.trim(this.value).length) {
       $("#addButton").stop().animate({opacity:0.25}, 250);
       $("#addButton").prop("disabled", true);
@@ -441,11 +441,11 @@ $(function() {
     }
   });
 
-  $(".textarea").blur(function() {
+  $(".textarea").blur(() => {
     checkInput();
   });
 
-  $("#date").change(function() {
+  $("#date").change(() => {
     const date = getDateObject(this.value);
     const now = getDateObject(new Date());
     if (date < now) {
@@ -455,7 +455,7 @@ $(function() {
     }
   });
 
-  $(".clear-div").hover(function(e){
+  $(".clear-div").hover((e) => {
     $("#clearList").stop().animate({
       opacity: e.type==="mouseenter" ? 1 : 0.5
     }, 250);
@@ -470,7 +470,7 @@ $(function() {
     }, 500);
   });
 
-  $(".theme-div").hover(function(e){
+  $(".theme-div").hover((e) => {
     $("#theme1").stop().animate({
       opacity: e.type==="mouseenter" ? 1 : 0.5
     }, 250);
@@ -488,28 +488,28 @@ $(function() {
     }, 500);
   });
 
-  $("#theme1").click(function() {
+  $("#theme1").click(() => {
     const themeName = "light";
     applyTheme(themeName);
     currentTheme = themeName;
     window.localStorage.setItem("todoTheme", JSON.stringify(themeName));
   });
 
-  $("#theme2").click(function() {
+  $("#theme2").click(() => {
     const themeName = "default";
     applyTheme(themeName);
     currentTheme = themeName;
     window.localStorage.setItem("todoTheme", JSON.stringify(themeName));
   });
 
-  $("#theme3").click(function() {
+  $("#theme3").click(() => {
     const themeName = "dark";
     applyTheme(themeName);
     currentTheme = themeName;
     window.localStorage.setItem("todoTheme", JSON.stringify(themeName));
   });
 
-  $("#cancelButton").click(function() {
+  $("#cancelButton").click(() => {
     resetInput(500);
     checkInput(1);
     $("#input").focus();
