@@ -37,7 +37,7 @@ afterAll(() => {
           key: 1
         }
   ]}, null, 2));
-  client.end();
+  //client.end();
 });
 
 describe('GET all /todos', function() {
