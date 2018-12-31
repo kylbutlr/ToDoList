@@ -22,7 +22,7 @@ const db = {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  createTodo: (title, cb) => client.query('INSERT INTO todos (title) VALUES ($1)', [title], (err, res) => {
+  createTodo: (title, cb) => client.query('INSERT INTO todos (title) VALUES ($1)', [todo.title], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
