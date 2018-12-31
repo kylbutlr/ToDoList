@@ -8,6 +8,8 @@ let db;
 
 beforeAll(() => {
   const client = new Client({
+    user: 'postgres',
+    password: 'pass',
     database: 'todos_test'
   });
   client.connect();
