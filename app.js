@@ -13,7 +13,6 @@ client.connect();
 let todos;
 let nextKey;
 
-
 const getAllTodos = (req,res) => {
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err; }
