@@ -135,7 +135,7 @@ describe('DELETE INVALID /todo', function() {
   });
 });
 
-describe('404', function() {
+describe('EXPECT 404', function() {
   it('should 404', function (done) {
     request(app)
       .get('/nothing')
@@ -143,12 +143,33 @@ describe('404', function() {
   });
 });
 
-describe('db', () => {
+describe('DB', () => {
   describe('getTodo()', () => {
-    it('should return test record', (done) => {
+    it('should return test todo', (done) => {
       db.getTodo(1, (err, res) => {
         if (err) throw err;
+        console.log(res);
         expect(res).toHaveLength(1);
+        done();
+      });
+    });
+  });
+  describe('createTodo()', () => {
+    it('should create test todo', (done) => {
+      db.createTodo("new test todo", (err, res) => {
+        if (err) throw err;
+        console.log(res);
+        //expect(res).toHaveLength(2);
+        done();
+      });
+    });
+  });
+  describe('getAll()', () => {
+    it('should return all test todos', (done) => {
+      db.getAll((err, res) => {
+        if (err) throw err;
+        expect(res).toHaveLength(2);
+        console.log(res);
         done();
       });
     });
