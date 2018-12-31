@@ -13,7 +13,7 @@
     "supertest": "^3.3.0"
   },
   "scripts": {
-    "test": "psql -f createTablesTest.sql && npx jest test.js"
+    "test": "psql -U postgres -f createTablesTest.sql && npx jest test.js"
   },
   "repository": {
     "type": "git",
