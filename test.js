@@ -159,7 +159,17 @@ describe('DB', () => {
       db.createTodo("new test todo", (err, res) => {
         if (err) throw err;
         console.log(res);
-        //expect(res).toHaveLength(2);
+        //expect(res).toHaveLength(1);
+        done();
+      });
+    });
+  });
+  describe('updateTodo()', () => {
+    it('should update first todo', (done) => {
+      db.updateTodo(1, "updated todo", (err, res) => {
+        if (err) throw err;
+        console.log(res);
+        //expect(res).toHaveLength(1);
         done();
       });
     });
@@ -170,6 +180,26 @@ describe('DB', () => {
         if (err) throw err;
         expect(res).toHaveLength(2);
         console.log(res);
+        done();
+      });
+    });
+  });
+  describe('deleteTodo()', () => {
+    it('should delete second todo', (done) => {
+      db.deleteTodo(2, (err, res) => {
+        if (err) throw err;
+        console.log(res);
+        //expect(res).toHaveLength(0);
+        done();
+      });
+    });
+  });
+  describe('deleteAll()', () => {
+    it('should delete all todos', (done) => {
+      db.deleteAll((err, res) => {
+        if (err) throw err;
+        console.log(res);
+        //expect(res).toHaveLength(0);
         done();
       });
     });
