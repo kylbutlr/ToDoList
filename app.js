@@ -3,13 +3,6 @@ const querystring = require('querystring');
 const express = require('express');
 const cors = require('cors');
 const app = express();
-/*const { Client } = require('pg');
-const client = new Client({
-  user: 'postgres',
-  password: 'pass',
-  database: 'playground'
-});
-client.connect();*/
 let todos;
 let nextKey;
 
