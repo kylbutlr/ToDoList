@@ -148,6 +148,7 @@ describe('DB', () => {
     it('should return test todo', (done) => {
       db.getTodo(1, (err, res) => {
         if (err) throw err;
+        expect(res[0].id).toBeGreaterThan(0);
         expect(res).toHaveLength(1);
         done();
       });
@@ -157,13 +158,8 @@ describe('DB', () => {
     it('should create test todo', (done) => {
       db.createTodo("new test todo", (err, res) => {
         if (err) throw err;
-        expect(res).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              title: "new test todo"
-            })
-          ])
-        );
+        expect(res[0].id).toBeGreaterThan(0);
+        expect(res[0].title).toBe("new test todo");
         done();
       });
     });
@@ -172,13 +168,8 @@ describe('DB', () => {
     it('should update first todo', (done) => {
       db.updateTodo(1, "updated todo", (err, res) => {
         if (err) throw err;
-        expect(res).toEqual(
-          expect.arrayContaining([
-            expect.objectContaining({
-              title: "updated todo"
-            })
-          ])
-        );
+        expect(res[0].id).toBeGreaterThan(0);
+        expect(res[0].title).toBe("updated todo");
         done();
       });
     });
@@ -187,6 +178,7 @@ describe('DB', () => {
     it('should return all test todos', (done) => {
       db.getAll((err, res) => {
         if (err) throw err;
+        expect(res[0].id).toBeGreaterThan(0);
         expect(res).toHaveLength(2);
         done();
       });
@@ -196,10 +188,6 @@ describe('DB', () => {
     it('should delete second todo', (done) => {
       db.deleteTodo(2, (err, res) => {
         if (err) throw err;
-      });
-      db.getAll((err, res) => {
-        if (err) throw err;
-        expect(res).toHaveLength(1);
         done();
       });
     });
@@ -208,10 +196,6 @@ describe('DB', () => {
     it('should delete all todos', (done) => {
       db.deleteAll((err, res) => {
         if (err) throw err;
-      });
-      db.getAll((err, res) => {
-        if (err) throw err;
-        expect(res).toHaveLength(0);
         done();
       });
     });
