@@ -40,106 +40,99 @@ afterAll(() => {
   ]}, null, 2));
 });
 
-describe('GET all /todos', () => {
-  it('should return all todos', (done) => {
-    request(app)
-      .get('/todos')
-      .expect(200, done);
-  });
-});
-
-describe('GET one /todos', () => {
-  it('should return first todo', (done) => {
-    request(app)
-      .get('/todos/0')
-      .expect(200, done);
-  });
-});
-
-describe('GET INVALID /todos', () => {
-  it('should 404 because invalid entry', (done) => {
-    request(app)
-      .get('/todos/343434343434')
-      .expect(404, done);
-  });
-});
-
-describe('POST to /todos', () => {
-  it('should post a todo entry', (done) => {
-    const todo = querystring.stringify({
-      "text": "NEW ENTRY",
-      "time24": "",
-      "date": "",
-      "done": "false"
+describe('CLIENT', () => {
+  describe('GET all /todos', () => {
+    it('should return all todos', (done) => {
+      request(app)
+        .get('/todos')
+        .expect(200, done);
     });
-    request(app)
-      .post('/todos')
-      .send(todo)
-      .expect(201, done);
   });
-});
-
-describe('PUT to /todos', () => {
-  it('should edit first todo entry', (done) => {
-    const todo = {
-      "text": "EDITED ENTRY",
-      "time24": "",
-      "date": "",
-      "done": "false",
-      "key": 0
-    };
-    request(app)
-      .put('/todos')
-      .send(todo)
-      .expect(204, done);
+  describe('GET one /todos', () => {
+    it('should return first todo', (done) => {
+      request(app)
+        .get('/todos/0')
+        .expect(200, done);
+    });
   });
-});
-
-describe('PUT INVALID /todos', () => {
-  it('should 404 because invalid entry', (done) => {
-    const todo = {
-      "text": "INVALID ENTRY",
-      "time24": "",
-      "date": "",
-      "done": "false",
-      "key": 2525252525
-    };
-    request(app)
-      .put('/todos')
-      .send(todo)
-      .expect(404, done);
+  describe('GET INVALID /todos', () => {
+    it('should 404 because invalid entry', (done) => {
+      request(app)
+        .get('/todos/343434343434')
+        .expect(404, done);
+    });
   });
-});
-
-describe('DELETE one /todo', () => {
-  it('should delete second todo entry', (done) => {
-    request(app)
-      .delete('/todos/1')
-      .expect(204, done);
+  describe('POST to /todos', () => {
+    it('should post a todo entry', (done) => {
+      const todo = querystring.stringify({
+        "text": "NEW ENTRY",
+        "time24": "",
+        "date": "",
+        "done": "false"
+      });
+      request(app)
+        .post('/todos')
+        .send(todo)
+        .expect(201, done);
+    });
   });
-});
-
-describe('DELETE all /todos', () => {
-  it('should delete all todos', (done) => {
-    request(app)
-      .delete('/todos')
-      .expect(204, done);
+  describe('PUT to /todos', () => {
+    it('should edit first todo entry', (done) => {
+      const todo = {
+        "text": "EDITED ENTRY",
+        "time24": "",
+        "date": "",
+        "done": "false",
+        "key": 0
+      };
+      request(app)
+        .put('/todos')
+        .send(todo)
+        .expect(204, done);
+    });
   });
-});
-
-describe('DELETE INVALID /todo', () => {
-  it('should 404 because invalid entry', (done) => {
-    request(app)
-      .delete('/todos/16161616161616')
-      .expect(404, done);
+  describe('PUT INVALID /todos', () => {
+    it('should 404 because invalid entry', (done) => {
+      const todo = {
+        "text": "INVALID ENTRY",
+        "time24": "",
+        "date": "",
+        "done": "false",
+        "key": 2525252525
+      };
+      request(app)
+        .put('/todos')
+        .send(todo)
+        .expect(404, done);
+    });
   });
-});
-
-describe('EXPECT 404', () => {
-  it('should 404', (done) => {
-    request(app)
-      .get('/nothing')
-      .expect(404, done);
+  describe('DELETE one /todo', () => {
+    it('should delete second todo entry', (done) => {
+      request(app)
+        .delete('/todos/1')
+        .expect(204, done);
+    });
+  });
+  describe('DELETE all /todos', () => {
+    it('should delete all todos', (done) => {
+      request(app)
+        .delete('/todos')
+        .expect(204, done);
+    });
+  });
+  describe('DELETE INVALID /todo', () => {
+    it('should 404 because invalid entry', (done) => {
+      request(app)
+        .delete('/todos/16161616161616')
+        .expect(404, done);
+    });
+  });
+  describe('EXPECT 404', () => {
+    it('should 404', (done) => {
+      request(app)
+        .get('/nothing')
+        .expect(404, done);
+    });
   });
 });
 
