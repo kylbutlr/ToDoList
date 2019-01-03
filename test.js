@@ -179,18 +179,12 @@ describe('DB', () => {
   });
   describe('deleteTodo()', () => {
     it('should delete second todo', (done) => {
-      db.deleteTodo(2, (err) => {
-        if (err) throw err;
-        done();
-      });
+      db.deleteTodo(2, done);
     });
   });
   describe('deleteAll()', () => {
     it('should delete all todos', (done) => {
-      db.deleteAll((err) => {
-        if (err) throw err;
-        done();
-      });
+      db.deleteAll(done);
     });
   });
 });
