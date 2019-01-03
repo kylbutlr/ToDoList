@@ -15,11 +15,11 @@ module.exports = client => ({
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  deleteAll: cb => client.query('DELETE FROM todos RETURNING *', (err, res) => {
+  deleteAll: cb => client.query('DELETE FROM todos', (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  deleteTodo: (id, cb) => client.query('DELETE FROM todos WHERE id = $1 RETURNING *', [id], (err, res) => {
+  deleteTodo: (id, cb) => client.query('DELETE FROM todos WHERE id = $1', [id], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   })

@@ -186,7 +186,7 @@ describe('DB', () => {
   });
   describe('deleteTodo()', () => {
     it('should delete second todo', (done) => {
-      db.deleteTodo(2, (err, res) => {
+      db.deleteTodo(2, (err) => {
         if (err) throw err;
         done();
       });
@@ -194,7 +194,7 @@ describe('DB', () => {
   });
   describe('deleteAll()', () => {
     it('should delete all todos', (done) => {
-      db.deleteAll((err, res) => {
+      db.deleteAll((err) => {
         if (err) throw err;
         done();
       });
