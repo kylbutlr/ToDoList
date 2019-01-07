@@ -51,7 +51,7 @@ describe('CLIENT', () => {
   describe('GET one /todos', () => {
     it('should return first todo', (done) => {
       request(app)
-        .get('/todos/0')
+        .get('/todos/1')
         .expect(200, done);
     });
   });

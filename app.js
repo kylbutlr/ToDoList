@@ -27,21 +27,12 @@ const getAllTodos = (req,res) => {
 const getOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
   db.getTodo(key, (err, data) => {
-    console.log(data);
-    console.log(err);
     if (err) { throw err; }
-  /*fs.readFile('todos.json', 'utf-8', (err,data) => {
-    if (err) { throw err; }
-    parsedData = JSON.parse(data);
-    if (!parsedData.todos[key]) {*/
-    if (!data.todos[key]) {
-      next();
-    }
+    if (!data[0]) return next();
     res.statusCode = 200;
-    res.end(JSON.stringify({ 
-      //todo: parsedData.todos.find(t => t.key === key)
-      todo: data.todos.find(t => t.key === key)
-    }));
+    res.send({
+        todo: data
+    });
   });
 };
 
