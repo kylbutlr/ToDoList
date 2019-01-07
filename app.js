@@ -8,7 +8,7 @@ const DB = require('./db');
 const client = new Client({
   user: 'postgres',
   password: 'pass',
-  database: 'todos_test'
+  database: 'todos'
 });
 const db = DB(client);
 let todos;
@@ -27,18 +27,20 @@ const getAllTodos = (req,res) => {
 const getOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
   db.getTodo(key, (err, data) => {
-    if (err) {throw err; }
     console.log(data);
-  });
-  fs.readFile('todos.json', 'utf-8', (err,data) => {
+    console.log(err);
+    if (err) { throw err; }
+  /*fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err; }
     parsedData = JSON.parse(data);
-    if (!parsedData.todos[key]) {
+    if (!parsedData.todos[key]) {*/
+    if (!data.todos[key]) {
       next();
     }
     res.statusCode = 200;
     res.end(JSON.stringify({ 
-      todo: parsedData.todos.find(t => t.key === key)
+      //todo: parsedData.todos.find(t => t.key === key)
+      todo: data.todos.find(t => t.key === key)
     }));
   });
 };
