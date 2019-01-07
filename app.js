@@ -17,47 +17,59 @@ let nextKey;
 client.connect();
 
 const getAllTodos = (req,res) => {
-  fs.readFile('todos.json', 'utf-8', (err,data) => {
-    if (err) { throw err; }
+  db.getAll((err, data) => {
+    if (err) return err;
     res.statusCode = 200;
-    res.end(data);
+    res.send(data);
   });
 };
 
 const getOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
   db.getTodo(key, (err, data) => {
-    if (err) { throw err; }
+    if (err) return err;
     if (!data[0]) return next();
     res.statusCode = 200;
-    res.send(data);
+    console.log(data[0]);
+    console.log(data[key]);
+    res.send(data[key]);
   });
 };
 
 const postTodo = (req,res) => {
-  let body = '';
+  const title = req.params.title;
+  const date = req.params.date;
+  const complete = req.params.complete;
+  /*let body = '';
   req.on('data', chunk => {
     body += chunk.toString();
   });
-  req.on('end', () => {
-    fs.readFile('todos.json', 'utf8', (err,data) => {
-      if (err) { throw err; }
-      const todosData = JSON.parse(data);
-      const todo = querystring.parse(body);
-      todo.key = nextKey;
+  req.on('end', () => {*/
+    //fs.readFile('todos.json', 'utf8', (err,data) => {
+    /*db.getAll((err, data) => {
+      if (err) return err;
+      console.log(data);*/
+      //const todosData = JSON.parse(data);
+      //const todo = querystring.parse(body);
+      /*todo.key = nextKey;
       nextKey++;
       todosData.todos.push(todo);
       todos = todosData.todos;
       const newData = JSON.stringify({ 
         "nextKey": nextKey, 
         "todos": todosData.todos
-      }, null, 2);
-      fs.writeFile('todos.json', newData, (err) => {
-        if (err) { throw err; }
+      }, null, 2);*/
+      //fs.writeFile('todos.json', newData, (err) => {
+      db.createTodo(title, date, complete, (err, data) => {
+        if (err) return err;
+        console.log(title);
+        console.log(date);
+        console.log(complete);
+        console.log(data);
         res.statusCode = 201;
-        res.end('POST');
-      });
-    });
+        res.send(data);
+      //});
+    //});
   });
 };
 

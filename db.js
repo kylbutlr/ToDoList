@@ -7,11 +7,11 @@ module.exports = client => ({
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  createTodo: (title, cb) => client.query('INSERT INTO todos (title) VALUES ($1) RETURNING *', [title], (err, res) => {
+  createTodo: (title, date, complete, cb) => client.query('INSERT INTO todos (title) VALUES ($1) RETURNING *', [title, date, complete], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  updateTodo: (id, title, cb) => client.query('UPDATE todos SET title = $2 WHERE id = $1 RETURNING *', [id, title], (err, res) => {
+  updateTodo: (id, title, date, complete, cb) => client.query('UPDATE todos SET title = $2 WHERE id = $1 RETURNING *', [id, title, date, complete], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),

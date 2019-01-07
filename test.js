@@ -19,7 +19,7 @@ beforeAll(() => {
 
 afterAll(() => {
   client.end();
-  fs.writeFile('todos.json', JSON.stringify(
+  /*fs.writeFile('todos.json', JSON.stringify(
     { 
       nextKey: 2, 
       todos: [
@@ -37,7 +37,7 @@ afterAll(() => {
           done:"false", 
           key: 1
         }
-  ]}, null, 2));
+  ]}, null, 2));*/
 });
 
 describe('CLIENT', () => {
@@ -64,15 +64,12 @@ describe('CLIENT', () => {
   });
   describe('POST to /todos', () => {
     it('should post a todo entry', (done) => {
-      const todo = querystring.stringify({
-        "text": "NEW ENTRY",
-        "time24": "",
-        "date": "",
-        "done": "false"
-      });
+      const title = "NEW ENTRY";
+      const date = "";
+      const complete = "false";
       request(app)
         .post('/todos')
-        .send(todo)
+        .send(title, date, complete)
         .expect(201, done);
     });
   });
