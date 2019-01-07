@@ -58,7 +58,7 @@ describe('CLIENT', () => {
   describe('GET INVALID /todos', () => {
     it('should 404 because invalid entry', (done) => {
       request(app)
-        .get('/todos/343434343434')
+        .get('/todos/-1')
         .expect(404, done);
     });
   });

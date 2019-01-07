@@ -3,9 +3,18 @@ const querystring = require('querystring');
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const db = require('./db');
+const { Client } = require('pg');
+const DB = require('./db');
+const client = new Client({
+  user: 'postgres',
+  password: 'pass',
+  database: 'todos_test'
+});
+const db = DB(client);
 let todos;
 let nextKey;
+
+client.connect();
 
 const getAllTodos = (req,res) => {
   fs.readFile('todos.json', 'utf-8', (err,data) => {
@@ -17,6 +26,10 @@ const getAllTodos = (req,res) => {
 
 const getOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
+  db.getTodo(key, (err, data) => {
+    if (err) {throw err; }
+    console.log(data);
+  });
   fs.readFile('todos.json', 'utf-8', (err,data) => {
     if (err) { throw err; }
     parsedData = JSON.parse(data);
