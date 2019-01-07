@@ -30,9 +30,7 @@ const getOneTodo = (req,res,next) => {
     if (err) return err;
     if (!data[0]) return next();
     res.statusCode = 200;
-    console.log(data[0]);
-    console.log(data[key]);
-    res.send(data[key]);
+    res.send(data[0]);
   });
 };
 
