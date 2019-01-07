@@ -30,9 +30,7 @@ const getOneTodo = (req,res,next) => {
     if (err) { throw err; }
     if (!data[0]) return next();
     res.statusCode = 200;
-    res.send({
-        todo: data
-    });
+    res.send(data);
   });
 };
 
