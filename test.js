@@ -1,9 +1,9 @@
-const fs = require('fs');
 const request = require('supertest');
-const querystring = require('querystring');
 const { Client } = require('pg');
 const app = require('./app');
 const DB = require('./db');
+//const fs = require('fs');
+//const querystring = require('querystring');
 let db;
 let client;
 

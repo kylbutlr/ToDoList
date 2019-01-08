@@ -1,5 +1,3 @@
-const fs = require('fs');
-const querystring = require('querystring');
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -11,16 +9,17 @@ const client = new Client({
   database: 'todos'
 });
 const db = DB(client);
-let todos;
-let nextKey;
+//const fs = require('fs');
+//const querystring = require('querystring');
+//let todos;
+//let nextKey;
 
 client.connect();
 
 const getAllTodos = (req,res) => {
   db.getAll((err, data) => {
     if (err) return err;
-    res.statusCode = 200;
-    res.send(data);
+    res.status(200).send(data);
   });
 };
 
@@ -29,8 +28,7 @@ const getOneTodo = (req,res,next) => {
   db.getTodo(key, (err, data) => {
     if (err) return err;
     if (!data[0]) return next();
-    res.statusCode = 200;
-    res.send(data[0]);
+    res.status(200).send(data[0]);
   });
 };
 
@@ -38,92 +36,41 @@ const postTodo = (req,res) => {
   const title = req.params.title;
   const date = req.params.date;
   const complete = req.params.complete;
-  /*let body = '';
-  req.on('data', chunk => {
-    body += chunk.toString();
-  });
-  req.on('end', () => {*/
-    //fs.readFile('todos.json', 'utf8', (err,data) => {
-    /*db.getAll((err, data) => {
-      if (err) return err;
-      console.log(data);*/
-      //const todosData = JSON.parse(data);
-      //const todo = querystring.parse(body);
-      /*todo.key = nextKey;
-      nextKey++;
-      todosData.todos.push(todo);
-      todos = todosData.todos;
-      const newData = JSON.stringify({ 
-        "nextKey": nextKey, 
-        "todos": todosData.todos
-      }, null, 2);*/
-      //fs.writeFile('todos.json', newData, (err) => {
-      db.createTodo(title, date, complete, (err, data) => {
-        if (err) return err;
-        console.log(title);
-        console.log(date);
-        console.log(complete);
-        console.log(data);
-        res.statusCode = 201;
-        res.send(data);
-      //});
-    //});
+  db.createTodo(title, date, complete, (err, data) => {
+    if (err) return err;
+    console.log(title, date, complete, data);
+    res.status(201).send(data);
   });
 };
 
 const editTodo = (req,res,next) => {
-  let body = '';
-  req.on('data', chunk => {
-    body += chunk.toString();
-  });
-  req.on('end', () => {
-    const parsedBody = JSON.parse(body);
-    parsedBody.key = parseInt(parsedBody.key);
-    const t = todos.findIndex(x => x.key === parsedBody.key);
-    if (t < 0) {
-      next();
-    }
-    todos[t] = parsedBody;
-    const newData = JSON.stringify({ 
-      "nextKey": nextKey, 
-      "todos": todos
-    }, null, 2);
-    fs.writeFile('todos.json', newData, (err) => {
-      if (err) { throw err; }
-      res.statusCode = 204;
-      res.end('PUT');
-    });
+  const key = Number(req.params.id);
+  const title = req.params.title;
+  const date = req.params.date;
+  const complete = req.params.complete;
+  db.createTodo(key, title, date, complete, (err, data) => {
+    if (err) return err;
+    if (!data[0]) return next();
+    res.status(204).send(data);
   });
 };
 
 const deleteAllTodos = (req,res) => {
-  todos.splice(0,todos.length);
-  const newData = JSON.stringify({
-    "nextKey": nextKey, 
-    "todos": []
-  }, null, 2);
-  fs.writeFile('todos.json', newData, (err) => {
-    if (err) { throw err; }
-    res.statusCode = 204;
-    res.end('CLEAR');
+  db.deleteAll((err, data) => {
+    if (err) return err;
+    res.status(204).send(data);
   });
 };
 
 const deleteOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
-  const t = todos.findIndex(x => x.key === key);
-  if (t < 0) {
-    next();
-  }
-  todos.splice(t,1);
-  const newData = JSON.stringify({ 
-    "nextKey": nextKey, 
-    "todos": todos
-  }, null, 2);
-  fs.writeFile('todos.json', newData, (err) => {
-    if (err) { throw err; }
-    res.statusCode = 204;
-    res.end('DELETE');
+  db.deleteTodo(key, (err, data) => {
+    console.log(key);
+    console.log(data);
+    console.log(data[0]);
+    if (err) return err;
+    if (!data[0]) return next();
+    res.status(204).send(data[0]);
   });
 };
 
@@ -136,12 +83,5 @@ app.put('/todos', editTodo);
 app.delete('/todos/:id', deleteOneTodo);
 app.delete('/todos', deleteAllTodos);
 app.use((req, res) => res.status(404).send('404: Not Found'));
-
-fs.readFile('todos.json', 'utf-8', (err,data) => {
-  if (err) { throw err; }
-  parsedData = JSON.parse(data);
-  nextKey = parsedData.nextKey;
-  todos = parsedData.todos;
-});
 
 module.exports = app;
