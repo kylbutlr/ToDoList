@@ -37,17 +37,19 @@ const postTodo = (req,res) => {
   const date = req.params.date;
   const complete = req.params.complete;
   db.createTodo(title, date, complete, (err, data) => {
+    /*console.log(title);
+    console.log(date);
+    console.log(complete);*/
     if (err) return err;
-    console.log(title, date, complete, data);
     res.status(201).send(data);
   });
 };
 
 const editTodo = (req,res,next) => {
   const key = Number(req.params.id);
-  const title = req.params.title;
-  const date = req.params.date;
-  const complete = req.params.complete;
+  const todo = req.params.todo;
+  /*console.log(key);
+  console.log(todo);*/
   db.createTodo(key, title, date, complete, (err, data) => {
     if (err) return err;
     if (!data[0]) return next();
@@ -65,9 +67,9 @@ const deleteAllTodos = (req,res) => {
 const deleteOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
   db.deleteTodo(key, (err, data) => {
-    console.log(key);
+    /*console.log(key);
     console.log(data);
-    console.log(data[0]);
+    console.log(data[0]);*/
     if (err) return err;
     if (!data[0]) return next();
     res.status(204).send(data[0]);
