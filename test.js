@@ -138,7 +138,7 @@ describe('DB', () => {
   });
   describe('createTodo()', () => {
     it('should create test todo', (done) => {
-      db.createTodo("new test todo", (err, res) => {
+      db.createTodo("new test todo", "", "false", (err, res) => {
         if (err) throw err;
         expect(res[0].id).toBeGreaterThan(0);
         expect(res[0].title).toBe("new test todo");
