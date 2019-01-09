@@ -69,37 +69,29 @@ describe('CLIENT', () => {
       const complete = "false";
       request(app)
         .post('/todos')
-        .send(title, date, complete)
+        .send({ title, date, complete })
         .expect(201, done);
     });
   });
   describe('PUT to /todos', () => {
     it('should edit first todo entry', (done) => {
-      const todo = {
-        "text": "EDITED ENTRY",
-        "time24": "",
-        "date": "",
-        "done": "false",
-        "key": 0
-      };
+      const title = "EDITED ENTRY";
+      const date = "";
+      const complete = "false";
       request(app)
         .put('/todos')
-        .send(todo)
+        .send({ title, date, complete })
         .expect(204, done);
     });
   });
   describe('PUT INVALID /todos', () => {
     it('should 404 because invalid entry', (done) => {
-      const todo = {
-        "text": "INVALID ENTRY",
-        "time24": "",
-        "date": "",
-        "done": "false",
-        "key": 2525252525
-      };
+      const title = "INVALID ENTRY";
+      const date = "";
+      const complete = "false";
       request(app)
         .put('/todos')
-        .send(todo)
+        .send({ title, date, complete })
         .expect(404, done);
     });
   });
@@ -120,7 +112,7 @@ describe('CLIENT', () => {
   describe('DELETE INVALID /todo', () => {
     it('should 404 because invalid entry', (done) => {
       request(app)
-        .delete('/todos/16161616161616')
+        .delete('/todos/161616')
         .expect(404, done);
     });
   });
