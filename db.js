@@ -7,7 +7,7 @@ module.exports = client => ({
     if (err) return cb(err);
     cb(null, res.rows);
   }),
-  createTodo: (title, date, complete, cb) => client.query('INSERT INTO todos (title) VALUES ($1) (date) VALUES ($2) (complete) VALUES ($3) RETURNING *', [title, date, complete], (err, res) => {
+  createTodo: (title, date, complete, cb) => client.query('INSERT INTO todos (title, date, complete) VALUES ($1, $2, $3) RETURNING *', [title, date, complete], (err, res) => {
     if (err) return cb(err);
     cb(null, res.rows);
   }),

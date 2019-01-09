@@ -40,7 +40,7 @@ const postTodo = (req,res) => {
     /*console.log(title);
     console.log(date);
     console.log(complete);*/
-    if (err) return err;
+    if (err) return next(err);
     res.status(201).send(data);
   });
 };
