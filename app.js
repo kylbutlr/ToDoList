@@ -16,9 +16,9 @@ const db = DB(client);
 
 client.connect();
 
-const getAllTodos = (req,res) => {
+const getAllTodos = (req,res,next) => {
   db.getAll((err, data) => {
-    if (err) return err;
+    if (err) return next(err);
     res.status(200).send(data);
   });
 };
@@ -26,20 +26,20 @@ const getAllTodos = (req,res) => {
 const getOneTodo = (req,res,next) => {
   const key = Number(req.params.id);
   db.getTodo(key, (err, data) => {
-    if (err) return err;
+    if (err) return next(err);
     if (!data[0]) return next();
     res.status(200).send(data[0]);
   });
 };
 
-const postTodo = (req,res) => {
+const postTodo = (req,res,next) => {
   const title = req.params.title;
   const date = req.params.date;
   const complete = req.params.complete;
   db.createTodo(title, date, complete, (err, data) => {
-    /*console.log(title);
+    console.log(title);
     console.log(date);
-    console.log(complete);*/
+    console.log(complete);
     if (err) return next(err);
     res.status(201).send(data);
   });
@@ -48,18 +48,18 @@ const postTodo = (req,res) => {
 const editTodo = (req,res,next) => {
   const key = Number(req.params.id);
   const todo = req.params.todo;
-  /*console.log(key);
-  console.log(todo);*/
+  console.log(key);
+  console.log(todo);
   db.createTodo(key, title, date, complete, (err, data) => {
-    if (err) return err;
+    if (err) return next(err);
     if (!data[0]) return next();
     res.status(204).send(data);
   });
 };
 
-const deleteAllTodos = (req,res) => {
+const deleteAllTodos = (req,res,next) => {
   db.deleteAll((err, data) => {
-    if (err) return err;
+    if (err) return next(err);
     res.status(204).send(data);
   });
 };
@@ -70,7 +70,7 @@ const deleteOneTodo = (req,res,next) => {
     /*console.log(key);
     console.log(data);
     console.log(data[0]);*/
-    if (err) return err;
+    if (err) return next(err);
     if (!data[0]) return next();
     res.status(204).send(data[0]);
   });
