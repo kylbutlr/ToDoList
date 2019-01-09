@@ -8,8 +8,6 @@ module.exports = client => ({
     cb(null, res.rows);
   }),
   createTodo: (title, date, complete, cb) => client.query('INSERT INTO todos (title, date, complete) VALUES ($1, $2, $3) RETURNING *', [title, date, complete], (err, res) => {
-    console.log(err);
-    console.log(res);
     if (err) return cb(err);
     cb(null, res.rows);
   }),
