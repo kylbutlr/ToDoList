@@ -65,7 +65,7 @@ describe('CLIENT', () => {
   describe('POST to /todos', () => {
     it('should post a todo entry', (done) => {
       const title = "NEW ENTRY";
-      const date = "";
+      const date = null;
       const complete = "false";
       request(app)
         .post('/todos')
@@ -138,7 +138,7 @@ describe('DB', () => {
   });
   describe('createTodo()', () => {
     it('should create test todo', (done) => {
-      db.createTodo("new test todo", "", "false", (err, res) => {
+      db.createTodo("new test todo", null, "false", (err, res) => {
         if (err) throw err;
         expect(res[0].id).toBeGreaterThan(0);
         expect(res[0].title).toBe("new test todo");
