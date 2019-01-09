@@ -33,23 +33,30 @@ const getOneTodo = (req,res,next) => {
 };
 
 const postTodo = (req,res,next) => {
-  const title = req.params.title;
-  const date = req.params.date;
-  const complete = req.params.complete;
-  db.createTodo(title, date, complete, (err, data) => {
-    console.log(title);
-    console.log(date);
-    console.log(complete);
-    if (err) return next(err);
-    res.status(201).send(data);
+  let body = '';
+  req.on('data', chunk => {
+    body += chunk.toString();
+  });
+  req.on('end', () => {
+    const todo = JSON.parse(body);
+    const title = todo.title;
+    const date = todo.date;
+    const complete = todo.complete;
+    db.createTodo(title, date, complete, (err, data) => {
+      console.log(todo);
+      console.log(title, date, complete);
+      console.log(data);
+      if (err) return next(err);
+      res.status(201).send(data);
+    });
   });
 };
 
 const editTodo = (req,res,next) => {
   const key = Number(req.params.id);
   const todo = req.params.todo;
-  console.log(key);
-  console.log(todo);
+  //console.log(key);
+  //console.log(todo);
   db.createTodo(key, title, date, complete, (err, data) => {
     if (err) return next(err);
     if (!data[0]) return next();
