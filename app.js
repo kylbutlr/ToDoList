@@ -1,23 +1,21 @@
+const express = require('express');
+const cors = require('cors');
+//const app = express();
+const {Client} = require('pg');
+const DB = require('./db');
+//const db = DB(client);
+//const fs = require('fs');
+//const querystring = require('querystring');
+//let todos;
+//let nextKey;
+//client.connect();
+
 module.exports = (client) => {
-  //const app = express();
-  //const db = DB(client);
-
-  const express = require('express');
-  const cors = require('cors');
   const app = express();
-  const { Client } = require('pg');
-  const DB = require('./db');
   const db = DB(client);
-  //const fs = require('fs');
-  //const querystring = require('querystring');
-  //let todos;
-  //let nextKey;
-
-  client.connect();
 
   const getAllTodos = (req,res,next) => {
     db.getAll((err, data) => {
-      console.log(data);
       if (err) return next(err);
       res.status(200).send(data);
     });
@@ -26,9 +24,6 @@ module.exports = (client) => {
   const getOneTodo = (req,res,next) => {
     const key = Number(req.params.id);
     db.getTodo(key, (err, data) => {
-      console.log(err);
-      console.log(key);
-      console.log(data);
       if (err) return next(err);
       if (!data[0]) return next();
       res.status(200).send(data);
@@ -53,14 +48,25 @@ module.exports = (client) => {
   };
 
   const editTodo = (req,res,next) => {
-    const key = Number(req.params.id);
-    const todo = req.params.todo;
-    //console.log(key);
-    //console.log(todo);
-    db.createTodo(key, title, date, complete, (err, data) => {
-      if (err) return next(err);
-      if (!data[0]) return next();
-      res.status(204).send(data);
+    let body = '';
+    req.on('data', chunk => {
+      body += chunk.toString();
+    });
+    req.on('end', () => {
+      const key = Number(req.params.id);
+      const todo = JSON.parse(body);
+      const title = todo.title;
+      const date = todo.date;
+      const complete = todo.complete;
+      console.log(key);
+      console.log(todo);
+      console.log(data);
+      console.log(data[0]);
+      db.createTodo(key, title, date, complete, (err, data) => {
+        if (err) return next(err);
+        if (!data[0]) return next();
+        res.status(204).send(data);
+      });
     });
   };
 
@@ -88,7 +94,7 @@ module.exports = (client) => {
   app.get('/todos', getAllTodos);
   app.get('/todos/:id', getOneTodo);
   app.post('/todos', postTodo);
-  app.put('/todos', editTodo);
+  app.put('/todos/:id', editTodo);
   app.delete('/todos/:id', deleteOneTodo);
   app.delete('/todos', deleteAllTodos);
   app.use((req, res) => res.status(404).send('404: Not Found'));

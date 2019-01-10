@@ -1,6 +1,6 @@
 const request = require('supertest');
 const { Client } = require('pg');
-const app = require('./app');
+const App = require('./app');
 const DB = require('./db');
 //const fs = require('fs');
 //const querystring = require('querystring');
@@ -15,6 +15,7 @@ beforeAll(() => {
   });
   client.connect();
   db = DB(client);
+  app = App(client);
 });
 
 afterAll(() => {
@@ -48,11 +49,7 @@ describe('CLIENT', () => {
       const complete = "false";
       request(app)
         .post('/todos')
-        .send({
-          title,
-          date,
-          complete
-        })
+        .send({ title, date, complete })
         .expect(201, done);
     });
   });
@@ -80,7 +77,7 @@ describe('CLIENT', () => {
   describe('PUT to /todos', () => {
     it('should edit first todo entry', (done) => {
       const title = "EDITED ENTRY";
-      const date = "";
+      const date = null;
       const complete = "false";
       request(app)
         .put('/todos')
@@ -91,7 +88,7 @@ describe('CLIENT', () => {
   describe('PUT INVALID /todos', () => {
     it('should 404 because invalid entry', (done) => {
       const title = "INVALID ENTRY";
-      const date = "";
+      const date = null;
       const complete = "false";
       request(app)
         .put('/todos')
@@ -99,7 +96,7 @@ describe('CLIENT', () => {
         .expect(404, done);
     });
   });
-  /*describe('DELETE one /todo', () => {
+  describe('DELETE one /todo', () => {
     it('should delete second todo entry', (done) => {
       request(app)
         .delete('/todos/1')
@@ -112,7 +109,7 @@ describe('CLIENT', () => {
         .delete('/todos')
         .expect(204, done);
     });
-  });*/
+  });
   describe('DELETE INVALID /todo', () => {
     it('should 404 because invalid entry', (done) => {
       request(app)
@@ -130,16 +127,6 @@ describe('CLIENT', () => {
 });
 
 describe('DB', () => {
-  describe('getTodo()', () => {
-    it('should return test todo', (done) => {
-      db.getTodo(1, (err, res) => {
-        if (err) throw err;
-        expect(res[0].id).toBeGreaterThan(0);
-        expect(res).toHaveLength(1);
-        done();
-      });
-    });
-  });
   describe('createTodo()', () => {
     it('should create test todo', (done) => {
       db.createTodo("new test todo", null, "false", (err, res) => {
@@ -150,9 +137,19 @@ describe('DB', () => {
       });
     });
   });
+  describe('getTodo()', () => {
+    it('should return test todo', (done) => {
+      db.getTodo(1, (err, res) => {
+        if (err) throw err;
+        expect(res[0].id).toBeGreaterThan(0);
+        expect(res).toHaveLength(1);
+        done();
+      });
+    });
+  });
   describe('updateTodo()', () => {
     it('should update first todo', (done) => {
-      db.updateTodo(1, "updated todo", (err, res) => {
+      db.updateTodo(1, "updated todo", null, "false", (err, res) => {
         if (err) throw err;
         expect(res[0].id).toBeGreaterThan(0);
         expect(res[0].title).toBe("updated todo");
