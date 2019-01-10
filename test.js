@@ -80,7 +80,7 @@ describe('CLIENT', () => {
       const date = null;
       const complete = "false";
       request(app)
-        .put('/todos')
+        .put('/todos/1')
         .send({ title, date, complete })
         .expect(204, done);
     });
@@ -91,7 +91,7 @@ describe('CLIENT', () => {
       const date = null;
       const complete = "false";
       request(app)
-        .put('/todos')
+        .put('/todos/-1')
         .send({ title, date, complete })
         .expect(404, done);
     });
@@ -140,6 +140,7 @@ describe('DB', () => {
   describe('getTodo()', () => {
     it('should return test todo', (done) => {
       db.getTodo(1, (err, res) => {
+        console.log(res);
         if (err) throw err;
         expect(res[0].id).toBeGreaterThan(0);
         expect(res).toHaveLength(1);
@@ -151,6 +152,8 @@ describe('DB', () => {
     it('should update first todo', (done) => {
       db.updateTodo(1, "updated todo", null, "false", (err, res) => {
         if (err) throw err;
+        console.log(res);
+        console.log(res[0]);
         expect(res[0].id).toBeGreaterThan(0);
         expect(res[0].title).toBe("updated todo");
         done();
