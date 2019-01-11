@@ -98,13 +98,11 @@ const applyTheme = (theme) => {
 
 const getSavedList = () => {
   $.get('http://localhost:3000/todos', (data) => {
-    console.log(data);
-    console.log(data.todos);
-    todos = data.todos;
+    todos = data;
     if (todos.length>0) {
       $list.innerHTML = "";
       for (i=0;i<todos.length;i++) {
-        renderTodo(todos[i], todos[i].key);
+        renderTodo(todos[i], todos[i].id);
       }
     } else {
       $list.innerHTML = "";
@@ -178,22 +176,23 @@ const renderTodo = (todo, newTodoKey) => {
   const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000);
   const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate();
   let currentKey = newTodoKey;
-  if (!todo.time && todo.date) {
+  console.log(todo);
+  /*if (!todo.time && todo.date) {
     h3.textContent = todo.text + " (by " + formattedDate + ")";
   } else if (todo.time && !todo.date) {
     h3.textContent = todo.text + " (by " + todo.time + ")";
   } else if (todo.time && todo.date) {
     h3.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
-  } else {
-    h3.textContent = todo.text;
-  }
+  } else {*/
+    h3.textContent = todo.title;
+  //}
   h3.addEventListener("click", onListItemClick);
   newList.appendChild(h3);
   newList.key = currentKey;
   newList.appendChild(createElementEditButton(currentKey));
   newList.appendChild(createElementDeleteButton(currentKey));
   newList.insertBefore(createElementCheckbox(todo, currentKey), newList.childNodes[0]);
-  if (todo.done === "true") {
+  if (todo.complete === "true") {
     newList.classList.add("checked");
   }
   if (newTodoKey >= 0){
