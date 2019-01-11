@@ -60,7 +60,7 @@ const getSavedTheme = () => {
   } else {
     applyTheme(currentTheme);
   }
-}
+};
 
 const applyTheme = (theme) => {
   const themeList = Object.keys(themes);
@@ -94,7 +94,7 @@ const applyTheme = (theme) => {
   $(".theme-div").addClass("theme-div-"+theme);
   $(".theme-btn-div").addClass("theme-btn-div-"+theme);
   $("h2").addClass("h2-"+theme);
-}
+};
 
 const getSavedList = () => {
   $.get('http://localhost:3000/todos', (data) => {
@@ -109,7 +109,7 @@ const getSavedList = () => {
       todos = [];
     }
   },"JSON");
-}
+};
 
 const onFormSubmit = (e) => {
   e.preventDefault();
@@ -206,7 +206,7 @@ const renderTodo = (todo, newTodoKey) => {
   } else {
     $list.appendChild(newList);
   }
-}
+};
 
 const resetInput = (delay) => {
   $input.value = "";
@@ -220,13 +220,13 @@ const resetInput = (delay) => {
     $time.value = "12:00";
     $date.valueAsDate = getDateObject(new Date());
   }
-}
+};
 
 const getDateObject = (date) => {
   const dateObject = new Date(date);
   const timeObject = new Date(dateObject.getTime() - dateObject.getTimezoneOffset() * 60000);
   return timeObject;
-}
+};
 
 const getAMPM = (time) => {
   let [h,m] = time.split(":");
@@ -245,7 +245,7 @@ const getAMPM = (time) => {
     h = 12;
   }
   return (h + ":" + m + " " + ampm);
-}
+};
 
 const onClearClick = (e) => {
   e.preventDefault();
@@ -277,7 +277,7 @@ const createElementEditButton = (key) => {
   editButton.textContent = "";
   editButton.addEventListener("click", onEditButtonClick);
   return editButton;
-}
+};
 
 const onEditButtonClick = (e) => {
   e.preventDefault();
@@ -295,7 +295,7 @@ const onEditButtonClick = (e) => {
   setTimeout(() => {
     e.target.parentNode.remove();
   }, 250);
-}
+};
 
 const createElementDeleteButton = (key) => {
   const deleteButton = document.createElement("button");
@@ -304,7 +304,7 @@ const createElementDeleteButton = (key) => {
   deleteButton.textContent = "";
   deleteButton.addEventListener("click", onDeleteButtonClick);
   return deleteButton;
-}
+};
 
 const onDeleteButtonClick = (e) => {
   e.preventDefault();
@@ -327,7 +327,7 @@ const onDeleteButtonClick = (e) => {
   setTimeout(() => {
     e.target.parentNode.remove();
   }, 250);
-}
+};
 
 const createElementCheckbox = (todo, key) => {
   const checkbox = document.createElement("input");
@@ -342,7 +342,7 @@ const createElementCheckbox = (todo, key) => {
     checkbox.checked = false;
   }
   return checkbox;
-}
+};
 
 const onCheckboxClick = (e) => {
   const target = todos.findIndex(x => x.key === e.target.dataset.key);
@@ -365,12 +365,12 @@ const onCheckboxClick = (e) => {
       data: JSON.stringify(todos[target])
     });
   }
-}
+};
 
 const onListItemClick = (e) => {
   const tkey = e.target.parentNode.children[0].dataset.key;
   $("#cb"+tkey).trigger("click");
-}
+};
 
 const checkInput = (key) => {
   if (key>=0) {
@@ -392,7 +392,7 @@ const checkInput = (key) => {
     $("#time").stop().animate({top:0},250);
     $("#date").stop().animate({top:0},500);
   }
-}
+};
 
 $time.value = "12:00";
 $date.valueAsDate = getDateObject(new Date());
