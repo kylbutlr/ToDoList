@@ -1,14 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-//const app = express();
-const {Client} = require('pg');
+//const {Client} = require('pg');
 const DB = require('./db');
-//const db = DB(client);
-//const fs = require('fs');
-//const querystring = require('querystring');
-//let todos;
-//let nextKey;
-//client.connect();
 
 module.exports = (client) => {
   const app = express();
@@ -76,9 +69,6 @@ module.exports = (client) => {
   const deleteOneTodo = (req,res,next) => {
     const key = Number(req.params.id);
     db.deleteTodo(key, (err, data) => {
-      /*console.log(key);
-      console.log(data);
-      console.log(data[0]);*/
       if (err) return next(err);
       if (!data[0]) return next();
       res.status(204).send(data[0]);
@@ -86,7 +76,6 @@ module.exports = (client) => {
   };
 
   app.use(cors());
-
   app.get('/todos', getAllTodos);
   app.get('/todos/:id', getOneTodo);
   app.post('/todos', postTodo);
