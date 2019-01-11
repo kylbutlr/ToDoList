@@ -97,7 +97,9 @@ const applyTheme = (theme) => {
 }
 
 const getSavedList = () => {
-  $.get('http://localhost:3000/todos', (data) => { 
+  $.get('http://localhost:3000/todos', (data) => {
+    console.log(data);
+    console.log(data.todos);
     todos = data.todos;
     if (todos.length>0) {
       $list.innerHTML = "";
