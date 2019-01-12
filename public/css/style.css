@@ -120,17 +120,20 @@ li:hover > .delete-button {
     display: inline-block;
     width: 100%;
 }
-.button {
+.button, 
+.mini-button {
     border-radius: 10px;
     box-shadow: 0px 2px 4px -2px black;
     text-align: center;
     transition: transform scale 0.1s;
 }
-.button:active {
+.button:active, 
+.mini-button:active {
     box-shadow: inset 0px 3px 6px -3px black;
     transform: scale(0.95);
 }
-.button:hover {
+.button:hover, 
+.mini-button:hover {
     cursor: pointer;
 }
 .button-div {

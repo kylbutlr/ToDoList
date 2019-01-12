@@ -268,7 +268,7 @@ const onClearClick = (e) => {
 const createElementEditButton = (key) => {
   const editButton = document.createElement("button");
   editButton.dataset.key = key;
-  editButton.className = "edit-button button";
+  editButton.className = "edit-button mini-button";
   editButton.textContent = "";
   editButton.addEventListener("click", onEditButtonClick);
   return editButton;
@@ -302,7 +302,7 @@ const onEditButtonClick = (e) => {
 const createElementDeleteButton = (key) => {
   const deleteButton = document.createElement("button");
   deleteButton.dataset.key = key;
-  deleteButton.className = "delete-button button";
+  deleteButton.className = "delete-button mini-button";
   deleteButton.textContent = "";
   deleteButton.addEventListener("click", onDeleteButtonClick);
   return deleteButton;
