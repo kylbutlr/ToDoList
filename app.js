@@ -32,8 +32,9 @@ module.exports = (client) => {
       const todo = JSON.parse(body);
       const title = todo.title;
       const date = todo.date;
+      const time = todo.time;
       const complete = todo.complete;
-      db.createTodo(title, date, complete, (err, data) => {
+      db.createTodo(title, date, time, complete, (err, data) => {
         if (err) return next(err);
         res.status(201).send(data[0]);
       });
@@ -50,8 +51,9 @@ module.exports = (client) => {
       const todo = JSON.parse(body);
       const title = todo.title;
       const date = todo.date;
+      const time = todo.time;
       const complete = todo.complete;
-      db.updateTodo(key, title, date, complete, (err, data) => {
+      db.updateTodo(key, title, date, time, complete, (err, data) => {
         if (err) return next(err);
         if (!data[0]) return next();
         res.status(204).send(data[0]);

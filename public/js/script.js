@@ -118,47 +118,48 @@ const onFormSubmit = (e) => {
     $input.value = "";
     $input.focus();
   } else {
-    let todo = {};
-    const time = $time.value;
-    if (time.length>0) {
-      todo = {
-        "text": $input.value, 
-        "time": getAMPM($time.value), 
-        "time24": $time.value, 
-        "date": $date.value, 
-        "done": "false"
-      };
-    } else {
-      todo = {
-        "text": $input.value, 
-        "time24": $time.value, 
-        "date": $date.value, 
-        "done": "false"
-      };
+    let time = null;
+    let date = null;
+    if ($time.value.length>0) {
+      time = $time.value;
     }
+    if ($date.value.length>0) {
+      date = $date.value;
+    }
+    const todo = {
+      "title": $input.value,  
+      "date": date,
+      "time": time,
+      "complete": false
+    };
     if ($key.value.length > 0){
       const key = parseInt($key.value);
-      todo.key = key;
-      const t = todos.findIndex(x => x.key === key-1);
-      todos[(t+1)] = todo;
+      console.log(key);
+      const t = todos.findIndex(x => x.id === key);
+      todo.id = key;
+      console.log(todos[t]);
+      todos[t] = todo;
+      console.log(todos[t]);
       $.ajax({
-        url: 'http://localhost:3000/todos',
+        url: 'http://localhost:3000/todos/'+key,
         method: 'PUT',
-        data: JSON.stringify(todos[key], null, 2),
+        data: JSON.stringify(todo),
         success: () => {
-          $.get('http://localhost:3000/todos/'+key, () => {
-            renderTodo(todos[key], key);
+          $.get('http://localhost:3000/todos/'+key, (data) => {
+            const t = todos.findIndex(x => x.id === key);
+            todos[t] = data;
+            renderTodo(data, data.id);
             $("#cancelButton").trigger("click");
           },"JSON");
         }
       });
     } else {
-      $.post('http://localhost:3000/todos', todo, () => {
+      $.post('http://localhost:3000/todos', JSON.stringify(todo), () => {
         $.get('http://localhost:3000/todos', (data) => { 
-          todos = data.todos;
-          const newKey = data.nextKey;
-          const t = todos.findIndex(x => x.key === newKey-1);
-          renderTodo(todos[t], todos[t].key);
+          todos = data;
+          const newKey = todos[todos.length-1].id;
+          const t = todos.findIndex(x => x.id === newKey);
+          renderTodo(todos[t], todos[t].id);
         },"JSON");
       });
     }
@@ -169,43 +170,45 @@ const onFormSubmit = (e) => {
   }
 };
 
-const renderTodo = (todo, newTodoKey) => {
-  const newList = document.createElement("li");
-  const h3 = document.createElement("h3");
+const renderTodo = (todo, currentKey) => {
+  const newTodo = document.createElement("li");
+  const todoTitle = document.createElement("h3");
   const dateObject = new Date(todo.date);
   const timeObject = new Date(dateObject.getTime() + dateObject.getTimezoneOffset() * 60000);
   const formattedDate =  days[timeObject.getDay()] + ", " + months[timeObject.getMonth()] + " " + timeObject.getDate();
-  let currentKey = newTodoKey;
-  console.log(todo);
-  /*if (!todo.time && todo.date) {
-    h3.textContent = todo.text + " (by " + formattedDate + ")";
-  } else if (todo.time && !todo.date) {
-    h3.textContent = todo.text + " (by " + todo.time + ")";
-  } else if (todo.time && todo.date) {
-    h3.textContent = todo.text + " (by " + todo.time + " on " + formattedDate + ")";
-  } else {*/
-    h3.textContent = todo.title;
-  //}
-  h3.addEventListener("click", onListItemClick);
-  newList.appendChild(h3);
-  newList.key = currentKey;
-  newList.appendChild(createElementEditButton(currentKey));
-  newList.appendChild(createElementDeleteButton(currentKey));
-  newList.insertBefore(createElementCheckbox(todo, currentKey), newList.childNodes[0]);
-  if (todo.complete === "true") {
-    newList.classList.add("checked");
+  let displayTime = todo.time;
+  if (displayTime != null) {
+    displayTime = getAmPm(displayTime, todo);
   }
-  if (newTodoKey >= 0){
-    newList.classList.add("new-post");
+  if (!todo.time && todo.date) {
+    todoTitle.textContent = todo.title + " (by " + formattedDate + ")";
+  } else if (todo.time && !todo.date) {
+    todoTitle.textContent = todo.title + " (by " + displayTime + ")";
+  } else if (todo.time && todo.date) {
+    todoTitle.textContent = todo.title + " (by " + displayTime + " on " + formattedDate + ")";
+  } else {
+    todoTitle.textContent = todo.title;
+  }
+  todoTitle.addEventListener("click", onListItemClick);
+  newTodo.appendChild(todoTitle);
+  newTodo.dataset.key = currentKey;
+  newTodo.appendChild(createElementEditButton(currentKey));
+  newTodo.appendChild(createElementDeleteButton(currentKey));
+  newTodo.insertBefore(createElementCheckbox(todo, currentKey), newTodo.childNodes[0]);
+  if (todo.complete === true) {
+    newTodo.classList.add("checked");
+  }
+  if (currentKey >= 0){
+    newTodo.classList.add("new-post");
     setTimeout(() => {
-      newList.classList.add("post-visible");
+      newTodo.classList.add("post-visible");
     },10);
   }
-  if (newTodoKey >= 0 && newTodoKey != todos.length-1){
-    $list.insertBefore(newList, $list.children[newTodoKey]);
-  } else {
-    $list.appendChild(newList);
-  }
+  /*if (newTodoKey >= 0 && newTodoKey != todos.length-1){
+    $list.insertBefore(newTodo, $list.children[newTodoKey]);
+  } else {*/
+    $list.appendChild(newTodo);
+  //}
 };
 
 const resetInput = (delay) => {
@@ -228,23 +231,30 @@ const getDateObject = (date) => {
   return timeObject;
 };
 
-const getAMPM = (time) => {
-  let [h,m] = time.split(":");
-  let ampm;
-  if (0 < h && h < 10) {
-    ampm = "am";
-    h = h.substr(1);
-  } else if (h === 12) {
-    ampm = "pm";
-    h = 12;
-  } else if (12 < h && h < 24) {
-    ampm = "pm";
-    h -= 12;
+const getAmPm = (displayTime, todo) => {
+  let AmPm;
+  if (displayTime.charAt(0) == 0) {
+    displayTime = todo.time.slice(1, 5);
+    if (displayTime.charAt(0) == 0) {
+      displayTime = "12:" + displayTime.charAt(2) + displayTime.charAt(3);
+    }
+    AmPm = "am";
   } else {
-    ampm = "am";
-    h = 12;
+    displayTime = todo.time.slice(0, 5);
+    const firstTwo = displayTime.charAt(0) + displayTime.charAt(1);
+    if (firstTwo < 12) {
+      AmPm = "am";
+    }
+    if (firstTwo == 12) {
+      AmPm = "pm";
+    }
+    if (firstTwo > 12) {
+      AmPm = "pm";
+      displayTime = Number(firstTwo) - 12 + ":" + displayTime.charAt(3) + displayTime.charAt(4);
+    }
   }
-  return (h + ":" + m + " " + ampm);
+  displayTime = displayTime + AmPm;
+  return displayTime;
 };
 
 const onClearClick = (e) => {
@@ -270,6 +280,16 @@ const onClearLSClick = (e) => {
   window.location.reload();
 };
 
+String.prototype.toDateFormat = function() {
+  const dateObj = new Date(this);
+  const year = dateObj.getFullYear();
+  let month = dateObj.getMonth() + 1;
+  let date = dateObj.getDate();
+  if (month < 10) { month = "0" + month; }
+  if (date < 10) { date = "0" + date; }
+  return year + "-" + month + "-" + date;
+};
+
 const createElementEditButton = (key) => {
   const editButton = document.createElement("button");
   editButton.dataset.key = key;
@@ -281,11 +301,19 @@ const createElementEditButton = (key) => {
 
 const onEditButtonClick = (e) => {
   e.preventDefault();
-  const t = todos.findIndex(x => x.key === e.target.dataset.key);
-  $input.value = todos[t].text;
-  $time.value = todos[t].time24;
-  $date.value = todos[t].date;
-  $key.value = todos[t].key;
+  console.log(todos);
+  const key = Number(e.target.dataset.key);
+  console.log(e.target.parentNode.children[1]);
+  console.log(key);
+  const t = todos.findIndex(x => x.id === key);
+  console.log(todos[t]);
+  const timeString = todos[t].time;
+  const dateString = todos[t].date;
+  const dateFormatted = dateString.toDateFormat();
+  $input.value = todos[t].title;
+  $time.value = timeString;
+  $date.value = dateFormatted;
+  $key.value = todos[t].id;
   $("#cancelButton").show();
   $("#addButton").addClass("edit");
   $("#addButton").text("Update");
@@ -308,11 +336,9 @@ const createElementDeleteButton = (key) => {
 
 const onDeleteButtonClick = (e) => {
   e.preventDefault();
-  console.log(todos);
   const key = e.target.dataset.key;
   const t = todos.findIndex(x => x.key === key);
   todos.splice(t,1);
-  console.log(todos);
   jQuery.ajax({
     url: 'http://localhost:3000/todos/'+key,
     method: 'DELETE',
@@ -336,7 +362,7 @@ const createElementCheckbox = (todo, key) => {
   checkbox.dataset.key = key;
   checkbox.id = "cb"+key;
   checkbox.addEventListener("click", onCheckboxClick);
-  if (todo.done === "true") {
+  if (todo.complete === "true") {
     checkbox.checked = true;
   } else { 
     checkbox.checked = false;
@@ -345,24 +371,25 @@ const createElementCheckbox = (todo, key) => {
 };
 
 const onCheckboxClick = (e) => {
-  const target = todos.findIndex(x => x.key === e.target.dataset.key);
+  const key = Number(e.target.dataset.key);
+  const t = todos.findIndex(x => x.id === key);
   if (e.target.parentNode.classList.contains("checked")) {
     e.target.parentNode.classList.remove("checked");
     e.target.checked = false;
-    todos[target].done = "false";
+    todos[t].complete = false;
     $.ajax({
-      url: 'http://localhost:3000/todos',
+      url: 'http://localhost:3000/todos/'+key,
       method: 'PUT',
-      data: JSON.stringify(todos[target])
+      data: JSON.stringify(todos[t])
     });
   } else {
     e.target.parentNode.classList.add("checked");
     e.target.checked = true;
-    todos[target].done = "true";
+    todos[t].complete = true;
     $.ajax({
-      url: 'http://localhost:3000/todos',
+      url: 'http://localhost:3000/todos/'+key,
       method: 'PUT',
-      data: JSON.stringify(todos[target])
+      data: JSON.stringify(todos[t])
     });
   }
 };
@@ -433,7 +460,7 @@ $(() => {
   });
     
   $("#input").on("change paste cut input", () => {
-    if (!$.trim(this.value).length) {
+    if ($.trim($input.value).length === 0) {
       $("#addButton").stop().animate({opacity:0.25}, 250);
       $("#addButton").prop("disabled", true);
     } else {

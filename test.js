@@ -25,10 +25,11 @@ describe('CLIENT', () => {
     it('should post a todo entry', (done) => {
       const title = "NEW ENTRY";
       const date = null;
-      const complete = "false";
+      const time = null;
+      const complete = false;
       request(app)
         .post('/todos')
-        .send({ title, date, complete })
+        .send({ title, date, time, complete })
         .expect(201, done);
     });
   });
@@ -57,10 +58,11 @@ describe('CLIENT', () => {
     it('should edit first todo entry', (done) => {
       const title = "EDITED ENTRY";
       const date = null;
-      const complete = "false";
+      const time = null;
+      const complete = false;
       request(app)
         .put('/todos/1')
-        .send({ title, date, complete })
+        .send({ title, date, time, complete })
         .expect(204, done);
     });
   });
@@ -68,10 +70,11 @@ describe('CLIENT', () => {
     it('should 404 because invalid entry', (done) => {
       const title = "INVALID ENTRY";
       const date = null;
-      const complete = "false";
+      const time = null;
+      const complete = false;
       request(app)
         .put('/todos/-1')
-        .send({ title, date, complete })
+        .send({ title, date, time, complete })
         .expect(404, done);
     });
   });
@@ -117,7 +120,7 @@ describe('DB', () => {
   });
   describe('createTodo()', () => {
     it('should create test todo', (done) => {
-      db.createTodo("first test todo", null, "false", (err, res) => {
+      db.createTodo("first test todo", null, null, false, (err, res) => {
         if (err) throw err;
         expect(res[0].id).toBe(3);
         expect(res[0].title).toBe("first test todo");
@@ -127,7 +130,7 @@ describe('DB', () => {
   });
   describe('createTodo()', () => {
     it('should create second test todo', (done) => {
-      db.createTodo("second test todo", null, "false", (err, res) => {
+      db.createTodo("second test todo", null, null, false, (err, res) => {
         if (err) throw err;
         expect(res[0].id).toBe(4);
         expect(res[0].title).toBe("second test todo");
@@ -148,7 +151,7 @@ describe('DB', () => {
   });
   describe('updateTodo()', () => {
     it('should update first test todo', (done) => {
-      db.updateTodo(3, "updated test todo", null, "false", (err, res) => {
+      db.updateTodo(3, "updated test todo", null, null, false, (err, res) => {
         if (err) throw err;
         expect(res[0].id).toBe(3);
         expect(res[0].title).toBe("updated test todo");

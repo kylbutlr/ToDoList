@@ -6,5 +6,5 @@ CREATE TABLE IF NOT EXISTS todos (
 
 TRUNCATE todos RESTART IDENTITY;
 
-INSERT INTO todos (title) VALUES ('test todo');
+INSERT INTO todos (title, date, time, complete) VALUES ('test todo', null, null, false);
 
