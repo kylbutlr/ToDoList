@@ -1,3 +1,5 @@
 # Todo List
-Javscript Todo List
-(Work in Progress)
+
+Javscript todo list web app
+
+Using PostgreSQL as database
