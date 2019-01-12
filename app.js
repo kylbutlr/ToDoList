@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-//const {Client} = require('pg');
 const DB = require('./db');
 
 module.exports = (client) => {
