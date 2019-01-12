@@ -336,14 +336,6 @@ li:hover > .delete-button {
     height: 6vh;
     transition: opacity 0.25s;
 }
-.clear-ls-button {
-    display: none;
-    opacity: 0.5;
-    border-radius: 0 10px 10px 0;
-    flex: 1;
-    height: 6vh;
-    transition: opacity 0.25s;
-}
 .edit-button {
     background-image:url("images/edit-icon.png");
     background-position: contain;

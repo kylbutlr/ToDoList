@@ -265,24 +265,6 @@ const onClearClick = (e) => {
   }, 250);
 };
 
-const onClearLSClick = (e) => {
-  e.preventDefault();
-  $list.innerHTML = "";
-  todos = [];
-  window.localStorage.clear();
-  window.location.reload();
-};
-
-String.prototype.toDateFormat = function() {
-  const dateObj = new Date(this);
-  const year = dateObj.getFullYear();
-  let month = dateObj.getMonth() + 1;
-  let date = dateObj.getDate();
-  if (month < 10) { month = "0" + month; }
-  if (date < 10) { date = "0" + date; }
-  return year + "-" + month + "-" + date;
-};
-
 const createElementEditButton = (key) => {
   const editButton = document.createElement("button");
   editButton.dataset.key = key;
@@ -298,10 +280,13 @@ const onEditButtonClick = (e) => {
   const t = todos.findIndex(x => x.id === key);
   const timeString = todos[t].time;
   const dateString = todos[t].date;
-  const dateFormatted = dateString.toDateFormat();
+  if (dateString != null) {
+    $date.value = dateString.toDateFormat();
+  } else {
+    $date.value = dateString;
+  }
   $input.value = todos[t].title;
   $time.value = timeString;
-  $date.value = dateFormatted;
   $key.value = todos[t].id;
   $("#cancelButton").show();
   $("#addButton").addClass("edit");
@@ -410,11 +395,20 @@ const checkInput = (key) => {
   }
 };
 
+String.prototype.toDateFormat = function () {
+  const dateObj = new Date(this);
+  const year = dateObj.getFullYear();
+  let month = dateObj.getMonth() + 1;
+  let date = dateObj.getDate();
+  if (month < 10) { month = "0" + month; }
+  if (date < 10) { date = "0" + date; }
+  return year + "-" + month + "-" + date;
+};
+
 $time.value = "12:00";
 $date.valueAsDate = getDateObject(new Date());
 form.addEventListener("submit", onFormSubmit, false);
 clearList.addEventListener("click", onClearClick, false);
-clearLS.addEventListener("click", onClearLSClick, false);
 getSavedList();
 getSavedTheme();
 
@@ -476,9 +470,7 @@ $(() => {
     $("#clearList").stop().animate({
       opacity: e.type==="mouseenter" ? 1 : 0.5
     }, 250);
-    $("#clearLS").stop().animate({
-      opacity: e.type==="mouseenter" ? 1 : 0.5
-    }, 250);
+
     $(".clear-div").stop().animate({
       bottom: e.type==="mouseenter" ? -10 : -60
     }, 500);
