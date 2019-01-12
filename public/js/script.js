@@ -120,12 +120,8 @@ const onFormSubmit = (e) => {
   } else {
     let time = null;
     let date = null;
-    if ($time.value.length>0) {
-      time = $time.value;
-    }
-    if ($date.value.length>0) {
-      date = $date.value;
-    }
+    if ($time.value.length>0) { time = $time.value; }
+    if ($date.value.length>0) { date = $date.value; }
     const todo = {
       "title": $input.value,  
       "date": date,
@@ -380,7 +376,7 @@ const checkInput = (key) => {
     $("#addButton").prop("disabled", false);
   }
   if ($("#input").val().length === 0 || key>=0) {
-    if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) { //Do nothing
+    if ($("#input").is(":active")||$("#time").is(":active")||$("#date").is(":active")||$("#addButton").is(":active")) { // Do nothing
     } else {
       $("#date").stop().animate({top:-65},250, () => {
         $("#time").stop().animate({top:-35},125, () => {
@@ -452,9 +448,7 @@ $(() => {
     }
   });
 
-  $(".textarea").blur(() => {
-    checkInput();
-  });
+  $(".textarea").blur(() => { checkInput(); });
 
   $("#date").change(() => {
     const date = getDateObject(this.value);
@@ -467,34 +461,17 @@ $(() => {
   });
 
   $(".clear-div").hover((e) => {
-    $("#clearList").stop().animate({
-      opacity: e.type==="mouseenter" ? 1 : 0.5
-    }, 250);
-
-    $(".clear-div").stop().animate({
-      bottom: e.type==="mouseenter" ? -10 : -60
-    }, 500);
-    $(".clear-div-glass").stop().animate({
-      top: e.type==="mouseenter" ? 10 : 60
-    }, 500);
+    $("#clearList").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+    $(".clear-div").stop().animate({ bottom: e.type==="mouseenter" ? -10 : -60 }, 500);
+    $(".clear-div-glass").stop().animate({ top: e.type==="mouseenter" ? 10 : 60 }, 500);
   });
 
   $(".theme-div").hover((e) => {
-    $("#theme1").stop().animate({
-      opacity: e.type==="mouseenter" ? 1 : 0.5
-    }, 250);
-    $("#theme2").stop().animate({
-      opacity: e.type==="mouseenter" ? 1 : 0.5
-    }, 250);
-    $("#theme3").stop().animate({
-      opacity: e.type==="mouseenter" ? 1 : 0.5
-    }, 250);
-    $(".theme-div").stop().animate({
-      bottom: e.type==="mouseenter" ? -10 : -60
-    }, 500);
-    $(".theme-div-glass").stop().animate({
-      top: e.type==="mouseenter" ? 10 : 60
-    }, 500);
+    $("#theme1").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+    $("#theme2").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+    $("#theme3").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+    $(".theme-div").stop().animate({ bottom: e.type==="mouseenter" ? -10 : -60 }, 500);
+    $(".theme-div-glass").stop().animate({ top: e.type==="mouseenter" ? 10 : 60 }, 500);
   });
 
   $("#theme1").click(() => {
