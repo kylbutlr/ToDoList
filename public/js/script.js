@@ -134,12 +134,9 @@ const onFormSubmit = (e) => {
     };
     if ($key.value.length > 0){
       const key = parseInt($key.value);
-      console.log(key);
       const t = todos.findIndex(x => x.id === key);
       todo.id = key;
-      console.log(todos[t]);
       todos[t] = todo;
-      console.log(todos[t]);
       $.ajax({
         url: 'http://localhost:3000/todos/'+key,
         method: 'PUT',
@@ -148,7 +145,7 @@ const onFormSubmit = (e) => {
           $.get('http://localhost:3000/todos/'+key, (data) => {
             const t = todos.findIndex(x => x.id === key);
             todos[t] = data;
-            renderTodo(data, data.id);
+            renderTodo(todos[t], todos[t].id);
             $("#cancelButton").trigger("click");
           },"JSON");
         }
@@ -204,11 +201,7 @@ const renderTodo = (todo, currentKey) => {
       newTodo.classList.add("post-visible");
     },10);
   }
-  /*if (newTodoKey >= 0 && newTodoKey != todos.length-1){
-    $list.insertBefore(newTodo, $list.children[newTodoKey]);
-  } else {*/
-    $list.appendChild(newTodo);
-  //}
+  $list.appendChild(newTodo);
 };
 
 const resetInput = (delay) => {
@@ -301,12 +294,8 @@ const createElementEditButton = (key) => {
 
 const onEditButtonClick = (e) => {
   e.preventDefault();
-  console.log(todos);
   const key = Number(e.target.dataset.key);
-  console.log(e.target.parentNode.children[1]);
-  console.log(key);
   const t = todos.findIndex(x => x.id === key);
-  console.log(todos[t]);
   const timeString = todos[t].time;
   const dateString = todos[t].date;
   const dateFormatted = dateString.toDateFormat();
@@ -548,7 +537,7 @@ $(() => {
     $("#addButton").removeClass("edit");
     $list.innerHTML = "";
     for (i=0;i<todos.length;i++) {
-      renderTodo(todos[i], todos[i].key);
+      renderTodo(todos[i], todos[i].id);
     }
   });
 });
