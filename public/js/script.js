@@ -325,16 +325,16 @@ const createElementDeleteButton = (key) => {
 
 const onDeleteButtonClick = (e) => {
   e.preventDefault();
-  const key = e.target.dataset.key;
-  const t = todos.findIndex(x => x.key === key);
+  const key = Number(e.target.dataset.key);
+  const t = todos.findIndex(x => x.id === key);
   todos.splice(t,1);
   jQuery.ajax({
     url: 'http://localhost:3000/todos/'+key,
     method: 'DELETE',
     data: JSON.stringify(key),
     success: () => {
-      $.get('http://localhost:3000/todos', (data) => { 
-        todos = data.todos;
+      $.get('http://localhost:3000/todos', (data) => {
+        todos = data;
       },"JSON");
     }
   });
