@@ -66,7 +66,7 @@ describe('CLIENT', () => {
         .expect(204, done);
     });
   });
-  describe('Pu/update invalid /todos', () => {
+  describe('Put/update invalid /todos', () => {
     it('should 404 because invalid entry', (done) => {
       const title = "INVALID ENTRY";
       const date = null;
