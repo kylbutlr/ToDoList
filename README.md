@@ -1,5 +1,4 @@
 # Todo List
+###JS Todo List application using PostgreSQL
 
-Javscript todo list web app
-
-Using PostgreSQL as database
+[Here's the app on my github.io website](https://kylbutlr.github.io/todo-list/public/)
