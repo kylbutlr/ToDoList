@@ -17,9 +17,9 @@ const themes = {
     buttonClass: 'button-light',
     textareaClass: 'textarea-light',
     clearDivClass: 'clear-div-light',
-    clearBtnDivClass: 'clear-btn-div-light',
+    clearButtonDivClass: 'clear-button-div-light',
     themeDivClass: 'theme-div-light',
-    themeBtnDivClass: 'theme-btn-div-light',
+    themeButtonDivClass: 'theme-button-div-light',
     h2Class: 'h2-light'
   },
   default: {
@@ -31,9 +31,9 @@ const themes = {
     buttonClass: 'button-default',
     textareaClass: 'textarea-default',
     clearDivClass: 'clear-div-default',
-    clearBtnDivClass: 'clear-btn-div-default',
+    clearButtonDivClass: 'clear-button-div-default',
     themeDivClass: 'theme-div-default',
-    themeBtnDivClass: 'theme-btn-div-default',
+    themeButtonDivClass: 'theme-button-div-default',
     h2Class: 'h2-default'
   },
   dark: {
@@ -45,9 +45,9 @@ const themes = {
     buttonClass: 'button-dark',
     textareaClass: 'textarea-dark',
     clearDivClass: 'clear-div-dark',
-    clearBtnDivClass: 'clear-btn-div-dark',
+    clearButtonDivClass: 'clear-button-div-dark',
     themeDivClass: 'theme-div-dark',
-    themeBtnDivClass: 'theme-btn-div-dark',
+    themeButtonDivClass: 'theme-button-div-dark',
     h2Class: 'h2-dark'
   }
 };
@@ -69,30 +69,30 @@ const applyTheme = (theme) => {
     $("body").removeClass("body-"+themeList[i]);
     $(".container").removeClass("container-"+themeList[i]);
     $(".form-div").removeClass("form-div-"+themeList[i]);
-    $(".form-btn-div").removeClass("form-btn-div-"+themeList[i]);
+    $(".form-button-div").removeClass("form-button-div-"+themeList[i]);
     $(".theme-div").removeClass("theme-div-"+themeList[i]);
     $(".list-div").removeClass("list-div-"+themeList[i]);
     $(".button").removeClass("button-"+themeList[i]);
     $(".textarea").removeClass("textarea-"+themeList[i]);
     $(".clear-div").removeClass("clear-div-"+themeList[i]);
-    $(".clear-btn-div").removeClass("clear-btn-div-"+themeList[i]);
+    $(".clear-button-div").removeClass("clear-button-div-"+themeList[i]);
     $(".theme-div").removeClass("theme-div-"+themeList[i]);
-    $(".theme-btn-div").removeClass("theme-btn-div-"+themeList[i]);
+    $(".theme-button-div").removeClass("theme-button-div-"+themeList[i]);
     $("h2").removeClass("h2-"+themeList[i]);
   }
   $(".header").addClass("header-"+theme);
   $("body").addClass("body-"+theme);
   $(".container").addClass("container-"+theme);
   $(".form-div").addClass("form-div-"+theme);
-  $(".form-btn-div").addClass("form-btn-div-"+theme);
+  $(".form-button-div").addClass("form-button-div-"+theme);
   $(".theme-div").addClass("theme-div-"+theme);
   $(".list-div").addClass("list-div-"+theme);
   $(".button").addClass("button-"+theme);
   $(".textarea").addClass("textarea-"+theme);
   $(".clear-div").addClass("clear-div-"+theme);
-  $(".clear-btn-div").addClass("clear-btn-div-"+theme);
+  $(".clear-button-div").addClass("clear-button-div-"+theme);
   $(".theme-div").addClass("theme-div-"+theme);
-  $(".theme-btn-div").addClass("theme-btn-div-"+theme);
+  $(".theme-button-div").addClass("theme-button-div-"+theme);
   $("h2").addClass("h2-"+theme);
 };
 
@@ -460,19 +460,23 @@ $(() => {
     }
   });
 
-  $(".clear-div").hover((e) => {
-    $("#clearList").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
-    $(".clear-div").stop().animate({ bottom: e.type==="mouseenter" ? -10 : -60 }, 500);
-    $(".clear-div-glass").stop().animate({ top: e.type==="mouseenter" ? 10 : 60 }, 500);
-  });
+  if ($(".clear-div").css("bottom") === "-60px") {
+    $(".clear-div").hover((e) => {
+      $("#clearList").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+      $(".clear-div").stop().animate({ bottom: e.type==="mouseenter" ? -10 : -60 }, 500);
+      $(".clear-div-glass").stop().animate({ top: e.type==="mouseenter" ? 10 : 60 }, 500);
+    });
+  }
 
-  $(".theme-div").hover((e) => {
-    $("#theme1").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
-    $("#theme2").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
-    $("#theme3").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
-    $(".theme-div").stop().animate({ bottom: e.type==="mouseenter" ? -10 : -60 }, 500);
-    $(".theme-div-glass").stop().animate({ top: e.type==="mouseenter" ? 10 : 60 }, 500);
-  });
+  if ($(".theme-div").css("bottom") === "-60px") {
+    $(".theme-div").hover((e) => {
+      $("#theme1").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+      $("#theme2").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+      $("#theme3").stop().animate({ opacity: e.type==="mouseenter" ? 1 : 0.5 }, 250);
+      $(".theme-div").stop().animate({ bottom: e.type==="mouseenter" ? -10 : -60 }, 500);
+      $(".theme-div-glass").stop().animate({ top: e.type==="mouseenter" ? 10 : 60 }, 500);
+    });
+  }
 
   $("#theme1").click(() => {
     const themeName = "light";
