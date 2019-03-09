@@ -82,3 +82,5 @@ typings/
 .vscode/
 
 .jshintrc
+
+old/
