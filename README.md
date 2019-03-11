@@ -1,7 +1,7 @@
 # Todo List (API)
 ### Todo list application REST API
-##### Features: CRUD, routing, and tests
-##### Using: PostgreSQL, Express, and Jest
+#### Features: REST, routing, and tests
+#### Using: PostgreSQL, Express, and Jest
 ### [Can be used with Todo List (React)](https://github.com/kylbutlr/todo-list-react)
 
 ## Install
