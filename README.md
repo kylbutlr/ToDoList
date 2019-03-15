@@ -6,7 +6,7 @@
 
 This is a custom public REST API to run the back-end of a Todo List application.
 
-Currently does not feature user accounts, so all entries and modifications will be saved and displayed for **all users**.
+Currently does not feature user accounts, so all entries and modifications will be saved and displayed for all users.
 
 ## Install
 
