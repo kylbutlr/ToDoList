@@ -22,8 +22,6 @@ Server runs on port `3000`
 npm start
 ```
 
-## API
-
 HTTP   | Request              | Response
 --- | --- | ---
 GET    | /todos     | Returns all todos
