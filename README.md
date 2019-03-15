@@ -1,8 +1,6 @@
 # Todo List (API)
 
-### Todo list application RESTful API, [can be used with Todo List (React)](https://github.com/kylbutlr/todo-list-react)
-
-This is a custom public REST API to run the back-end of a Todo List application.
+### Todo List app public RESTful API, [can be used with Todo List (React)](https://github.com/kylbutlr/todo-list-react)
 
 Featuring: REST CRUD, routing, and tests
 
