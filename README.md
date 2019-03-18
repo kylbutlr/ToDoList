@@ -2,9 +2,13 @@
 
 #### Todo List app public RESTful API, [can be used with Todo List (React)](https://github.com/kylbutlr/todo-list-react)
 
-Using: PostgreSQL, Express, and Jest
+Uses: PostgreSQL, Express, and Jest
 
-Featuring: REST CRUD, routing, and tests
+Features: REST CRUD, routing, and tests
+
+[This API is hosted publicly on Heroku](https://kylbutlr-todos-api.herokuapp.com) (try going to /todos)
+
+### [Click Here for a Live Preview of the React app using this API](https://kylbutlr-todos-react.herokuapp.com/) (Warning: **Public** Information)
 
 *Currently does not feature user accounts, so all entries and modifications will be saved and displayed for all users.*
 
