@@ -2,7 +2,7 @@
   "name": "todo-list",
   "version": "1.0.0",
   "description": "Todo List",
-  "main": "todo.js",
+  "main": "app.js",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.4",
@@ -13,7 +13,8 @@
     "supertest": "^3.4.2"
   },
   "scripts": {
-    "test": "psql -U postgres -d todos_test -f createTablesTest.sql && npx jest test.js"
+    "test": "psql -U postgres -d todos_test -f createTablesTest.sql && npx jest test.js",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
