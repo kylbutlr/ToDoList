@@ -10,4 +10,4 @@ const client = new Client({
 });
 client.connect();
 const app = App(client);
-app.listen(3000);
+app.listen(5432);
