@@ -1,16 +1,20 @@
 # Todo List (API)
 
-#### Todo List app public RESTful API, [can be used with Todo List (React)](https://github.com/kylbutlr/todo-list-react)
+#### Todo List application's RESTful API
 
-Uses: PostgreSQL, Express, and Jest
+Created to be used with my [Todo List (React)](https://github.com/kylbutlr/todo-list-react) app
 
 Features: REST CRUD, routing, and tests
 
-[This API is hosted publicly on Heroku](https://kylbutlr-todos-api.herokuapp.com) (try going to /todos)
+Uses: PostgreSQL, Express, and Jest
 
-### [Click Here for a Live Preview of the React app using this API](https://kylbutlr-todos-react.herokuapp.com/) (Warning: **Public** Information)
+## Preview
 
-*Currently does not feature user accounts, so all entries and modifications will be saved and displayed for all users.*
+### [Click here for a live preview](https://kylbutlr-todos-react.herokuapp.com/) of my React app that uses this API.
+
+Or [go to the API directly](https://kylbutlr-todos-api.herokuapp.com) in your browser. (Try going to /todos)
+
+**Warning**: This is public information. This is currently a "public app" and does not feature user accounts, so all entries and modifications will be **saved and displayed for all users**.
 
 ## Install
 
@@ -40,6 +44,10 @@ DELETE | /todos/:id | Deletes one todo selected by the ID
 [@kylbutlr](https://github.com/kylbutlr)
 
 PRs accepted.
+
+## Special Thanks
+
+[@NoumanSaleem](https://github.com/NoumanSaleem])
 
 ## License
 
