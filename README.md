@@ -39,13 +39,11 @@ DELETE | /todos/:id | Deletes one todo selected by the ID
 
 ## Contributing
 
-[@kylbutlr](https://github.com/kylbutlr)
+[Kyle Butler](https://github.com/kylbutlr)
 
-PRs accepted.
+Special Thanks: 
 
-## Special Thanks
-
-[@NoumanSaleem](https://github.com/NoumanSaleem])
+[Nouman Saleem](https://github.com/NoumanSaleem)
 
 ## License
 
