@@ -66,7 +66,7 @@ module.exports = client => {
   };
 
   app.use(cors());
-  app.une(bodyParser());
+  app.use(bodyParser());
   app.get('/todos', getAllTodos);
   app.get('/todos/:id', getOneTodo);
   app.post('/todos', postTodo);
