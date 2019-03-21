@@ -24,7 +24,7 @@ module.exports = client => {
   };
 
   const postTodo = (req, res, next) => {
-    const todo = JSON.parse(body);
+    const todo = req.body;
     const title = todo.title;
     const date = todo.date;
     const time = todo.time;
@@ -37,7 +37,7 @@ module.exports = client => {
 
   const editTodo = (req, res, next) => {
     const key = Number(req.params.id);
-    const todo = JSON.parse(body);
+    const todo = req.body;
     const title = todo.title;
     const date = todo.date;
     const time = todo.time;
