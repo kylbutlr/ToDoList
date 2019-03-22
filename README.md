@@ -2,7 +2,7 @@
 
 Todo List application RESTful API server
 
-Created to be used with my [Todo List (React)](https://github.com/kylbutlr/todo-list-react) app
+Created to be used with my [Todo List (React)](https://github.com/kylbutlr/todo-list-react) app front-end
 
 Features: REST CRUD, routing, and tests
 
