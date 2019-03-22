@@ -22,20 +22,28 @@ npm install
 
 ## Usage
 
-Server runs on port `3000`
+Start the local server:
 
 ```shell
 npm start
 ```
 
-HTTP   | Request              | Response
---- | --- | ---
-GET    | /todos     | Returns all todos
-GET    | /todos/:id | Returns one todo selected by the ID
-POST   | /todos     | Creates a new todo
-PUT    | /todos/:id | Edits a todo selected by the ID
-DELETE | /todos     | Deletes all todos
-DELETE | /todos/:id | Deletes one todo selected by the ID
+| HTTP   | Request    | Response                            |
+| ------ | ---------- | ----------------------------------- |
+| GET    | /todos     | Returns all todos                   |
+| GET    | /todos/:id | Returns one todo selected by the ID |
+| POST   | /todos     | Creates a new todo                  |
+| PUT    | /todos/:id | Edits a todo selected by the ID     |
+| DELETE | /todos     | Deletes all todos                   |
+| DELETE | /todos/:id | Deletes one todo selected by the ID |
+
+#### Tests:
+
+Start unit and integration tests:
+
+```shell
+npm test
+```
 
 ## Contributing
 
