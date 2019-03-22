@@ -24,8 +24,6 @@ Or [go to the API directly](https://kylbutlr-todos-api.herokuapp.com) in your br
 npm install
 ```
 
-***
-
 ## Usage
 
 Start the local server:
@@ -33,8 +31,6 @@ Start the local server:
 ```shell
 npm start
 ```
-
-***
 
 
 | HTTP   | Request    | Response                            |
@@ -45,8 +41,6 @@ npm start
 | PUT    | /todos/:id | Edits a todo selected by the ID     |
 | DELETE | /todos     | Deletes all todos                   |
 | DELETE | /todos/:id | Deletes one todo selected by the ID |
-
-***
 
 #### Tests:
 
@@ -65,8 +59,6 @@ npm test
 #### Special Thanks: 
 
 [@NoumanSaleem](https://github.com/NoumanSaleem)
-
-***
 
 ## License
 
