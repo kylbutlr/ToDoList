@@ -99,13 +99,6 @@ describe('CLIENT', () => {
         .expect(404, done);
     });
   });
-  describe('404', () => {
-    it('should 404', (done) => {
-      request(app)
-        .get('/nothing')
-        .expect(404, done);
-    });
-  });
 });
 
 describe('DB', () => {
@@ -196,5 +189,13 @@ describe('DB', () => {
         done();
       });
     });
+  });
+});
+
+describe('404', () => {
+  it('should 404', (done) => {
+    request(app)
+      .get('/nothing')
+      .expect(404, done);
   });
 });
