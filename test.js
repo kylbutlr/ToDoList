@@ -21,7 +21,7 @@ afterAll(() => {
 });
 
 describe('CLIENT', () => {
-  describe('Post to /todos', () => {
+  describe('POST to /todos', () => {
     it('should post a todo entry', (done) => {
       const title = "NEW ENTRY";
       const date = null;
@@ -33,28 +33,28 @@ describe('CLIENT', () => {
         .expect(201, done);
     });
   });
-  describe('Get all /todos', () => {
+  describe('GET all /todos', () => {
     it('should return all todos', (done) => {
       request(app)
         .get('/todos')
         .expect(200, done);
     });
   });
-  describe('Get one /todos', () => {
+  describe('GET one /todos', () => {
     it('should return first todo', (done) => {
       request(app)
         .get('/todos/1')
         .expect(200, done);
     });
   });
-  describe('Get invalid /todos', () => {
+  describe('GET invalid /todos', () => {
     it('should 404 because invalid entry', (done) => {
       request(app)
         .get('/todos/-1')
         .expect(404, done);
     });
   });
-  describe('Put/update to /todos', () => {
+  describe('PUT to /todos', () => {
     it('should edit first todo entry', (done) => {
       const title = "EDITED ENTRY";
       const date = null;
@@ -66,7 +66,7 @@ describe('CLIENT', () => {
         .expect(204, done);
     });
   });
-  describe('Put/update invalid /todos', () => {
+  describe('PUT invalid /todos', () => {
     it('should 404 because invalid entry', (done) => {
       const title = "INVALID ENTRY";
       const date = null;
@@ -78,28 +78,28 @@ describe('CLIENT', () => {
         .expect(404, done);
     });
   });
-  describe('Delete one /todo', () => {
+  describe('DELETE one /todo', () => {
     it('should delete second todo entry', (done) => {
       request(app)
         .delete('/todos/1')
         .expect(204, done);
     });
   });
-  describe('Delete all /todos', () => {
+  describe('DELETE all /todos', () => {
     it('should delete all todos', (done) => {
       request(app)
         .delete('/todos')
         .expect(204, done);
     });
   });
-  describe('Delete invalid /todo', () => {
+  describe('DELETE invalid /todo', () => {
     it('should 404 because invalid entry', (done) => {
       request(app)
         .delete('/todos/161616')
         .expect(404, done);
     });
   });
-  describe('Expect 404', () => {
+  describe('404', () => {
     it('should 404', (done) => {
       request(app)
         .get('/nothing')
