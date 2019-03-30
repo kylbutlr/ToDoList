@@ -14,7 +14,7 @@
     "supertest": "^3.4.2"
   },
   "scripts": {
-    "test": "psql -h ec2-23-23-173-30.compute-1.amazonaws.com -U xwjbpnahjviqxd -p 5432 -d dai0irse5nbbgl -f restartTest.sql && npx jest test.js",
+    "test": "set PGPASSWORD=2d893d7efc3e04435a11903f927687f998070964e5e4882fdd05dc300eb8a3ef&& psql -h ec2-23-23-173-30.compute-1.amazonaws.com -U xwjbpnahjviqxd -p 5432 -d dai0irse5nbbgl -f restartTest.sql && npx jest test.js",
     "start": "node server.js"
   },
   "repository": {
