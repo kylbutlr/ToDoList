@@ -5,6 +5,3 @@ node_js:
 
 services:
   - postgresql
-
-before_scripts:
-  - set PGPASSWORD=2d893d7efc3e04435a11903f927687f998070964e5e4882fdd05dc300eb8a3ef
