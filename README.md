@@ -1,37 +1,27 @@
-# Todo List (API)
+# Todo List API
 
-Todo List application RESTful API node server
+#### Todo List application RESTful API
 
-Created to be used with my [Todo List (React)](https://github.com/kylbutlr/todo-list-react) app front-end
+Created to be used with my [Todo List (React)](https://github.com/kylbutlr/todo-list-react) front-end
 
 Features: REST CRUD, routing, and tests
 
 Uses: PostgreSQL, Express, and Jest
 
-***
-
-### [Click here for a live preview](https://kylbutlr-todos-react.herokuapp.com/) of my React app that uses this API.
-
-Or [go to the API directly](https://kylbutlr-todos-api.herokuapp.com/todos) in your browser. (Link goes to /todos)
-
-This is currently a "public app" without user accounts, so **all entries and modifications will be publicly displayed (deleted daily)**.
-
-***
-
-## Install
-
-```shell
-npm install
-```
-
 ## Usage
 
-Start the local server:
+The API can be found at: ```https://kylbutlr-todos-api.herokuapp.com/```
 
-```shell
-npm start
-```
+[Click here for an example](https://kylbutlr-todos-api.herokuapp.com/todos). (This link goes to /todos)
 
+Alternatively, download this repository and run the server locally:
+
+1. Install the dependencies: ```npm install```
+2. Run unit and integration tests: ```npm test```
+3. Start the server: ```npm start``` 
+4. API can be found at: ```localhost:3000```
+
+### Requests:
 
 | HTTP   | Request    | Response                            |
 | ------ | ---------- | ----------------------------------- |
@@ -41,14 +31,6 @@ npm start
 | PUT    | /todos/:id | Edits a todo selected by the ID     |
 | DELETE | /todos     | Deletes all todos                   |
 | DELETE | /todos/:id | Deletes one todo selected by the ID |
-
-#### Tests:
-
-Start unit and integration tests:
-
-```shell
-npm test
-```
 
 ***
 
