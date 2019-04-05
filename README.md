@@ -1,6 +1,6 @@
 # Todo List (API)
 
-Todo List application RESTful API server
+Todo List application RESTful API and node server
 
 Created to be used with my [Todo List (React)](https://github.com/kylbutlr/todo-list-react) app front-end
 
