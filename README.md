@@ -12,7 +12,7 @@ Uses: PostgreSQL, Express, and Jest
 
 ### [Click here for a live preview](https://kylbutlr-todos-react.herokuapp.com/) of my React app that uses this API.
 
-Or [go to the API directly](https://kylbutlr-todos-api.herokuapp.com) in your browser. (Try going to /todos)
+Or [go to the API directly](https://kylbutlr-todos-api.herokuapp.com/todos) in your browser. (Link goes to /todos)
 
 This is currently a "public app" without user accounts, so **all entries and modifications will be publicly displayed (deleted daily)**.
 
