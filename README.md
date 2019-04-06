@@ -8,7 +8,7 @@ Features: REST CRUD, routing, and tests
 
 Uses: PostgreSQL, Express, and Jest
 
-## Usage
+## How to Use
 
 The API can be found at: ```https://kylbutlr-todos-api.herokuapp.com/```
 
