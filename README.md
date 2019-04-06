@@ -12,7 +12,7 @@ Uses: PostgreSQL, Express, and Jest
 
 The API can be found at: ```https://kylbutlr-todos-api.herokuapp.com/```
 
-[Click here for an example](https://kylbutlr-todos-api.herokuapp.com/todos). (This link goes to /todos)
+[Click here for an example](https://kylbutlr-todos-api.herokuapp.com/todos) (This link goes to /todos)
 
 Alternatively, download this repository and run the server locally:
 
