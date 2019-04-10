@@ -34,7 +34,7 @@ Alternatively, download this repository and run the server locally:
 
 ***
 
-## Contributing:
+### Contributing:
 
 [@kylbutlr](https://github.com/kylbutlr)
 
@@ -42,6 +42,6 @@ Alternatively, download this repository and run the server locally:
 
 [@NoumanSaleem](https://github.com/NoumanSaleem)
 
-## License:
+### License:
 
 MIT
