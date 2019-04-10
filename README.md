@@ -10,7 +10,7 @@ Uses: PostgreSQL, Express, and Jest
 
 ## How to Use:
 
-The API can be found at: ```https://kylbutlr-todos-api.herokuapp.com/```
+API Endpoint: ```https://kylbutlr-todos-api.herokuapp.com/```
 
 [Click here for an example](https://kylbutlr-todos-api.herokuapp.com/todos) (This link goes to /todos)
 
