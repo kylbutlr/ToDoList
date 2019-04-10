@@ -1,6 +1,6 @@
 # Todo List API
 
-#### Todo List application RESTful API
+#### RESTful API for a basic todo list application
 
 Created to be used with my [Todo List (React)](https://github.com/kylbutlr/todo-list-react) front-end
 
@@ -8,7 +8,7 @@ Features: REST CRUD, routing, and tests
 
 Uses: PostgreSQL, Express, and Jest
 
-## How to Use
+## How to Use:
 
 The API can be found at: ```https://kylbutlr-todos-api.herokuapp.com/```
 
@@ -34,7 +34,7 @@ Alternatively, download this repository and run the server locally:
 
 ***
 
-## Contributing
+## Contributing:
 
 [@kylbutlr](https://github.com/kylbutlr)
 
@@ -42,6 +42,6 @@ Alternatively, download this repository and run the server locally:
 
 [@NoumanSaleem](https://github.com/NoumanSaleem)
 
-## License
+## License:
 
 MIT
