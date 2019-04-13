@@ -4,8 +4,6 @@
 
 Created to be used with [Todo List (React)](https://github.com/kylbutlr/todo-list-react)
 
-Features: REST CRUD, routing, and tests
-
 Uses: PostgreSQL, Express, and Jest
 
 ## How to Use:
