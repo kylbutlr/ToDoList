@@ -10,7 +10,7 @@ Uses: PostgreSQL, Express, and Jest
 
 API Endpoint: ```https://kylbutlr-todos-api.herokuapp.com/```
 
-[Click here for an example](https://kylbutlr-todos-api.herokuapp.com/todos) (This link goes to /todos)
+[Click here for an example](https://kylbutlr-todos-api.herokuapp.com/todos) (this link goes to /todos)
 
 Alternatively, download this repository and run the server locally:
 
