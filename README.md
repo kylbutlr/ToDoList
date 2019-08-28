@@ -1,8 +1,8 @@
-# Todo List API
+# To-do List API
 
-#### RESTful API for a basic todo list application
+#### RESTful API for a basic to-do list application
 
-Created to be used with [Todo List (React)](https://github.com/kylbutlr/todo-list-react)
+Created to be used with [To-do List (React)](https://github.com/kylbutlr/todo-list-react)
 
 Uses: PostgreSQL, Express, and Jest
 
@@ -23,12 +23,12 @@ Alternatively, download this repository and run the server locally:
 
 | HTTP   | Request    | Response                            |
 | ------ | ---------- | ----------------------------------- |
-| GET    | /todos     | Returns all todos                   |
-| GET    | /todos/:id | Returns one todo selected by the ID |
-| POST   | /todos     | Creates a new todo                  |
-| PUT    | /todos/:id | Edits a todo selected by the ID     |
-| DELETE | /todos     | Deletes all todos                   |
-| DELETE | /todos/:id | Deletes one todo selected by the ID |
+| GET    | /todos     | Returns all to-dos                   |
+| GET    | /todos/:id | Returns one to-do selected by the ID |
+| POST   | /todos     | Creates a new to-do                  |
+| PUT    | /todos/:id | Edits a to-do selected by the ID     |
+| DELETE | /todos     | Deletes all to-dos                   |
+| DELETE | /todos/:id | Deletes one to-do selected by the ID |
 
 ***
 
